@@ -97,7 +97,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import Business from '@/components/'
+import Business from '@/components/BusAdmin/BasicBusiness.vue'
   const Data = [
     {
       title: '基礎管理學分學程',
