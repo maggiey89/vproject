@@ -1,22 +1,19 @@
 <template>
   <v-container class="fill-height">
       <v-expansion-panels variant="accordion">
-        <v-expansion-panel
-          v-for="{title, content} in Data"
-        >
-        <v-expansion-panel-title expand-icon="mdi-menu-down">
-          {{ title }}
-        </v-expansion-panel-title>
-        <v-expansion-panel-text>
-          <Business/>
-        </v-expansion-panel-text>
-
+        <v-expansion-panel v-for="{title, content} in Data">
+          <v-expansion-panel-title expand-icon="mdi-menu-down">
+            {{ title }}
+          </v-expansion-panel-title>
+          <v-expansion-panel-text>
+            <Business/>
+          </v-expansion-panel-text>
         </v-expansion-panel>
 
       <v-expansion-panel>
-      <v-expansion-panel-title>First table</v-expansion-panel-title>
-      <v-expansion-panel-text>
-        
+        <v-expansion-panel-title>韓國學與語文學分學程</v-expansion-panel-title>
+        <v-expansion-panel-text>
+          <Korean/>
       </v-expansion-panel-text>
     </v-expansion-panel>
 
@@ -98,6 +95,7 @@
 <script setup>
 import { ref } from 'vue'
 import Business from '@/components/商業管理/基礎管理學分學程.vue'
+import Korean from '@/components/語言文學/'
   const Data = [
     {
       title: '基礎管理學分學程',
