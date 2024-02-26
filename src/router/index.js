@@ -1,6 +1,6 @@
 // Composables
 import { createRouter, createWebHistory } from 'vue-router'
-
+/*
 const routes = [
   {
     path: '/',
@@ -12,7 +12,7 @@ const routes = [
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "home" */ '@/views/Home.vue'),
+        component: () => import( '@/views/Home.vue'),
         meta: {
           title: '首頁',
           //isAllowGuest: true,
@@ -21,7 +21,7 @@ const routes = [
     ],
   },
 ]
-
+*/
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes: [
@@ -31,6 +31,24 @@ const router = createRouter({
       component: () => import('@/views/Home.vue'),
       meta: {
         title: '首頁',
+        isAllowGuest: true,
+      },
+    },
+    {
+      path: '/Language',
+      name: '語言文學',
+      component: () => import('@/components/語言文學/ViewPage.vue'),
+      meta: {
+        title: '檢視',
+        isAllowGuest: true,
+      },
+    },
+    {
+      path: '/International',
+      name: '國際交流',
+      component: () => import('@/components/國際交流/International.vue'),
+      meta: {
+        title: '檢視',
         isAllowGuest: true,
       },
     },

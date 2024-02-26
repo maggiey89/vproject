@@ -24,9 +24,13 @@
         margin-top: 3px;
         border-left-width: 1px;
         border-left-style: solid;
-        border-left-color: rgba(255,255,255,0.2);"
+        border-left-color: rgba(255,255,255,0.2);
+        text-decoration: none;"
         >
-        標題放這
+        <router-link style="text-decoration: none; color: inherit;" to="/">
+            標題放這
+        </router-link>
+        
             
       </div>
       
