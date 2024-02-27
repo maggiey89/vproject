@@ -25,10 +25,8 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
 import SideNav from '@/components/Default/SideNav.vue'
 import Business from '@/components/商業管理/基礎管理學分學程.vue'
-import Korean from '@/components/語言文學/韓國學與語文學分學程.vue'
   const Data = [
     {
       title: '基礎管理學分學程',

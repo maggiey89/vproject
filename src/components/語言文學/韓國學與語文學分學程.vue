@@ -39,7 +39,7 @@
             </tr>
         </thead>
         <tbody>
-        <tr v-for="item in courses" :key="item.name">
+        <tr v-for="item in electives" :key="item.name">
             <td>{{ item.id }}</td>
             <td>{{ item.name }}</td>
         </tr>
