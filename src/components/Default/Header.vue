@@ -14,7 +14,7 @@
           />
        </a>
       </div>
-      <div style="font-family: 'Noto Serif TC', serif;
+      <div style="font-family: 'Noto Sans TC', serif;
         float: left;
         color: #FFFFFF;
         font-size: 20px;
@@ -30,20 +30,20 @@
         <router-link style="text-decoration: none; color: inherit;" to="/">
             標題放這
         </router-link>
-        
-            
       </div>
+
+      <v-spacer/>
+
+      <v-btn to="/Upload" class="mr-5 text-body-1 font-weight-medium"
+        style="background-color: #6D0116;" variant="text">
+      已修課程 
+      </v-btn>
+
+      <v-btn to="/Login" class="mr-5 text-body-1 font-weight-medium"
+        style="background-color: #6D0116;" variant="text">
+      登入 
+      </v-btn>
       
-  
-      
-      
-        
-      
-      <!--v-app-bar-title>
-        <v-icon icon="mdi-circle-slice-4" />
-  
-        國立臺灣師範大學
-      </v-app-bar-title-->
     </v-app-bar>
   </template>
   

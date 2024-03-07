@@ -14,9 +14,27 @@ const router = createRouter({
       },
     },
     {
+      path: '/Login',
+      name: 'login',
+      component: () => import('@/views/Login.vue'),
+      meta: {
+        title: '登入',
+        isAllowGuest: true,
+      },
+    },
+    {
+      path: '/Upload',
+      name: 'upload',
+      component: () => import('@/views/Upload.vue'),
+      meta: {
+        title: '已修課程',
+        isAllowGuest: true,
+      },
+    },
+    {
       path: '/Language',
       name: '語言文學',
-      component: () => import('@/components/語言文學/ViewPage.vue'),
+      component: () => import('@/components/語言文學/Language.vue'),
       meta: {
         title: '檢視',
         isAllowGuest: true,

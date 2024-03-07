@@ -11,17 +11,14 @@
 
 <script setup>
 const Categories = [
-    {
-        name: '商業管理',
-        route: '/'
-    },
-    {
-        name: '國際交流',
-        route: '/International'
-    },
-    {
-        name: '語言文學',
-        route: '/Language'
-    },
+    {name: '商業管理', route: '/'},
+    {name: '國際交流', route: '/International'},
+    {name: '專業領導', route: 'null'},
+    {name: '教育發展', route: 'null'},
+    {name: '文化創意', route: 'null'},
+    {name: '社會科學', route: 'null'},
+    {name: '科技應用', route: 'null'},
+    {name: '語言文學', route: '/Language'},
+    {name: '資訊應用', route: 'null'},
 ]
 </script>
