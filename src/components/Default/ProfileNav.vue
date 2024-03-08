@@ -12,7 +12,7 @@
 <script setup>
 const Categories = [
     {name: '個人資料', route: '/profile'},
-    {name: '我的課程', route: 'null'},
+    {name: '我的課程', route: '/profile/mycourses'},
     {name: '新增課程', route: '/profile/uploadcourse'},
 ]
 </script>

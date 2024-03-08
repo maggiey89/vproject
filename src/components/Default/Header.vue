@@ -35,14 +35,13 @@
 
       <v-spacer/>
 
-      <v-btn to="/course-view" class="text-body-1 font-weight-medium"
-        style="background-color: #6D0116;" variant="text">
+      <v-btn to="/course-view" variant="text" height="100%">
       學分學程
       </v-btn>
 
       <v-menu open-on-hover>
         <template v-slot:activator="{ props }">
-          <v-btn to="/profile" v-bind="props" height="100%" class="text-body-1 font-weight-medium" variant="text">
+          <v-btn to="/profile" v-bind="props" variant="text" height="100%">
             個人檔案
           </v-btn>
         </template>
@@ -60,8 +59,7 @@
       個人檔案 
       </v-btn-->
 
-      <v-btn to="/login" class="mr-5 text-body-1 font-weight-medium"
-        style="background-color: #6D0116;" variant="text">
+      <v-btn to="/login" class="mr-5" variant="text" height="100%">
       登入 
       </v-btn>
       
@@ -79,8 +77,11 @@
     ]
     
   </script>
-<style>
+<style scoped>
 .v-btn {
+  background-color: #6D0116;
   font-size: medium;
+  font-weight: 500;
+  letter-spacing: 1px;
 }
 </style>
