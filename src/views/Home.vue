@@ -1,8 +1,7 @@
 <template>
-  <Business />
+  <v-text>首頁</v-text>>
 </template>
 
 <script setup>
   import HelloWorld from '@/components/HelloWorld.vue'
-  import Business from '@/components/商業管理/Business.vue'
 </script>
