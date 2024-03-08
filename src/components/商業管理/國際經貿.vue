@@ -1,6 +1,6 @@
 <template>
     <text>必修：3科 9學分</text>
-    <v-table :headers="headers" :items="items">
+    <v-table density="compact" fixed-header>
         <thead>
             <tr>
                 <th class="text-left font-weight-bold">
@@ -23,7 +23,7 @@
         </tbody>
     </v-table>
     <text>選修：1科 3學分</text>
-    <v-table :headers="headers" :items="items">
+    <v-table density="compact" fixed-header>
         <thead>
             <tr>
                 <th class="text-left font-weight-bold">

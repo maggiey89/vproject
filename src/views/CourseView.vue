@@ -10,14 +10,20 @@
         <v-expansion-panels variant="accordion" style="display: flex; font-family: 'Noto Sans TC', serif;">
           <router-view/>
         </v-expansion-panels>
-        
+
       </v-col>
     </v-row>
     </v-container>
   
-  </template>
+</template>
   
-  <script setup>
+<script setup>
   import SideNav from '@/components/Default/SideNav.vue'
 
-  </script>
+</script>
+
+<style>
+.v-table {
+    max-height: 300px;
+}
+</style>

@@ -40,10 +40,25 @@
       學分學程
       </v-btn>
 
-      <v-btn to="/profile" class="text-body-1 font-weight-medium"
+      <v-menu open-on-hover>
+        <template v-slot:activator="{ props }">
+          <v-btn to="/profile" v-bind="props" height="100%" class="text-body-1 font-weight-medium" variant="text">
+            個人檔案
+          </v-btn>
+        </template>
+
+        <v-list density="compact">
+          <router-link v-for="{name, route} in profile" :to="{path: route}" style="text-decoration: none; color: inherit;">  
+          <v-list-item>{{name}}</v-list-item>
+          </router-link>
+        </v-list>
+      </v-menu>
+      
+
+      <!--v-btn to="/profile" height="100%" class="text-body-1 font-weight-medium"
         style="background-color: #6D0116;" variant="text">
       個人檔案 
-      </v-btn>
+      </v-btn-->
 
       <v-btn to="/login" class="mr-5 text-body-1 font-weight-medium"
         style="background-color: #6D0116;" variant="text">
@@ -56,7 +71,16 @@
   <script setup>
     import ntnu from "@/assets/ntnu.png"
     import ntnuLogo from "@/assets/ntnu-logo.png"
-  
+
+    const profile = [
+      {name: '個人資料', route: '/profile'},
+      {name: '我的課程', route: '/profile'},
+      {name: '新增課程', route: '/profile/uploadcourse'},
+    ]
     
   </script>
-  
+<style>
+.v-btn {
+  font-size: medium;
+}
+</style>
