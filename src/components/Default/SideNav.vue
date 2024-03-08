@@ -1,16 +1,21 @@
 <template>
-    <v-col cols="2" style="margin-left: 20px;">
-      <v-list-item title="學分學程" subtitle="選單"></v-list-item>
-      <v-divider></v-divider>
+  <v-col cols="2" style="margin-left: 20px">
+    <v-list-item title="學分學程" subtitle="選單"></v-list-item>
+    <v-divider></v-divider>
 
-    <router-link v-for="{name, route} in Categories" :to="{path: route}" style="text-decoration: none; color: inherit;">  
-    <v-list-item>{{name}}</v-list-item>
-    </router-link>  
-    </v-col>
+    <router-link
+      v-for="{ name, route } in Categories"
+      :to="{ path: route }"
+      style="text-decoration: none; color: inherit"
+    >
+      <v-list-item>{{ name }}</v-list-item>
+    </router-link>
+  </v-col>
 </template>
 
 <script setup>
 const Categories = [
+=======
     {name: '商業管理', route: '/course-view'},
     {name: '國際交流', route: '/course-view/international'},
     {name: '專業領導', route: 'null'},
@@ -21,4 +26,5 @@ const Categories = [
     {name: '語言文學', route: '/course-view/language'},
     {name: '資訊應用', route: 'null'},
 ]
+>>>>>>> cb63f70d7f798345b15458d3e71113268665816c
 </script>
