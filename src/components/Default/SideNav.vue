@@ -15,7 +15,6 @@
 
 <script setup>
 const Categories = [
-=======
     {name: '商業管理', route: '/course-view'},
     {name: '國際交流', route: '/course-view/international'},
     {name: '專業領導', route: 'null'},
@@ -26,5 +25,4 @@ const Categories = [
     {name: '語言文學', route: '/course-view/language'},
     {name: '資訊應用', route: 'null'},
 ]
->>>>>>> cb63f70d7f798345b15458d3e71113268665816c
 </script>
