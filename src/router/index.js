@@ -14,6 +14,40 @@ const router = createRouter({
       },
     },
     {
+      path: '/course-view',
+      name: 'courseview',
+      component: () => import('@/views/CourseView.vue'),
+      children: [
+        {
+          path: '',
+          name: '商業管理',
+          component: () => import('@/components/商業管理/Business.vue'),
+          meta: {
+            title: '檢視',
+            isAllowGuest: true,
+          },
+        },
+        {
+          path: 'international',
+          name: '國際交流',
+          component: () => import('@/components/國際交流/International.vue'),
+          meta: {
+            title: '檢視',
+            isAllowGuest: true,
+          },
+        },
+        {
+          path: 'language',
+          name: '語言文學',
+          component: () => import('@/components/語言文學/Language.vue'),
+          meta: {
+            title: '檢視',
+            isAllowGuest: true,
+          },
+        },
+      ],
+    },
+    {
       path: '/Login',
       name: 'login',
       component: () => import('@/views/Login.vue'),
@@ -23,32 +57,26 @@ const router = createRouter({
       },
     },
     {
-      path: '/Upload',
-      name: 'upload',
-      component: () => import('@/views/Upload.vue'),
-      meta: {
-        title: '已修課程',
-        isAllowGuest: true,
-      },
+      path: '/profile',
+      name: 'profile',
+      component: () => import('@/views/Profile.vue'),
+      children: [
+        {
+          path: '',
+          name: 'profileinfo',
+          component: () => import('@/components/Profile/ProfileInfo.vue'),
+          meta: { title: '個人資料' },
+        },
+        {
+          path: 'uploadcourse',
+          name: 'uploadcourse',
+          component: () => import('@/components/Profile/UploadCourse.vue'),
+          meta: { title: '上傳課程' },
+        },
+      ],
+      
     },
-    {
-      path: '/Language',
-      name: '語言文學',
-      component: () => import('@/components/語言文學/Language.vue'),
-      meta: {
-        title: '檢視',
-        isAllowGuest: true,
-      },
-    },
-    {
-      path: '/International',
-      name: '國際交流',
-      component: () => import('@/components/國際交流/International.vue'),
-      meta: {
-        title: '檢視',
-        isAllowGuest: true,
-      },
-    },
+    
   ]
 })
 

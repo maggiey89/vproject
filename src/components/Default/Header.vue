@@ -2,7 +2,7 @@
     <v-app-bar flat color="#6D0116" class="width: 100%; display: block;">
       <div class="ml-5">
         <a href="https://www.ntnu.edu.tw/">
-          <v-img
+          <!--v-img
           :src="ntnuLogo"
           @click=""
           style="float: left; width: 38px; height: 38px; margin-top: 7px;"
@@ -11,7 +11,8 @@
           <v-img 
           :src="ntnu"
           style="float: left; width: 190px; padding-left: 5px; padding-right: 10px;"
-          />
+          /-->
+          
        </a>
       </div>
       <div style="font-family: 'Noto Sans TC', serif;
@@ -34,12 +35,17 @@
 
       <v-spacer/>
 
-      <v-btn to="/Upload" class="mr-5 text-body-1 font-weight-medium"
+      <v-btn to="/course-view" class="text-body-1 font-weight-medium"
         style="background-color: #6D0116;" variant="text">
-      已修課程 
+      學分學程
       </v-btn>
 
-      <v-btn to="/Login" class="mr-5 text-body-1 font-weight-medium"
+      <v-btn to="/profile" class="text-body-1 font-weight-medium"
+        style="background-color: #6D0116;" variant="text">
+      個人檔案 
+      </v-btn>
+
+      <v-btn to="/login" class="mr-5 text-body-1 font-weight-medium"
         style="background-color: #6D0116;" variant="text">
       登入 
       </v-btn>
