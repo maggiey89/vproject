@@ -25,4 +25,14 @@ const Categories = [
   { name: "語言文學", route: "/course-view/language" },
   { name: "資訊應用", route: "null" },
 ];
+    {name: '商業管理', route: '/course-view'},
+    {name: '國際交流', route: '/course-view/international'},
+    {name: '專業領導', route: '/course-view'},
+    {name: '教育發展', route: '/course-view'},
+    {name: '文化創意', route: '/course-view'},
+    {name: '社會科學', route: '/course-view'},
+    {name: '科技應用', route: '/course-view'},
+    {name: '語言文學', route: '/course-view/language'},
+    {name: '資訊應用', route: '/course-view'},
+]
 </script>

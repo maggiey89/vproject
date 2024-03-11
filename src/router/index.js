@@ -8,10 +8,7 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: () => import('@/views/Home.vue'),
-      meta: {
-        title: '首頁',
-        isAllowGuest: true,
-      },
+      meta: { title: '首頁', },
     },
     {
       path: '/course-view',
@@ -22,28 +19,19 @@ const router = createRouter({
           path: '',
           name: '商業管理',
           component: () => import('@/components/商業管理/Business.vue'),
-          meta: {
-            title: '檢視',
-            isAllowGuest: true,
-          },
+          meta: { title: '檢視', },
         },
         {
           path: 'international',
           name: '國際交流',
           component: () => import('@/components/國際交流/International.vue'),
-          meta: {
-            title: '檢視',
-            isAllowGuest: true,
-          },
+          meta: { title: '檢視', },
         },
         {
           path: 'language',
           name: '語言文學',
           component: () => import('@/components/語言文學/Language.vue'),
-          meta: {
-            title: '檢視',
-            isAllowGuest: true,
-          },
+          meta: { title: '檢視', },
         },
       ],
     },
@@ -66,6 +54,12 @@ const router = createRouter({
           name: 'profileinfo',
           component: () => import('@/components/Profile/ProfileInfo.vue'),
           meta: { title: '個人資料' },
+        },
+        {
+          path: 'mycourses',
+          name: 'mycourses',
+          component: () => import('@/components/Profile/MyCourses.vue'),
+          meta: { title: '我的課程' },
         },
         {
           path: 'uploadcourse',
