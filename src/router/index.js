@@ -36,8 +36,8 @@ const router = createRouter({
       ],
     },
     {
-      path: '/Login',
-      name: 'login',
+      path: '/register',
+      name: 'register',
       component: () => import('@/views/register.vue'),
       meta: {
         title: '註冊',
