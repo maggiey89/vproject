@@ -50,9 +50,9 @@ const router = createRouter({
     {
       path: '/Login',
       name: 'login',
-      component: () => import('@/views/Login.vue'),
+      component: () => import('@/views/register.vue'),
       meta: {
-        title: '登入',
+        title: '註冊',
         isAllowGuest: true,
       },
     },
@@ -74,17 +74,20 @@ const router = createRouter({
           meta: { title: '上傳課程' },
         },
       ],
-      
+
     },
-    
+
   ]
 })
 
-router.beforeEach((to, from) => {
+router.beforeEach((to, from) =>
+{
 
-  if (to.meta /*&& typeof to.meta.title === 'function'*/) {
+  if (to.meta /*&& typeof to.meta.title === 'function'*/)
+  {
     document.title = `${to.meta.title} | 國立臺灣師範大學`
-  } else {
+  } else
+  {
     document.title = '國立臺灣師範大學'
   }
 })
