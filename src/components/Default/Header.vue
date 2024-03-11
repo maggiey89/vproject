@@ -62,10 +62,10 @@
       個人檔案 
       </v-btn-->
 
-    <v-btn to="/register" class="mr-5" variant="text" height="100%">
-      註冊
-    </v-btn>
-    <!-- <v-btn to="/login" class="mr-5" variant="text" height="100%"> 註冊 </v-btn> -->
+    <!-- <v-btn to="/register" class="mr-5" variant="text" height="100%">
+      註冊 -->
+    <!-- </v-btn> -->
+    <v-btn to="/login" class="mr-5" variant="text" height="100%"> 登入 </v-btn>
   </v-app-bar>
 </template>
   

@@ -1,7 +1,7 @@
 <template>
-  <v-text>首頁</v-text>>
+  <v-text>歡迎來到我們的學分紀錄網站</v-text>
 </template>
 
 <script setup>
-  import HelloWorld from '@/components/HelloWorld.vue'
+import HelloWorld from "@/components/HelloWorld.vue";
 </script>

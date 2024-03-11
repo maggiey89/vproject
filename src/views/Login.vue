@@ -1,118 +1,83 @@
 <template>
-  <section>
-    <div class="form-box">
-      <div class="form-value">
-        <form action="">
-          <h2>Login</h2>
-          <div class="inputbox">
-            <ion-icon name="mail-outline"></ion-icon>
-            <input type="email" required />
-            <label for="">Email</label>
-          </div>
-          <div class="inputbox">
-            <ion-icon name="lock-closed-outline"></ion-icon>
-            <input type="password" required />
-            <label for="">Password</label>
-          </div>
-          <div class="forget">
-            <label for=""><input type="checkbox" />Remember Me</label>
-            <a href="#">Forget password</a>
-          </div>
-          <button>Log in</button>
-          <div class="register">
-            <p>Don't have an account<a href="#">Register</a></p>
-          </div>
-        </form>
-      </div>
-    </div>
-  </section>
+  <h1>登入</h1>
+  <div>
+    <input type="text" placeholder="請輸入姓名" />
+    <input type="text" placeholder="請輸入信箱" />
+    <input type="password" placeholder="請輸入密碼" />
+    <button>登入</button>
+    <p>
+      <router-link to="/register" class="router-link-button"
+        >我還沒有帳號</router-link
+      >
+    </p>
+  </div>
 </template>
-
 <script>
 export default {
-  name: "LoginPage",
+  nams: "Login",
 };
 </script>
-
 <style scoped>
-* {
-  margin: 0;
-  padding: 0;
-  font-family: "poppins", "sans-serif";
+h1 {
+  margin-bottom: 30px;
+  margin-top: 20px;
 }
 
-section {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  width: 100%;
-  background-color: rgb(141, 141, 163);
+input[type="text"],
+input[type="password"] {
+  border: 1px solid #ccc;
+  padding-left: 20px;
+  margin-bottom: 20px;
+  margin-right: auto;
+  margin-left: auto;
+  background-color: rgb(255, 255, 255);
+  width: 320px;
+  height: 40px;
+  display: block;
 }
 
-.form-box {
-  position: relative;
-  width: 400px;
-  height: 450px;
-  background-color: rgb(102, 142, 147);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-h2 {
-  font-size: 2em;
-  color: white;
-  text-align: center;
-}
-
-.inputbox {
-  position: relative;
-  margin: 30px 0;
-  width: 350px;
-  border-bottom: 2px solid white;
-}
-
-.inputbox label {
-  position: absolute;
-  top: -10px;
-  left: 5px;
-  font-size: 1em;
-  color: white;
-  pointer-events: none;
-  transition: top 0.3s ease, font-size 0.3s ease;
-}
-
-input:focus ~ label,
-input:focus ~ :valid {
-  top: -25px;
-  font-size: 1em;
-}
-
-.inputbox input {
-  width: 100%;
-  height: 50px;
-  background-color: transparent;
+button {
   border: none;
-  outline: none;
-  font-size: 1em;
-  padding: 0 35px 0 5px;
+  padding: 10px 20px;
+  background-color: #84a8cf;
   color: white;
+  cursor: pointer;
+  border-radius: 8px;
+  width: 320px;
+  margin-bottom: 20px;
+  margin-top: 10px;
 }
 
-.inputbox ion-icon {
-  position: absolute;
-  right: 8px;
+button:hover {
+  background-color: #637485;
+}
+select {
+  width: 320px;
+  height: 50px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  margin-bottom: 30px;
+  background-color: white;
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 10px;
+}
+.router-link-button {
+  display: block;
+  width: 320px;
+  padding: 10px 20px;
+  margin: 10px auto 30px;
+  text-align: center;
+  background-color: #84a8cf;
   color: white;
-  font-size: 1.2em;
-  top: 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  cursor: pointer;
+  margin-top: 10px;
 }
 
-.forget {
-  margin: -15px 0 15px;
-  font-size: 1em;
-  color: white;
-  display: flex;
-  align-items: center;
+.router-link-button:hover {
+  background-color: #637485;
 }
 </style>

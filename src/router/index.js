@@ -45,6 +45,15 @@ const router = createRouter({
       },
     },
     {
+      path: '/Login',
+      name: 'Login',
+      component: () => import('@/views/Login.vue'),
+      meta: {
+        title: '登入',
+        isAllowGuest: true,
+      },
+    },
+    {
       path: '/profile',
       name: 'profile',
       component: () => import('@/views/Profile.vue'),
