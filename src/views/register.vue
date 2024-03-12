@@ -1,7 +1,7 @@
 <template>
   <!-- <img class="logo" src="./path of the logo"> -->
   <h1>註冊</h1>
-  <div>
+  <div class="register-container">
     <input type="text" placeholder="請輸入姓名" />
     <input type="text" placeholder="請輸入信箱" />
     <input type="password" placeholder="請輸入密碼" />
@@ -95,5 +95,10 @@ select {
 
 .router-link-button:hover {
   background-color: #637485;
+}
+.register-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 </style>
