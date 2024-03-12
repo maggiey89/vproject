@@ -46,6 +46,7 @@ button {
   width: 320px;
   margin-bottom: 20px;
   margin-top: 10px;
+  
 }
 
 button:hover {

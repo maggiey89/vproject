@@ -75,7 +75,7 @@ import ntnuLogo from "@/assets/ntnu-logo.png";
 
 const profile = [
   { name: "個人資料", route: "/profile" },
-  { name: "我的課程", route: "/profile" },
+  { name: "我的課程", route: "/profile/mycourses" },
   { name: "新增課程", route: "/profile/uploadcourse" },
 ];
 </script>
