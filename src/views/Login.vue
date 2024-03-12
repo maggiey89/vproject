@@ -1,7 +1,7 @@
 <template>
-  <h1>登入</h1>
   <div class="login-container">
-    <input type="text" placeholder="請輸入姓名" />
+    <h1>登入</h1>
+    <!-- <input type="text" placeholder="請輸入姓名" /> -->
     <input type="text" placeholder="請輸入信箱" />
     <input type="password" placeholder="請輸入密碼" />
     <button>登入</button>
@@ -46,7 +46,6 @@ button {
   width: 320px;
   margin-bottom: 20px;
   margin-top: 10px;
-  
 }
 
 button:hover {
