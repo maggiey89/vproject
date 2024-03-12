@@ -1,6 +1,6 @@
 <template>
   <h1>登入</h1>
-  <div>
+  <div class="login-container">
     <input type="text" placeholder="請輸入姓名" />
     <input type="text" placeholder="請輸入信箱" />
     <input type="password" placeholder="請輸入密碼" />
@@ -80,5 +80,10 @@ select {
 
 .router-link-button:hover {
   background-color: #637485;
+}
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 </style>
