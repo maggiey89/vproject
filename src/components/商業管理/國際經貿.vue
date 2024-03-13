@@ -16,9 +16,9 @@
         </thead>
         <tbody>
         <tr v-for="item in compulsary" :key="item.name">
-            <td width="33%">{{ item.id }}</td>
-            <td width="33%">{{ item.name }}</td>
-            <td width="20%">{{ item.credit }}</td>
+          <td width="300px">{{ item.id }}</td>
+            <td width="300px">{{ item.name }}</td>
+            <td>{{ item.credit }}</td>
         </tr>
         </tbody>
     </v-table>
@@ -39,9 +39,9 @@
         </thead>
         <tbody>
         <tr v-for="item in electives" :key="item.name">
-            <td width="33%">{{ item.id }}</td>
-            <td width="33%">{{ item.name }}</td>
-            <td width="20%">{{ item.credit }}</td>
+          <td width="300px">{{ item.id }}</td>
+            <td width="300px">{{ item.name }}</td>
+            <td>{{ item.credit }}</td>
         </tr>
         </tbody>
     </v-table>

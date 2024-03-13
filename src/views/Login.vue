@@ -1,6 +1,7 @@
 <template>
-  <h1>登入</h1>
+  
   <div class="login-container">
+    <h1>登入</h1>
     <input type="text" placeholder="請輸入姓名" />
     <input type="text" placeholder="請輸入信箱" />
     <input type="password" placeholder="請輸入密碼" />
@@ -19,8 +20,8 @@ export default {
 </script>
 <style scoped>
 h1 {
-  margin-bottom: 30px;
-  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-top: 50px;
 }
 
 input[type="text"],

@@ -1,6 +1,6 @@
 <template>
-    <v-container style="margin-top: 50px; height: 100px; text-align: center; font-size: 30px;">
-      我的課程
+    <v-container style="margin-top: 30px; height: 100px; text-align: center; background-color: blanchedalmond; ">
+      <h1>我的課程</h1>
     </v-container>
     <v-container style=" background-color: rgb(248, 248, 247); margin-bottom: 50px; height: 100%;">
       <v-row no-gutters align="start">
