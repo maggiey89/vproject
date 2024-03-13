@@ -1,6 +1,6 @@
 <template>
   <!-- <img class="logo" src="./path of the logo"> -->
-  
+
   <div class="register-container">
     <h1>註冊</h1>
     <input type="text" placeholder="請輸入姓名" />
