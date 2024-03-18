@@ -31,7 +31,7 @@
       "
     >
       <router-link style="text-decoration: none; color: inherit" to="/">
-        標題放這
+        學分學程管理系統
       </router-link>
     </div>
 
