@@ -19,9 +19,9 @@
         font-family: 'Noto Sans TC', serif;
         float: left;
         color: #ffffff;
-        font-size: 20px;
-        font-weight: 400;
-        letter-spacing: 1px;
+        font-size: 30px;
+        font-weight: bold;
+        letter-spacing: 5px;
         padding-left: 15px;
         margin-top: 3px;
         border-left-width: 1px;
@@ -66,6 +66,7 @@
       註冊 -->
     <!-- </v-btn> -->
     <v-btn to="/login" class="mr-5" variant="text" height="100%"> 登入 </v-btn>
+    <v-btn to="" class="mr-5" variant="text" height="100%"> 操作手冊 </v-btn>
   </v-app-bar>
 </template>
   
