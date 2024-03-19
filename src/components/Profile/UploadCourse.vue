@@ -12,5 +12,26 @@
 </template>
     
 <script setup>
-    import ProfileNav from '@/components/Default/ProfileNav.vue'
+    import { ref } from 'vue'
+    //import { uid } from 'uid'
+    //import { Icon } from '@iconify/vue'
+    
+    const todoList = ref([]);
+
+    const fetchTodoList = () => {
+        const savedTodoList = JSON.parse(localStorage.getItem("todoList", JSON.stringify(todoLIst.value)))
+        if (savedTodoList) {
+            todoList.value = savedTodoList;
+        }
+    };
+
+    const setTodoListLocalStorage = () => {
+        localStorage.setItem("todoList", JSON.stringify(todoLIst.value))
+    };
+
+    const createTodo = (todo) => {
+        todoList.value.push({
+            todo,
+        });
+    };
 </script>

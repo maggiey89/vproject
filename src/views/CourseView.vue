@@ -1,14 +1,14 @@
 <template>
-    <v-container style="margin-top: 30px; height: 80px; text-align: center; background-color: blanchedalmond;">
+    <v-container style="margin-top: 30px; height: 80px;">
       <v-row>
         <v-col/>
       <v-col style="text-align: center;"><h1>檢視</h1></v-col>
-      <v-col style="">
-        <v-form style="width: min(200px, 80%); ">
+      <v-col>
+        <v-form style="max-width: 200px; margin-left: 150px; ">
         <v-text-field 
-            label="科目代碼"
-            variant="solo"
-            append-inner-icon="mdi-plus"
+            label="搜尋"
+            variant="underlined"
+            append-inner-icon="mdi-magnify"
             @click:append-inner="onClick"
         ></v-text-field>
         </v-form> 
@@ -20,7 +20,7 @@
       <SideNav/>
       <v-col style="margin-left: 40px; margin-right: 20px">
 
-        <v-expansion-panels variant="accordion" style="display: flex; font-family: 'Noto Sans TC', serif;">
+        <v-expansion-panels variant="accordion" style="display: flex; text-align: left; font-family: 'Noto Sans TC', serif;">
           <router-view/>
         </v-expansion-panels>
 
@@ -39,4 +39,5 @@
 .v-table {
     max-height: 300px;
 }
+
 </style>

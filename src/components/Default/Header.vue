@@ -36,7 +36,7 @@
     </div>
 
     <v-spacer />
-
+    <v-btn to="" variant="text" height="100%"> 操作手冊 </v-btn>
     <v-btn to="/course-view" variant="text" height="100%"> 學分學程 </v-btn>
 
     <v-menu open-on-hover>
@@ -66,7 +66,7 @@
       註冊 -->
     <!-- </v-btn> -->
     <v-btn to="/login" class="mr-5" variant="text" height="100%"> 登入 </v-btn>
-    <v-btn to="" class="mr-5" variant="text" height="100%"> 操作手冊 </v-btn>
+    
   </v-app-bar>
 </template>
   

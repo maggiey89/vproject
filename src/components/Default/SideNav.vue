@@ -1,5 +1,5 @@
 <template>
-  <v-col cols="2" style="margin-left: 20px">
+  <v-col cols="2" style="margin-left: 20px; text-align: left;">
     <v-list-item title="學分學程" subtitle="選單"></v-list-item>
     <v-divider></v-divider>
 
