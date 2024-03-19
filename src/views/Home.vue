@@ -4,6 +4,14 @@
     <div class="left-section">
       <v-text>歡迎來到我們的學分紀錄網站</v-text>
       <!-- 其他網站簡介內容... -->
+      <div>
+        <a href="https://www.cge.ntnu.edu.tw/article_d.php?lang=tw&tb=5&cid=114&id=1114">
+        <v-btn style="color: black;">
+          本校學分學程
+        </v-btn>
+      </a>
+      </div>
+      
     </div>
 
     <!-- 右半部分：圖片 -->
