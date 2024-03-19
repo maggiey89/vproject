@@ -34,7 +34,5 @@ import HelloWorld from "@/components/HelloWorld.vue";
 .right-section {
   flex: 1;
 }
-
-/* 根據你的需求進一步調整樣式... */
 </style>
 
