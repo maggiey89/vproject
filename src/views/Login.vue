@@ -2,19 +2,51 @@
   <div class="login-container">
     <h1>登入</h1>
     <!-- <input type="text" placeholder="請輸入姓名" /> -->
-    <input type="text" placeholder="請輸入信箱" />
-    <input type="password" placeholder="請輸入密碼" />
-    <button>登入</button>
+    <form @submit="onSubmit">
+      <input type="text" v-model="userForm.email" placeholder="請輸入信箱" />
+      <input type="password" v-model="userForm.password" placeholder="請輸入密碼" />
+      <button type="submit">登入</button>
+    </form>
     <p>
       <router-link to="/register" class="router-link-button"
         >我還沒有帳號</router-link
       >
     </p>
   </div>
+  <!--<p v-if="showmessage" >{{ message }}</p>-->
 </template>
 <script>
 export default {
   nams: "Login",
+  data() {
+    return {
+      userForm : {
+        email: '',
+        password: '',
+      }
+    }
+  },
+
+  methods: {
+    login(){
+      const path = 'http://127.0.0.1:5000/login';
+      axios.post(path, payload)
+      .then(() => {
+        this.message = '登入成功';
+        this.showmessage = true;
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+    },
+
+    onSubmit(){
+      const payload = {
+        email: this.userForm.email,
+        password: this.userForm.password,
+      }
+    }
+  }
 };
 </script>
 <style scoped>
