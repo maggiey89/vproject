@@ -1,5 +1,16 @@
 <template>
-    <text>必修：5科 14學分</text>
+  <div class="d-flex">
+    <text>必修：5科14學分</text>
+    <v-spacer/>
+    <a href="https://sites.google.com/view/ntnufin/"
+  >
+    <v-btn density="compact" variant="outlined" 
+        style="color: black"
+    >
+    點我了解更多
+    </v-btn>
+  </a>
+  </div>
     <v-table density="compact" fixed-header>
         <thead>
             <tr>

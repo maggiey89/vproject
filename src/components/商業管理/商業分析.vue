@@ -1,5 +1,19 @@
 <template>
-    <text>必修：1科 3學分</text>
+  <div class="d-flex">
+    <text>必修：1科3學分</text>
+    <v-spacer/>
+    <a href="https://www.mgt.ntnu.edu.tw/business-analysis"
+  >
+  
+    <v-btn density="compact" variant="outlined" 
+        style="color: black"
+    >
+    點我了解更多
+    </v-btn>
+  </a>
+</div>
+
+    
     <v-table density="compact" fixed-header>
         <thead>
             <tr>
