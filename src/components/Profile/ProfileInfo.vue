@@ -4,6 +4,7 @@
     <p class="profile-item"><strong>信箱：</strong>{{ profile.email }}</p>
     <p class="profile-item"><strong>大學：</strong>{{ profile.university }}</p>
     <p class="profile-item"><strong>就讀科系：</strong>{{ profile.major }}</p>
+    <p class="profile-item"><strong>身分：</strong>{{ profile.iden }}</p>
   </div>
 </template>
 
@@ -30,5 +31,6 @@ const profile = {
   email: "xxxxxgmail.com",
   university: "台灣師範大學",
   major: "資訊工程學系",
+  iden: "學生",
 };
 </script>
