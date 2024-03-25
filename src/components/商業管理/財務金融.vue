@@ -3,6 +3,7 @@
     <text>必修：5科14學分</text>
     <v-spacer/>
     <a href="https://sites.google.com/view/ntnufin/"
+    target="_blank" rel="noopener noreferrer"
   >
     <v-btn density="compact" variant="outlined" 
         style="color: black"

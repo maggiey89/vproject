@@ -3,6 +3,7 @@
     <text>必修：1科3學分</text>
     <v-spacer/>
     <a href="https://www.mgt.ntnu.edu.tw/business-analysis"
+    target="_blank" rel="noopener noreferrer"
   >
   
     <v-btn density="compact" variant="outlined" 

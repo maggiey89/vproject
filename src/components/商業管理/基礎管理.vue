@@ -3,6 +3,7 @@
   <v-text>必修：4科12學分</v-text>
   <v-spacer/>
   <a href="https://www.ba.ntnu.edu.tw/%E6%9C%80%E6%96%B0%E6%B6%88%E6%81%AF-2"
+    target="_blank" rel="noopener noreferrer"
   >
     <v-btn density="compact" variant="outlined" 
         style="color: black"
