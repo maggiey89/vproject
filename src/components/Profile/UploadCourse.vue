@@ -1,37 +1,68 @@
 <template>
-
-    <v-form style="width: min(200px, 80%)">
-        <v-text-field 
-            label="科目代碼"
-            variant="solo"
-            append-inner-icon="mdi-plus"
-            @click:append-inner="onClick"
-        ></v-text-field>
-    </v-form>    
   
+    <CourseCreator @create-course="createCourse"/>
+    
+    <CourseItems v-for="(course, index) in courseList" 
+        :course="course" 
+        :index="index"
+        @edit-course="toggleEditCourse"
+        @update-course="updateCourse"
+        @delete-course="deleteCourse"
+    />
+    
+    
 </template>
     
 <script setup>
-    import { ref } from 'vue'
-    //import { uid } from 'uid'
-    //import { Icon } from '@iconify/vue'
-    
-    const todoList = ref([]);
+import CourseCreator from './CourseCreator.vue'
+import CourseItems from './CourseItems.vue'
+import { ref, watch } from 'vue'
+import { v4 as uuidv4 } from "uuid"
 
-    const fetchTodoList = () => {
-        const savedTodoList = JSON.parse(localStorage.getItem("todoList", JSON.stringify(todoLIst.value)))
-        if (savedTodoList) {
-            todoList.value = savedTodoList;
-        }
-    };
+const courseList = ref([]);
 
-    const setTodoListLocalStorage = () => {
-        localStorage.setItem("todoList", JSON.stringify(todoLIst.value))
-    };
+watch(
+    courseList, 
+    () => {
+        setcourseListLocalStorage();
+    },
+    {
+        deep: true,
+    }
+);
 
-    const createTodo = (todo) => {
-        todoList.value.push({
-            todo,
-        });
-    };
+const fetchcourseList = () => {
+    const savedcourseList = JSON.parse(localStorage.getItem("courseList", JSON.stringify(courseList.value))) 
+    if (savedcourseList) {
+        courseList.value = savedcourseList;
+    }
+};
+
+fetchcourseList();
+
+const setcourseListLocalStorage = () => {
+    localStorage.setItem("courseList", JSON.stringify(courseList.value))
+};
+
+const createCourse = (course) => {
+    courseList.value.push({
+        id: uuidv4(), 
+        course,
+        isCompleted: null,
+        isEditing: null,
+    });
+};
+
+const toggleEditCourse = (coursePos) => {
+    courseList.value[coursePos].isEditing = !courseList.value[coursePos].isEditing;
+};
+
+const updateCourse = (courseVal, coursePos) => {
+    courseList.value[coursePos].course = courseVal;
+};
+
+const deleteCourse = (courseId) => {
+    courseList.value = courseList.value.filter((course) => course.id != courseId);
+};
+
 </script>
