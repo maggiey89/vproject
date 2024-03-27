@@ -1,5 +1,5 @@
 <template>
-    <v-form style="width: min(200px, 80%)" >
+    <v-form style="width: min(200px, 80%); height: 50px; margin-bottom: 20px;" >
         <v-text-field 
             label="科目代碼"
             variant="underlined"
@@ -25,13 +25,19 @@ const courseState = reactive({
 
 const createcourse = () => {
     courseState.invalid = null;
-    if (courseState.course !== ""){
-        emit("create-course", courseState.course);
-        courseState.course = "";
+    if (courseState.course == ""){
+        courseState.invalid = true;
+        courseState.errMsg = "Value cannot be empty";
         return;
     }
-    courseState.invalid = true;
-    courseState.errMsg = "Value cannot be empty";
+    if (courseState.course.length != 7) {
+        courseState.invalid = true;
+        courseState.errMsg = "科目代碼錯誤";
+        return;
+    } 
+    
+    emit("create-course", courseState.course);
+    courseState.course = "";
 };
 
 </script>

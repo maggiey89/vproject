@@ -9,7 +9,7 @@
             label="搜尋"
             variant="underlined"
             append-inner-icon="mdi-magnify"
-            @click:append-inner="onClick"
+            @click:append-inner=""
         ></v-text-field>
         </v-form> 
       </v-col>

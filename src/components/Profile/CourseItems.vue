@@ -1,17 +1,20 @@
 <template>
     <li>
         <div class="course">
-            <input v-if="course.isEditing" type="text" :value="course.course" 
+            <!--input v-if="course.isEditing" type="text" :value="course.course" 
                 @input="$emit('update-course', $event.target.value, index)"/>
             <span v-else>
+                {{ course.course }}
+            </span-->
+            <span>
                 {{ course.course }}
             </span>
         </div>
         <div class="course-actions">
-            <Icon v-if="course.isEditing" icon="ph:check-circle" 
+            <!--Icon v-if="course.isEditing" icon="ph:check-circle" 
                 color="#41b080" width="15px" @click="$emit('edit-course', index)"/>
             <Icon v-else icon="ph:pencil-fill" 
-                color="#41b080" width="15px" @click="$emit('edit-course', index)"/>
+                color="#41b080" width="15px" @click="$emit('edit-course', index)"/-->
             <Icon icon="ph:trash" 
                 color="#f95e5e" width="15px" @click="$emit('delete-course', course.id)"/>
         </div>
@@ -42,9 +45,8 @@ li {
     text-align: left;
     align-items: center;
     gap: 6px;
-    padding: 3px 3px;
-    width: 130px;
-    height: 30px;
+    width: fit-content;
+    height: fit-content;
     &:hover {
         .course-actions {
             opacity: 1;
@@ -56,8 +58,8 @@ li {
         input[type="text"] {
             width: 100%;
             height: 100%;
-            padding: 3px 3px;
-            border: 1px solid;
+            border: 2px solid;
+            text-underline-position: below;
         }
     }
 
