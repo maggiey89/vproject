@@ -3,12 +3,12 @@
     <h1>登入</h1>
     <!-- <input type="text" placeholder="請輸入姓名" /> -->
     <form @submit="onSubmit">
-      <input type="text" v-model="userForm.email" placeholder="請輸入信箱" />
-      <input type="password" v-model="userForm.password" placeholder="請輸入密碼" />
-      <!--v-text-field label="請輸入信箱" placeholder="johndoe@gmail.com" type="email" v-model="userForm.email"
+      <!-- <input type="text" v-model="userForm.email" placeholder="請輸入信箱" /> -->
+      <!-- <input type="password" v-model="userForm.password" placeholder="請輸入密碼" /> -->
+      <v-text-field label="請輸入信箱" placeholder="johndoe@gmail.com" type="email" v-model="userForm.email"
         variant="outlined" density="compact"/>
       <v-text-field label="請輸入密碼" type="password" v-model="userForm.password"
-        variant="outlined" density="compact"/-->
+        variant="outlined" density="compact"/>
       
       <button type="submit">登入</button>
     </form>
