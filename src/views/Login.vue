@@ -18,13 +18,16 @@
       >
     </p>
   </div>
-  <!--<p v-if="showmessage" >{{ message }}</p>-->
+  <!--<p v-if="showmesssge" >{{ message }}</p>-->
 </template>
 <script>
+import axios from 'axios';
 export default {
   nams: "Login",
   data() {
     return {
+      message: '',
+      showmesssge: false,
       userForm : {
         email: '',
         password: '',
@@ -33,15 +36,19 @@ export default {
   },
 
   methods: {
-    login(){
+    login(payload){
       const path = 'http://127.0.0.1:5000/login';
       axios.post(path, payload)
-      .then(() => {
-        this.message = '登入成功';
-        this.showmessage = true;
+      .then((res) => {
+        if(res.data.access_token){
+          window.localStorage.setItem("email", payload.email)//登出按鈕
+          router.push({name: "home"});//登入後無法轉頁面？
+        }
       })
       .catch((error) => {
         console.log(error);
+        this.message = "not success.";//有能顯示錯誤訊息的地方嗎？
+        this.showmessage = true;
       })
     },
 
@@ -50,6 +57,7 @@ export default {
         email: this.userForm.email,
         password: this.userForm.password,
       }
+      this.login(payload);
     }
   }
 };

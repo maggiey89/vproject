@@ -5,14 +5,14 @@
     <h1>註冊</h1>
     <!--<h3 v-if="showmessage" show>{{ message }}</h3>-->
     <form @submit="onSubmit">
-      <input type="text" v-model="newuserform.name" placeholder="請輸入姓名" />
-      <input type="text" v-model="newuserform.email" placeholder="請輸入信箱" />
-      <input type="password" v-model="newuserform.password1" placeholder="請輸入密碼" />
-      <input type="password" v-model="newuserform.password2" placeholder="請再次輸入密碼" />
+      <input type="text" v-model="newuserform.name" placeholder="請輸入姓名" required/>
+      <input type="text" v-model="newuserform.email" placeholder="請輸入信箱" required/>
+      <input type="password" v-model="newuserform.password1" placeholder="請輸入密碼" required/>
+      <input type="password" v-model="newuserform.password2" placeholder="請再次輸入密碼" required/>
       <!-- <input type="text" placeholder="就讀大學" /> -->
       <div>
         <label for="university">就讀大學:</label>
-        <select id="university" name="university" v-model="newuserform.school">
+        <select id="university" name="university" v-model="newuserform.school" required>
           <option value="">請選擇...</option>
           <option  v-for="(s, index) in schools" :key="index">{{ `${s.abbr} ${s.name}` }}</option>
           <!--<option value="university2">國立台灣大學</option>
@@ -20,7 +20,7 @@
           <!-- 更多選項 -->
         </select>
       </div>
-      <input type="text" v-model="newuserform.department" placeholder="就讀科系" />
+      <input type="text" v-model="newuserform.department" placeholder="就讀科系" required/>
       <button type="submit">完成註冊</button>
     </form>
     <p>
