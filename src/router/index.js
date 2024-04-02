@@ -93,6 +93,15 @@ const router = createRouter({
         title: '管理者',
         isAllowGuest: true,
       },
+      children: [
+        {
+          path: '',
+          name: 'showuser',
+          component: () => import('@/components/admin/showuser.vue'),
+          meta: { title: '數據顯示' },
+        },
+
+      ],
     },
   ]
 })
