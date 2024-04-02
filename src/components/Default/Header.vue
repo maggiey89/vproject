@@ -54,6 +54,8 @@
     <!-- <v-avatar class="mr-3" size="36">
       <img :src="userAvatar" alt="User Avatar">
     </v-avatar> -->
+    <v-btn to="/admin" variant="text" height="100%"> 管理者介面 </v-btn>
+
   </v-app-bar>
 </template>
 

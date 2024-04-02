@@ -70,7 +70,7 @@
     </v-app-bar>
   </template>
     
-    <script setup>
+  <script setup>
   import ntnu from "@/assets/ntnu.png";
   import ntnuLogo from "@/assets/ntnu-logo.png";
   

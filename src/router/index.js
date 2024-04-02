@@ -85,6 +85,15 @@ const router = createRouter({
       component: () => import('@/views/test.vue'),
       meta: { title: 'test', },
     },
+    {
+      path: '/admin',
+      name: 'admin',
+      component: () => import('@/views/admin.vue'),
+      meta: {
+        title: '管理者',
+        isAllowGuest: true,
+      },
+    },
   ]
 })
 
