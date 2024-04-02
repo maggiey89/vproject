@@ -6,6 +6,9 @@
     <p class="profile-item"><strong>就讀科系：</strong>{{ this.profile.major }}</p>
     <p class="profile-item"><strong>身分：</strong>{{ this.profile.iden }}</p>
   </div>
+  <form @submit = "logout">
+    <v-btn type="submit">登出</v-btn>
+  </form>
 </template>
 
 <style scoped>
@@ -25,6 +28,7 @@
 
 <script>
 import ProfileNav from "@/components/Default/ProfileNav.vue";
+import router from "@/router";
 import axios from "axios";
 // 從後端獲得使用者的個人資料
 export default {
@@ -41,23 +45,41 @@ export default {
   },
 
   methods: {
+  header(){
+      const user = JSON.parse(localStorage.getItem('user'));
+      if(user && user["access_token"]){
+        return {Authorization : `Bearer ${user["access_token"]}`};
+      }
+      else {
+        return {};
+      }
+    },
     getinfo(){
       const path = 'http://127.0.0.1:5000/userinfo';
-      axios.get(path)
+      axios.get(path, { headers : this.header() })
       .then((res) => {
         this.profile.email = res.data.email;
         this.profile.name = res.data.name;
         this.profile.university = res.data.university;
         this.profile.major = res.data.major;
-        this.profile.iden = res.data.iden;
+        if(res.data.iden == 1)
+          this.profile.iden = '學生';
+        else if(res.data.iden == 0)
+          this.profile.iden = '管理者';
       })
       .catch((error) => {
         console.error(error);
       });
+    },
+    logout(){
+      localStorage.removeItem('user');
+      //router.push('/');不知為何不會換頁面
     }
   },
   created(){
-    this.getinfo();
+    if(localStorage.getItem('user')){
+      this.getinfo();
+    }
   }
 }
 

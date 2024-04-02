@@ -58,16 +58,20 @@ def sign_up():
 @auth.route('/userinfo', methods = ['GET'])
 @jwt_required()
 def userinfo():
+    #return jsonify({"message" : "message"})
     print('success')
     email = get_jwt_identity()
     collection = db["user"]
-    user = collection.find_one({"email": email})
-    name = user['name']
-    university = user['school']
-    major = user['department']
-    if(user['role'] == 1):
+    u = collection.find_one({"email": email})
+    name = u['user_name']
+    university = u['school']
+    major = u['department']
+    role = u['role']
+    '''
+    if(u['role'] == 1):
         role = '學生'
     else:
         role = '管理者'
+    '''
     user_data = {'name': name, 'email': email, 'university': university, 'major': major, 'iden': role}
     return jsonify(user_data)

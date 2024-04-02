@@ -2,7 +2,7 @@
   <div class="login-container">
     <h1>登入</h1>
     <!-- <input type="text" placeholder="請輸入姓名" /> -->
-    <form @submit="onSubmit">
+    <form @submit.prevent="onSubmit">
       <!-- <input type="text" v-model="userForm.email" placeholder="請輸入信箱" /> -->
       <!-- <input type="password" v-model="userForm.password" placeholder="請輸入密碼" /> -->
       <v-text-field label="請輸入信箱" placeholder="johndoe@gmail.com" type="email" v-model="userForm.email"
@@ -21,6 +21,7 @@
   <!--<p v-if="showmesssge" >{{ message }}</p>-->
 </template>
 <script>
+import router from '@/router';
 import axios from 'axios';
 export default {
   nams: "Login",
@@ -41,8 +42,8 @@ export default {
       axios.post(path, payload)
       .then((res) => {
         if(res.data.access_token){
-          window.localStorage.setItem("email", payload.email)//登出按鈕
-          router.push({name: "home"});//登入後無法轉頁面？
+          localStorage.setItem('user', JSON.stringify(res.data));//登出按鈕
+          router.push('/');
         }
       })
       .catch((error) => {
