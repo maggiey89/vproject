@@ -1,5 +1,6 @@
 <template>
-    <v-form style="width: min(200px, 80%); height: 50px; margin-bottom: 20px;" >
+   
+    <v-form style="width: 200px; height: 50px; margin-bottom: 20px;" >
         <v-text-field 
             label="科目代碼"
             variant="underlined"
@@ -8,6 +9,7 @@
             @click:append-inner="createcourse()"
         ></v-text-field>
     </v-form> 
+    
     <div style="text-align: left; font-size: 12px;" >{{ courseState.errMsg }}</div>
 
 </template>
@@ -43,9 +45,5 @@ const createcourse = () => {
 </script>
 
 <style>
-.input-wrap{
-    display: flex;
-    transition: 250ms ease;
-    border: 2px solid #41b080;
-}
+
 </style>
