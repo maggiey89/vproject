@@ -36,21 +36,35 @@
     </div>
 
     <v-spacer />
-
     
     <v-btn to="" variant="text" height="100%"> 操作手冊 </v-btn>
     <v-btn to="/course-view" variant="text" height="100%"> 學分學程 </v-btn>
 
     <v-menu open-on-hover>
-      <!-- 其他菜單項目 -->
+        <template v-slot:activator="{ props }">
+          <v-btn to="/profile" v-bind="props" class="mr-5" variant="text" height="100%">
+            {{userName}}
+          </v-btn>
+        </template>
+        
+        <v-list density="compact">
+          <router-link
+            v-for="{ name, route } in profile"
+            :to="{ path: route }"
+            style="text-decoration: none; color: inherit; text-align: center;"
+          >
+            <v-list-item>{{ name }}</v-list-item>
+          </router-link>
+        </v-list>
     </v-menu>
 
     <!-- <v-btn to="/login" class="mr-5" variant="text" height="100%"> 登入 </v-btn> -->
     <!-- // -->
     
-    <v-btn to="/profile" variant="text" height="100%">
+    <!--v-btn to="/profile" variant="text" height="100%">
       {{ userName }}
-    </v-btn>
+    </v-btn-->
+    
     <!-- <v-avatar class="mr-3" size="36">
       <img :src="userAvatar" alt="User Avatar">
     </v-avatar> -->
@@ -64,6 +78,13 @@ import { ref } from 'vue';
 
 const userAvatar = ref('url_to_default_avatar'); // 替換為用戶頭像的 URL
 const userName = ref(''); // 初始使用者名稱設為空字串
+
+const profile = [
+    { name: "個人資料", route: "/profile" },
+    { name: "我的課程", route: "/profile/mycourses" },
+    { name: "新增課程", route: "/profile/uploadcourse" },
+    { name: "登出", route: "/" },
+];
 
 const fetchUserInfo = () => {
   // 假設這是從後端 API 獲取的用戶信息
@@ -79,6 +100,9 @@ const fetchUserInfo = () => {
 
 // 在組件初始化時獲取用戶信息
 fetchUserInfo();
+
+
+
 </script>
 
 

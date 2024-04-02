@@ -15,5 +15,6 @@
 </template>
     
 <script setup>
-    import ProfileNav from '@/components/Default/ProfileNav.vue'
+import ProfileNav from '@/components/Default/ProfileNav.vue'
+
 </script>
