@@ -36,13 +36,15 @@
     </div>
 
     <v-spacer />
-    
+
+    <v-btn to="/admin" variant="text" height="100%"> 管理者介面 </v-btn>
+
     <v-btn to="" variant="text" height="100%"> 操作手冊 </v-btn>
     <v-btn to="/course-view" variant="text" height="100%"> 學分學程 </v-btn>
 
     <v-menu open-on-hover>
         <template v-slot:activator="{ props }">
-          <v-btn to="/profile" v-bind="props" class="mr-5" variant="text" height="100%">
+          <v-btn to="/profile" v-bind="props" variant="text" height="100%">
             {{userName}}
           </v-btn>
         </template>
@@ -58,7 +60,7 @@
         </v-list>
     </v-menu>
 
-    <!-- <v-btn to="/login" class="mr-5" variant="text" height="100%"> 登入 </v-btn> -->
+    <v-btn to="/" class="mr-5" variant="text" height="100%"> 登出 </v-btn>
     <!-- // -->
     
     <!--v-btn to="/profile" variant="text" height="100%">
@@ -68,7 +70,7 @@
     <!-- <v-avatar class="mr-3" size="36">
       <img :src="userAvatar" alt="User Avatar">
     </v-avatar> -->
-    <v-btn to="/admin" variant="text" height="100%"> 管理者介面 </v-btn>
+    
 
   </v-app-bar>
 </template>
@@ -83,7 +85,6 @@ const profile = [
     { name: "個人資料", route: "/profile" },
     { name: "我的課程", route: "/profile/mycourses" },
     { name: "新增課程", route: "/profile/uploadcourse" },
-    { name: "登出", route: "/" },
 ];
 
 const fetchUserInfo = () => {
