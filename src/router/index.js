@@ -100,6 +100,18 @@ const router = createRouter({
           component: () => import('@/components/admin/showuser.vue'),
           meta: { title: '數據顯示' },
         },
+        {
+          path: 'uploadcourse',
+          name: 'uploadcourse',
+          component: () => import('@/components/admin/uploadcourse.vue'),
+          meta: { title: '上傳新課程' },
+        },
+        {
+          path: 'uploadprogram',
+          name: 'uploadprogram',
+          component: () => import('@/components/admin/uploadprogram.vue'),
+          meta: { title: '上傳新學程' },
+        },
 
       ],
     },

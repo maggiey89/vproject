@@ -14,8 +14,8 @@
   
   const AdminCategories = [
       { name: '數據顯示', route: '/admin/' },
-    //   { name: '管理員權限', route: '/admin/permissions' },
       { name: '新增課程', route: '/admin/uploadcourse' },
+      { name: '新增學程', route: '/admin/uploadprogram' },
   ];
   const adminAvatar = ref('url_to_default_avatar'); 
   const adminName = ref(''); 
