@@ -112,6 +112,12 @@ const router = createRouter({
           component: () => import('@/components/admin/uploadprogram.vue'),
           meta: { title: '上傳新學程' },
         },
+        {
+          path: 'uploadfield',
+          name: 'uploadfield',
+          component: () => import('@/components/admin/uploadfield.vue'),
+          meta: { title: '上傳新領域' },
+        },
 
       ],
     },
