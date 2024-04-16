@@ -42,6 +42,28 @@ const createcourse = () => {
     courseState.course = "";
 };
 
+/*export default {
+    
+    methods: {
+    header(){
+        const user = JSON.parse(localStorage.getItem('user'));
+        if(user && user["access_token"]){
+            return {Authorization : `Bearer ${user["access_token"]}`};
+        } else {
+            return {};
+        }
+    },
+
+    postcourse(){
+        const path = 'http://127.0.0.1:5000/useraddcourse';
+        axios.post(path, { headers : header(), course : courseState.course })
+        .then((response) => console.log(response))
+        .catch((error) => console.log(error))
+    },
+    }
+}*/
+
+
 </script>
 
 <style>

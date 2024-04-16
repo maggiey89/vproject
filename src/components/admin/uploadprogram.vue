@@ -1,11 +1,11 @@
 <template>
     <div>
       <h1>新增學程</h1>
-  
+      <form @submit.prevent="confirmAdd">
       <div class="form-group">
         <label for="program" class="custom-label">請選擇學程所屬領域：</label>
         <div>
-          <select id="program" v-model="selectedProgram" class="custom-select">
+          <select id="program" v-model="newprogramForm.area" class="custom-select" required>
             <option value="商業管理">商業管理</option>
             <option value="國際交流">國際交流</option>
             <option value="專業領導">專業領導</option>
@@ -18,25 +18,44 @@
   
       <div class="form-group">
         <label for="programName" class="custom-label">請輸入新增學程名稱：</label>
-        <input type="text" id="programName" v-model="programName" class="custom-input" placeholder="ex: 全英語學分學程">
+        <input type="text" id="programName" v-model="newprogramForm.name" class="custom-input" placeholder="ex: 全英語學分學程" required>
       </div>
   
-      <button @click="confirmAdd" class="submit-button">確認新增</button>
+      <button type="submit" class="submit-button">確認新增</button>
+    </form>
     </div>
   </template>
   
   <script>
+  import axios from 'axios';
+
   export default {
     data() {
       return {
-        selectedProgram: '',
-        programName: ''
+        newprogramForm:{
+          name: '',
+          area: '',
+        }
       };
     },
     methods: {
+      addprogram(payload){
+        const path = 'http://127.0.0.1:5000/addprogram';
+        axios.post(path, payload)
+        .then(() => {
+          alert('已新增完成，請到"新增課程"處新增學程內課程。');
+        })
+        .catch((error) => {
+        console.log(error);
+        })
+      },
+
       confirmAdd() {
-        // 假設這裡是提交表單的程式碼
-        alert('已新增完成，請到"新增課程"處新增學程內課程。');
+        const payload = {
+          name: this.newprogramForm.name,
+          area: this.newprogramForm.area,
+        }
+        this.addprogram(payload);
       }
     }
   };

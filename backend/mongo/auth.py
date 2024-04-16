@@ -4,7 +4,7 @@ from flask_jwt_extended import (create_access_token, create_refresh_token,
                                 jwt_required, get_jwt_identity, unset_jwt_cookies)
 from mongo import db
 from datetime import datetime
-
+from .engine import User
 auth = Blueprint('auth', __name__)
 
 @auth.route('/login', methods = ['POST', 'GET'])
@@ -42,6 +42,13 @@ def sign_up():
         dt = datetime.now()
         role = 1
         collection = db["user"]
+        '''
+        user = User(
+            name = name,
+            email = mail,
+
+        )
+        '''
         collection.insert_one({
             "email" : mail,
             "user_name" : name,
@@ -49,6 +56,7 @@ def sign_up():
             "role" : role,
             "school" : school,
             "department" : department,
+            "courses" : [],
             "datetime" : dt
         })
         response_object['message'] = 'success.'
@@ -58,8 +66,6 @@ def sign_up():
 @auth.route('/userinfo', methods = ['GET'])
 @jwt_required()
 def userinfo():
-    #return jsonify({"message" : "message"})
-    print('success')
     email = get_jwt_identity()
     collection = db["user"]
     u = collection.find_one({"email": email})

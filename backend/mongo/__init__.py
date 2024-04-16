@@ -13,6 +13,8 @@ jwt.init_app(app)
 
 from .school import school
 from .auth import auth
+from .course import course
 
 app.register_blueprint(school, url_prefix = '/')
 app.register_blueprint(auth, url_prefix = '/')
+app.register_blueprint(course, url_prefix = '/')

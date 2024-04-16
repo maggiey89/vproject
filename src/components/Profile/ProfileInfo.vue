@@ -73,6 +73,7 @@ export default {
     },
     logout(){
       localStorage.removeItem('user');
+      localStorage.removeItem('courseList')
       //router.push('/');不知為何不會換頁面
     }
   },
