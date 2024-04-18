@@ -1,17 +1,19 @@
 <template>
     <div>
       <h1>新增領域</h1>
+      <form @submit="confirmAdd">
+        <div class="form-group">
+          <label for="domainName" class="custom-label">請使用者輸入領域名稱：</label>
+          <input type="text" id="domainName" v-model="domainName" class="custom-input" placeholder="ex:商業管理">
+        </div>
   
-      <div class="form-group">
-        <label for="domainName" class="custom-label">請使用者輸入領域名稱：</label>
-        <input type="text" id="domainName" v-model="domainName" class="custom-input" placeholder="ex:商業管理">
-      </div>
-  
-      <button @click="confirmAdd" class="submit-button">確認新增</button>
+        <button type="submit" class="submit-button">確認新增</button>
+      </form>
     </div>
-  </template>
+</template>
   
-  <script>
+<script>
+import axios from 'axios';
   export default {
     data() {
       return {
@@ -19,12 +21,26 @@
       };
     },
     methods: {
+      addfield(payload){
+        const path = 'http://127.0.0.1:5000/addfield';
+        axios.post(path, payload)
+        .then(() => {
+          alert('已新增領域，請到"新增學程"處新增學程內容。');
+        })
+        .catch((error) => {
+        console.log(error);
+        })
+      },
+
       confirmAdd() {
-        alert('已新增領域，請到"新增學程"處新增學程內容。');
+        const payload = {
+          name: this.domainName,
+        }
+        this.addfield(payload);
       }
     }
   };
-  </script>
+</script>
   
   <style scoped>
   h1 {

@@ -14,7 +14,9 @@ jwt.init_app(app)
 from .school import school
 from .auth import auth
 from .course import course
+from .admin import admin
 
 app.register_blueprint(school, url_prefix = '/')
 app.register_blueprint(auth, url_prefix = '/')
 app.register_blueprint(course, url_prefix = '/')
+app.register_blueprint(admin, url_prefix = '/')

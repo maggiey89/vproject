@@ -5,13 +5,8 @@
       <div class="form-group">
         <label for="program" class="custom-label">請選擇學程所屬領域：</label>
         <div>
-          <select id="program" v-model="newprogramForm.area" class="custom-select" required>
-            <option value="商業管理">商業管理</option>
-            <option value="國際交流">國際交流</option>
-            <option value="專業領導">專業領導</option>
-            <option value="教育發展">教育發展</option>
-            <option value="文化創意">文化創意</option>
-            <!-- 添加其他學程領域 -->
+          <select id="program" v-model="newprogramForm.field" class="custom-select" required>
+            <option  v-for="(f, index) in fields" :key="index">{{ f }}</option>
           </select>
         </div>
       </div>
@@ -32,13 +27,25 @@
   export default {
     data() {
       return {
+        fields:[],
         newprogramForm:{
           name: '',
-          area: '',
+          field: '',
         }
       };
     },
     methods: {
+      getFields(){
+      const path = 'http://127.0.0.1:5000/getfield';
+      axios.get(path)
+      .then((res) => {
+        this.fields = res.data;
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+      },
+
       addprogram(payload){
         const path = 'http://127.0.0.1:5000/addprogram';
         axios.post(path, payload)
@@ -53,10 +60,13 @@
       confirmAdd() {
         const payload = {
           name: this.newprogramForm.name,
-          area: this.newprogramForm.area,
+          field: this.newprogramForm.field,
         }
         this.addprogram(payload);
       }
+    },
+    created(){
+      this.getFields();
     }
   };
   </script>

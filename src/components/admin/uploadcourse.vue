@@ -5,21 +5,23 @@
     <div class="form-group">
       <label for="program" class="custom-label">請選擇課程所屬學程領域：</label>
       <div>
-        <select id="program" v-model="selectedProgram" class="custom-select">
-          <option value="商業管理">商業管理</option>
-          <option value="國際交流">國際交流</option>
-          <option value="專業領導">專業領導</option>
-          <option value="教育發展">教育發展</option>
-          <option value="文化創意">文化創意</option>
-          <!-- 添加其他學程名稱 -->
+        <select id="program" v-model="newcourseForm.field" class="custom-select" required>
+          <option  v-for="(f, index) in fields" :key="index">{{ f }}</option>
         </select>
       </div>
     </div>
 
     <div class="form-group">
+      <label for="courseName" class="custom-label">請輸入新增課程所屬學程：</label>
+      <select id="program" v-model="newcourseForm.program" class="custom-select" required>
+          <option  v-for="(p, index) in programs" :key="index">{{ p }}</option>
+        </select>
+    </div>
+
+    <div class="form-group">
       <label for="programType" class="custom-label">請選擇課程類型：</label>
       <div>
-        <select id="programType" v-model="selectedProgramType" class="custom-select">
+        <select id="programType" v-model="newcourseForm.type" class="custom-select" required>
           <option value="必修">必修</option>
           <option value="選修">選修</option>
         </select>
@@ -27,23 +29,18 @@
     </div>
 
     <div class="form-group">
-      <label for="courseName" class="custom-label">請輸入新增課程所屬學程：</label>
-      <input type="text" id="ProgramName" v-model="ProgramName" class="custom-input" placeholder="ex:全英語學分學程">
-    </div>
-
-    <div class="form-group">
       <label for="courseName" class="custom-label">請輸入課程名稱：</label>
-      <input type="text" id="courseName" v-model="courseName" class="custom-input" placeholder="ex: 初級韓文">
+      <input type="text" id="courseName" v-model="newcourseForm.name" class="custom-input" placeholder="ex: 初級韓文" required>
     </div>
 
     <div class="form-group">
       <label for="courseCode" class="custom-label">請輸入課程序號：</label>
-      <input type="text" id="courseCode" v-model="courseCode" maxlength="7" class="custom-input" placeholder="ex: L0U2001">
+      <input type="text" id="courseCode" v-model="newcourseForm.code" maxlength="7" class="custom-input" placeholder="ex: L0U2001" required>
     </div>
 
     <div class="form-group">
       <label for="credit" class="custom-label">請輸入學分數：</label>
-      <input type="text" id="credit" v-model="credit" class="custom-input" placeholder="輸入數字">
+      <input type="text" id="credit" v-model="newcourseForm.credit" class="custom-input" placeholder="輸入數字" required>
     </div>
 
     <button @click="submitForm" class="submit-button">確認送出</button>
@@ -51,22 +48,75 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
   data() {
     return {
-      selectedProgram: '',
-      selectedProgramType: '',
-      ProgramName: '',
-      courseName: '',      
-      courseCode: '',      
-      credit: ''           
+      newcourseForm:{
+        field: '',
+        program: '',
+        type: '',
+        name: '',
+        code: '',
+        credit: '',
+        
+      },
+      fields: [],
+      programs: [],          
     };
   },
   methods: {
+    getFields(){
+      const path = 'http://127.0.0.1:5000/getfield';
+      axios.get(path)
+      .then((res) => {
+        this.fields = res.data;
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+    },
+
+    getProgram(f){
+      const path = 'http://127.0.0.1:5000/getprogram';
+      axios.post(path, f)
+      .then((res) => {
+        this.programs = res.data;
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+    },
+
     submitForm() {
+      const payload = {
+        field: this.newcourseForm.field,
+        program: this.newcourseForm.program,
+        type: this.newcourseForm.type,
+        name: this.newcourseForm.name,
+        code: this.newcourseForm.code,
+        credit: this.newcourseForm.credit,
+      }
+      const path = 'http://127.0.0.1:5000/addcourse';
+      axios.post(path, payload)
+      .then(() => {
+        console.log('表單已提交');
+        alert('已新增課程。');
+      })
+      .catch((error) => {
+        console.error(error);
+      });
       
-      console.log('表單已提交');
     }
+  },
+  watch: {
+    "newcourseForm.field": function(){
+      this.getProgram(this.newcourseForm.field);
+    }
+  },
+
+  created(){
+    this.getFields();
   }
 };
 </script>
