@@ -1,8 +1,8 @@
 <template>
   <div class="d-flex">
-  <v-text>必修：2科6學分</v-text>
+  <v-text>必修：至少16學分</v-text>
   <v-spacer/>
-  <a href="https://www.cge.ntnu.edu.tw/article_d.php?lang=tw&tb=5&cid=114&id=1126"
+  <a href="https://www.cge.ntnu.edu.tw/article_d.php?lang=tw&tb=5&cid=114&id=1120"
     target="_blank" rel="noopener noreferrer"
   >
     <v-btn density="compact" variant="outlined" 
@@ -13,6 +13,7 @@
   </a>  
   </div> 
     <v-table density="compact" fixed-header>
+        
         <thead>
             <tr>
                 <th class="text-left font-weight-bold">
@@ -34,7 +35,7 @@
         </tr>
         </tbody>
     </v-table>
-    <text>選修</text>
+    <!--text>選修</text>
     <v-table density="compact" fixed-header>
         <thead>
             <tr>
@@ -56,7 +57,7 @@
           <td>{{ item.credit }}</td>
         </tr>
         </tbody>
-    </v-table>
+    </v-table-->
 </template>
 
 <script>
@@ -65,78 +66,18 @@
       return {
         courses: [
           {
-            id: 'L0U2001',
-            name: '初級韓文(一)',
-            credit: '2',
+            id: '[國外]',
+            name: '赴外交換修習課程',
+            credit: '6',
           },
           {
-            id: 'L0U2002',
-            name: '初級韓文(二)',
-            credit: '2',
+            id: '[國內]',
+            name: '本校外語授課課程',
+            credit: '10',
           },
-          {
-            id: 'L0U2003',
-            name: '中級韓文(一)',
-            credit: '2',
-          },
-          {
-            id: 'L0U2004',
-            name: '中級韓文(二)',
-            credit: '2',
-          },
-          {
-            id: 'L0U2005',
-            name: '韓語會話與聽力練習（一）',
-            credit: '2',
-          },
-          {
-            id: 'L0U2006',
-            name: '韓語會話與聽力練習（二）',
-            credit: '2',
-          },
-          {
-            id: 'L0U2022',
-            name: '韓文閱讀與寫作',
-            credit: '2',
-          },
+          
         ],
-        electives: [
-          {
-            id: 'L0U2001',
-            name: '初級韓文(一)',
-            credit: '2',
-          },
-          {
-            id: 'L0U2002',
-            name: '初級韓文(二)',
-            credit: '2',
-          },
-          {
-            id: 'L0U2003',
-            name: '中級韓文(一)',
-            credit: '2',
-          },
-          {
-            id: 'L0U2004',
-            name: '中級韓文(二)',
-            credit: '2',
-          },
-          {
-            id: 'L0U2005',
-            name: '韓語會話與聽力練習（一）',
-            credit: '2',
-          },
-          {
-            id: 'L0U2006',
-            name: '韓語會話與聽力練習（二）',
-            credit: '2',
-          },
-          {
-            id: 'L0U2022',
-            name: '韓文閱讀與寫作',
-            credit: '2',
-          },
-        ],
+        
       }
     },
 }

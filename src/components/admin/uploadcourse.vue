@@ -34,7 +34,7 @@
     </div>
 
     <div class="form-group">
-      <label for="courseCode" class="custom-label">請輸入課程序號：</label>
+      <label for="courseCode" class="custom-label">請輸入課程代碼：</label>
       <input type="text" id="courseCode" v-model="newcourseForm.code" maxlength="7" class="custom-input" placeholder="ex: L0U2001" required>
     </div>
 

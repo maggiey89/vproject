@@ -16,7 +16,7 @@ const router = createRouter({
       component: () => import('@/views/CourseView.vue'),
       children: [
         {
-          path: '',
+          path: 'business',
           name: '商業管理',
           component: () => import('@/components/商業管理/Business.vue'),
           meta: { title: '檢視', },
@@ -28,9 +28,45 @@ const router = createRouter({
           meta: { title: '檢視', },
         },
         {
+          path: 'leadership',
+          name: '專業領導',
+          component: () => import('@/components/專業領導/Leadership.vue'),
+          meta: { title: '檢視', },
+        },
+        {
+          path: 'education',
+          name: '教育發展',
+          component: () => import('@/components/教育發展/Education.vue'),
+          meta: { title: '檢視', },
+        },
+        {
+          path: 'culture',
+          name: '文化創意',
+          component: () => import('@/components/文化創意/Culture.vue'),
+          meta: { title: '檢視', },
+        },
+        {
+          path: 'socialscience',
+          name: '社會科學',
+          component: () => import('@/components/社會科學/SocialScience.vue'),
+          meta: { title: '檢視', },
+        },
+        {
+          path: 'tech',
+          name: '科技應用',
+          component: () => import('@/components/科技應用/Tech.vue'),
+          meta: { title: '檢視', },
+        },
+        {
           path: 'language',
           name: '語言文學',
           component: () => import('@/components/語言文學/Language.vue'),
+          meta: { title: '檢視', },
+        },
+        {
+          path: 'information',
+          name: '資訊應用',
+          component: () => import('@/components/資訊應用/Information.vue'),
           meta: { title: '檢視', },
         },
       ],
@@ -102,7 +138,7 @@ const router = createRouter({
         },
         {
           path: 'uploadcourse',
-          name: 'uploadcourse',
+          name: 'adminuploadcourse',
           component: () => import('@/components/admin/uploadcourse.vue'),
           meta: { title: '上傳新課程' },
         },

@@ -9,28 +9,34 @@
   </v-expansion-panel>  
 </template>
   
-  <script>
+<script>
   import { ref } from 'vue'
   import SideNav from '@/components/Default/SideNav.vue'
-  import 韓國學 from '@/components/語言文學/韓國學與語文.vue'
+  import 榮譽英語 from './榮譽英語.vue'
+  import 歐洲文化與語言 from './歐洲文化與語言.vue'
+  import 日本語文 from './日本語文.vue'
+  import 韓國學 from './韓國學與語文.vue'
+  import 文學創作 from './文學創作.vue'
+  import 中英翻譯 from './中英翻譯.vue'
+  
   export default {
   components: {
-    SideNav, 韓國學,
+    SideNav, 榮譽英語, 歐洲文化與語言, 日本語文, 韓國學, 文學創作, 中英翻譯
   },
   data() {
     return {
       courses: [
       {
         title: '榮譽英語學分學程',
-        content: 'Business',
+        content: '榮譽英語',
       },
       {
         title: '歐洲文化與語言學分學程',
-        content: 'blank',
+        content: '歐洲文化與語言',
       },
       {
         title: '日本語文學分學程',
-        content: 'blank',
+        content: '日本語文',
       },
       {
         title: '韓國學與語文學分學程',
@@ -38,11 +44,11 @@
       },
       {
         title: '文學創作學分學程',
-        content: 'blank',
+        content: '文學創作',
       },
       {
         title: '中英翻譯學分學程',
-        content: 'blank',
+        content: '中英翻譯',
       },
       ],
     }

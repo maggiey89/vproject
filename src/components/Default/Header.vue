@@ -40,7 +40,7 @@
     <v-btn to="/admin" variant="text" height="100%"> 管理者介面 </v-btn>
 
     <v-btn to="" variant="text" height="100%"> 操作手冊 </v-btn>
-    <v-btn to="/course-view" variant="text" height="100%"> 學分學程 </v-btn>
+    <v-btn to="/course-view/business" variant="text" height="100%"> 學分學程 </v-btn>
 
     <v-menu open-on-hover>
         <template v-slot:activator="{ props }">

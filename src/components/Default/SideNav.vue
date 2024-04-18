@@ -15,14 +15,14 @@
 
 <script setup>
 const Categories = [
-    {name: '商業管理', route: '/course-view'},
+    {name: '商業管理', route: '/course-view/business'},
     {name: '國際交流', route: '/course-view/international'},
-    {name: '專業領導', route: '/course-view'},
-    {name: '教育發展', route: '/course-view'},
-    {name: '文化創意', route: '/course-view'},
-    {name: '社會科學', route: '/course-view'},
-    {name: '科技應用', route: '/course-view'},
+    {name: '專業領導', route: '/course-view/leadership'},
+    {name: '教育發展', route: '/course-view/education'},
+    {name: '文化創意', route: '/course-view/culture'},
+    {name: '社會科學', route: '/course-view/socialscience'},
+    {name: '科技應用', route: '/course-view/tech'},
     {name: '語言文學', route: '/course-view/language'},
-    {name: '資訊應用', route: '/course-view'},
+    {name: '資訊應用', route: '/course-view/information'},
 ]
 </script>

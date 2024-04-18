@@ -1,6 +1,19 @@
 <template>
-    <text>必修：7科 14學分</text>
-    <v-table :headers="headers" :items="items">
+  <div class="d-flex">
+  <v-text>必修：7科 14學分</v-text>
+  <v-spacer/>
+  <a href="https://www.cla.ntnu.edu.tw/index.php/korean-program-enrollment/"
+    target="_blank" rel="noopener noreferrer"
+  >
+    <v-btn density="compact" variant="outlined" 
+        style="color: black"
+    >
+    點我了解更多
+    </v-btn>
+  </a>  
+  </div> 
+
+    <v-table density="compact" fixed-header>
         
         <thead>
             <tr>
@@ -17,14 +30,14 @@
         </thead>
         <tbody>
         <tr v-for="item in courses" :key="item.name">
-            <td width="33%">{{ item.id }}</td>
-            <td width="33%">{{ item.name }}</td>
-            <td width="20%">{{ item.credit }}</td>
+          <td width="300px">{{ item.id }}</td>
+          <td width="300px">{{ item.name }}</td>
+          <td>{{ item.credit }}</td>
         </tr>
         </tbody>
     </v-table>
     <text>選修：3科 6學分</text>
-    <v-table :headers="headers" :items="items">
+    <v-table density="compact" fixed-header>
         <thead>
             <tr>
                 <th class="text-left font-weight-bold">
@@ -40,9 +53,9 @@
         </thead>
         <tbody>
         <tr v-for="item in electives" :key="item.name">
-            <td width="33%">{{ item.id }}</td>
-            <td width="33%">{{ item.name }}</td>
-            <td width="20%">{{ item.credit }}</td>
+          <td width="300px">{{ item.id }}</td>
+          <td width="300px">{{ item.name }}</td>
+          <td>{{ item.credit }}</td>
         </tr>
         </tbody>
     </v-table>
