@@ -27,7 +27,7 @@
             </tr>
         </thead>
         <tbody>
-        <tr v-for="item in compulsary" :key="item.name">
+        <tr v-for="item in compulsary" :key="item.name" :class="{ 'textcolor': item.id == 'PGUA006' }">
             <td width="300px">{{ item.id }}</td>
             <td width="300px">{{ item.name }}</td>
             <td>{{ item.credit }}</td>
@@ -60,6 +60,8 @@
 </template>
 
 <script>
+import { getCurrentInstance } from 'vue';
+
   export default {
     data() {
       return {
@@ -157,3 +159,9 @@
 }
 
 </script>
+
+<style>
+.textcolor {
+  color: green;
+}
+</style>
