@@ -32,7 +32,7 @@ export default {
   data() {
     return {
       message: '',
-      showmesssge: false,
+      showmessage: false,
       userForm : {
         email: '',
         password: '',
