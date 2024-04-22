@@ -17,6 +17,7 @@
       { name: '新增課程', route: '/admin/uploadcourse' },
       { name: '新增學程', route: '/admin/uploadprogram' },
       { name: '新增領域', route: '/admin/uploadfield' },
+      { name: '新增學程中分類', route: '/admin/subset' },
   ];
   const adminAvatar = ref('url_to_default_avatar'); 
   const adminName = ref(''); 
