@@ -60,7 +60,7 @@
         </v-list>
     </v-menu>
 
-    <v-btn to="/" class="mr-5" variant="text" height="100%"> 登入 </v-btn>
+    <v-btn to="/login" class="mr-5" variant="text" height="100%"> 登入 </v-btn>
 
     <v-btn to="/" class="mr-5" variant="text" height="100%"> 登出 </v-btn>
     <!-- // -->
@@ -96,9 +96,18 @@ const fetchUserInfo = () => {
     name: 'LiBob' // 假設使用者名稱從後端 API 獲取為 "Amy"
   };
 
+  
+
   // 更新用戶頭像和名稱
   userAvatar.value = userInfo.avatar;
   userName.value = userInfo.name;
+
+  mounted() {
+    var userName = localStorage.getItem('userName');
+    console.log(userName)
+    this.userName = userName ? userName : '未登入'
+    this.notLogin = userName ? false : true
+  },
 };
 
 // 在組件初始化時獲取用戶信息
