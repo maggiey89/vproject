@@ -6,7 +6,7 @@
     <p class="profile-item"><strong>就讀科系：</strong>{{ this.profile.major }}</p>
     <p class="profile-item"><strong>身分：</strong>{{ this.profile.iden }}</p>
   </div>
-  <form @submit="logout">
+  <form @submit.prevent="logout">
     <v-btn type="submit">登出</v-btn>
   </form>
 </template>
@@ -73,8 +73,10 @@ export default {
     },
     logout() {
       localStorage.removeItem('user');
-      localStorage.removeItem('courseList')
-      //router.push('/');不知為何不會換頁面
+      if (localStorage.getItem('courseList')) {
+        localStorage.removeItem('courseList')
+      }
+      router.push('/');//不知為何不會換頁面
     }
   },
   created() {

@@ -61,6 +61,7 @@
 
 <script>
 import { getCurrentInstance } from 'vue';
+import axios from 'axios';
 
   export default {
     data() {
@@ -154,8 +155,32 @@ import { getCurrentInstance } from 'vue';
             credit: '3',
           },
         ],
+        usercourses:[],
       }
     },
+
+    /*methods: {
+      getcourses(){
+        const path = 'http://127.0.0.1:5000/getcourse';
+        axios.post(path, {program: '基礎管理學分學程'})
+        .then((res) => {
+          const data = res.data;
+          for(let course of data){
+            if(course.type == 1){
+              this.compulsary.push[course];
+            } else {
+              this.electives.push[course];
+            }
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      }
+    },
+    created(){
+      this.getcourses();
+    }*/
 }
 
 </script>
@@ -165,3 +190,93 @@ import { getCurrentInstance } from 'vue';
   color: green;
 }
 </style>
+
+<!--
+{
+            id: 'PGUA006',
+            name: '經濟學',
+            credit: '3',
+          },
+          {
+            id: 'PGUA007',
+            name: '統計學',
+            credit: '3',
+          },
+          {
+            id: 'PGUA005',
+            name: '	會計學',
+            credit: '3',
+          },
+          {
+            id: 'PGUA001',
+            name: '企業概論',
+            credit: '3',
+          },
+
+{
+            id: 'PGUA002',
+            name: '管理學',
+            credit: '3',
+          },
+          {
+            id: 'PGUA004',
+            name: '行銷管理',
+            credit: '3',
+          },
+          {
+            id: 'PGUA003',
+            name: '財務管理',
+            credit: '3',
+          },
+          {
+            id: 'PGUA008',
+            name: '資訊管理',
+            credit: '3',
+          },
+          {
+            id: 'PGUA009',
+            name: '人力資源管理',
+            credit: '3',
+          },
+          {
+            id: 'PGUA011',
+            name: '投資組合與個人財務分析',
+            credit: '3',
+          },
+          {
+            id: 'PGUA020',
+            name: '餐旅產業管理',
+            credit: '3',
+          },
+          {
+            id: 'PGUA021',
+            name: '產業分析',
+            credit: '3',
+          },
+          {
+            id: 'PGUA022',
+            name: '策略管理',
+            credit: '3',
+          },
+          {
+            id: 'PGUA023',
+            name: '投資學',
+            credit: '3',
+          },
+          {
+            id: 'PGUA024',
+            name: '港台經商政治與社會文化',
+            credit: '3',
+          },
+          {
+            id: 'PGUA025',
+            name: '基礎商業資料視覺化與溝通',
+            credit: '3',
+          },
+          {
+            id: '	BAU0006',
+            name: '管理科學模式',
+            credit: '3',
+          },
+
+-->

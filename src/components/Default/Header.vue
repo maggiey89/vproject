@@ -35,7 +35,7 @@
 
     <v-spacer />
 
-    <v-btn to="/admin" variant="text" height="100%" v-if="headerfile.iden == 0"> 管理者介面 </v-btn>
+    <v-btn to="/admin" variant="text" height="100%" v-if="headerfile.iden == 0 && isloggedin"> 管理者介面 </v-btn>
 
     <v-btn to="" variant="text" height="100%"> 操作手冊 </v-btn>
     <v-btn to="/course-view/business" variant="text" height="100%"> 學分學程 </v-btn>
@@ -57,7 +57,7 @@
 
     <v-btn to="/login" class="mr-5" variant="text" height="100%" v-if="!isloggedin "> 登入 </v-btn>
 
-    <v-btn to="/" class="mr-5" variant="text" height="100%" v-if="isloggedin" @click = "logout"> 登出 </v-btn>
+    <v-btn to="/" class="mr-5" variant="text" height="100%" v-if="isloggedin" @click.prevent = "logout"> 登出 </v-btn>
     <!-- // -->
 
     <!--v-btn to="/profile" variant="text" height="100%">

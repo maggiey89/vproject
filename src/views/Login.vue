@@ -20,7 +20,7 @@
       >
     </p>
   </div>
-  <!--<p v-if="showmesssge" >{{ message }}</p>-->
+  <!--<p v-if="showmessage" >{{ message }}</p>-->
 </template>
 <script>
 import router from '@/router';
@@ -30,7 +30,7 @@ export default {
   data() {
     return {
       message: '',
-      showmesssge: false,
+      showmessage: false,
       userForm: {
         email: '',
         password: '',
