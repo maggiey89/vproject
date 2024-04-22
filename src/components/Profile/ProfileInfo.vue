@@ -6,7 +6,7 @@
     <p class="profile-item"><strong>就讀科系：</strong>{{ this.profile.major }}</p>
     <p class="profile-item"><strong>身分：</strong>{{ this.profile.iden }}</p>
   </div>
-  <form @submit = "logout">
+  <form @submit="logout">
     <v-btn type="submit">登出</v-btn>
   </form>
 </template>
@@ -34,51 +34,51 @@ import axios from "axios";
 export default {
   data() {
     return {
-      profile : {
-      name: '',
-      email: '',
-      university: '',
-      major: '',
-      iden: '',
+      profile: {
+        name: '',
+        email: '',
+        university: '',
+        major: '',
+        iden: '',
       }
     }
   },
 
   methods: {
-  header(){
+    header() {
       const user = JSON.parse(localStorage.getItem('user'));
-      if(user && user["access_token"]){
-        return {Authorization : `Bearer ${user["access_token"]}`};
+      if (user && user["access_token"]) {
+        return { Authorization: `Bearer ${user["access_token"]}` };
       }
       else {
         return {};
       }
     },
-    getinfo(){
+    getinfo() {
       const path = 'http://127.0.0.1:5000/userinfo';
-      axios.get(path, { headers : this.header() })
-      .then((res) => {
-        this.profile.email = res.data.email;
-        this.profile.name = res.data.name;
-        this.profile.university = res.data.university;
-        this.profile.major = res.data.major;
-        if(res.data.iden == 1)
-          this.profile.iden = '學生';
-        else if(res.data.iden == 0)
-          this.profile.iden = '管理者';
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+      axios.get(path, { headers: this.header() })
+        .then((res) => {
+          this.profile.email = res.data.email;
+          this.profile.name = res.data.name;
+          this.profile.university = res.data.university;
+          this.profile.major = res.data.major;
+          if (res.data.iden == 1)
+            this.profile.iden = '學生';
+          else if (res.data.iden == 0)
+            this.profile.iden = '管理者';
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     },
-    logout(){
+    logout() {
       localStorage.removeItem('user');
       localStorage.removeItem('courseList')
       //router.push('/');不知為何不會換頁面
     }
   },
-  created(){
-    if(localStorage.getItem('user')){
+  created() {
+    if (localStorage.getItem('user')) {
       this.getinfo();
     }
   }
