@@ -60,6 +60,8 @@
         </v-list>
     </v-menu>
 
+    <v-btn to="/" class="mr-5" variant="text" height="100%"> 登入 </v-btn>
+
     <v-btn to="/" class="mr-5" variant="text" height="100%"> 登出 </v-btn>
     <!-- // -->
     
