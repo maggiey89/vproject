@@ -32,8 +32,8 @@ export default {
   data() {
     return {
       message: '',
-      showmessage: false,
-      userForm : {
+      showmesssge: false,
+      userForm: {
         email: '',
         password: '',
       }
@@ -41,23 +41,23 @@ export default {
   },
 
   methods: {
-    login(payload){
+    login(payload) {
       const path = 'http://127.0.0.1:5000/login';
       axios.post(path, payload)
-      .then((res) => {
-        if(res.data.access_token){
-          localStorage.setItem('user', JSON.stringify(res.data));//登出按鈕
-          router.push('/');
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-        this.message = "not success.";//有能顯示錯誤訊息的地方嗎？
-        this.showmessage = true;
-      })
+        .then((res) => {
+          if (res.data.access_token) {
+            localStorage.setItem('user', JSON.stringify(res.data));//登出按鈕
+            router.push('/');
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+          this.message = "not success.";//有能顯示錯誤訊息的地方嗎？
+          this.showmessage = true;
+        })
     },
 
-    onSubmit(){
+    onSubmit() {
       const payload = {
         email: this.userForm.email,
         password: this.userForm.password,
@@ -101,6 +101,7 @@ button {
 button:hover {
   background-color: #637485;
 }
+
 select {
   width: 320px;
   height: 50px;
@@ -113,6 +114,7 @@ select {
   margin-left: auto;
   margin-top: 10px;
 }
+
 .router-link-button {
   display: block;
   width: 320px;
@@ -130,6 +132,7 @@ select {
 .router-link-button:hover {
   background-color: #637485;
 }
+
 .login-container {
   display: flex;
   flex-direction: column;

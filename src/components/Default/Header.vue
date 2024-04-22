@@ -14,8 +14,7 @@
           /-->
       </a>
     </div>
-    <div
-      style="
+    <div style="
         font-family: 'Noto Sans TC', serif;
         float: left;
         color: #ffffff;
@@ -28,8 +27,7 @@
         border-left-style: solid;
         border-left-color: rgba(255, 255, 255, 0.2);
         text-decoration: none;
-      "
-    >
+      ">
       <router-link style="text-decoration: none; color: inherit" to="/">
         學分學程管理系統
       </router-link>
@@ -43,71 +41,72 @@
     <v-btn to="/course-view/business" variant="text" height="100%"> 學分學程 </v-btn>
 
     <v-menu open-on-hover>
-        <template v-slot:activator="{ props }">
-          <v-btn to="/profile" v-bind="props" variant="text" height="100%">
-            {{userName}}
-          </v-btn>
-        </template>
-        
-        <v-list density="compact">
-          <router-link
-            v-for="{ name, route } in profile"
-            :to="{ path: route }"
-            style="text-decoration: none; color: inherit; text-align: center;"
-          >
-            <v-list-item>{{ name }}</v-list-item>
-          </router-link>
-        </v-list>
+      <template v-slot:activator="{ props }">
+        <v-btn to="/profile" v-bind="props" variant="text" height="100%">
+          {{ userName }}
+        </v-btn>
+      </template>
+
+      <v-list density="compact">
+        <router-link v-for="{ name, route } in profile" :to="{ path: route }"
+          style="text-decoration: none; color: inherit; text-align: center;">
+          <v-list-item>{{ name }}</v-list-item>
+        </router-link>
+      </v-list>
     </v-menu>
 
     <v-btn to="/login" class="mr-5" variant="text" height="100%"> 登入 </v-btn>
 
     <v-btn to="/" class="mr-5" variant="text" height="100%"> 登出 </v-btn>
     <!-- // -->
-    
+
     <!--v-btn to="/profile" variant="text" height="100%">
       {{ userName }}
     </v-btn-->
-    
+
     <!-- <v-avatar class="mr-3" size="36">
       <img :src="userAvatar" alt="User Avatar">
     </v-avatar> -->
-    
+
 
   </v-app-bar>
 </template>
 
 <script setup>
-import { ref } from 'vue'; 
+import { ref } from 'vue';
+import axios from 'axios';
 
 const userAvatar = ref('url_to_default_avatar'); // 替換為用戶頭像的 URL
 const userName = ref(''); // 初始使用者名稱設為空字串
+const userRole = ref('');
 
 const profile = [
-    { name: "個人資料", route: "/profile" },
-    { name: "我的課程", route: "/profile/mycourses" },
-    { name: "新增課程", route: "/profile/uploadcourse" },
+  { name: "個人資料", route: "/profile" },
+  { name: "我的課程", route: "/profile/mycourses" },
+  { name: "新增課程", route: "/profile/uploadcourse" },
 ];
+
+const header = () => {
+  const user = JSON.parse(localStorage.getItem('user'));
+  if(user && user["access_token"]){
+    return {Authorization : `Bearer ${user["access_token"]}`};
+  }
+  else {
+    return {};
+  }
+};
 
 const fetchUserInfo = () => {
   // 假設這是從後端 API 獲取的用戶信息
   const userInfo = {
     avatar: 'url_to_user_avatar',
-    name: 'LiBob' // 假設使用者名稱從後端 API 獲取為 "Amy"
+    name: '', // 假設使用者名稱從後端 API 獲取為 "Amy"
+    role: '',
   };
-
-  
 
   // 更新用戶頭像和名稱
   userAvatar.value = userInfo.avatar;
   userName.value = userInfo.name;
-
-  mounted() {
-    var userName = localStorage.getItem('userName');
-    console.log(userName)
-    this.userName = userName ? userName : '未登入'
-    this.notLogin = userName ? false : true
-  },
 };
 
 // 在組件初始化時獲取用戶信息
