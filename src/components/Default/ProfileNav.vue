@@ -24,9 +24,9 @@ const fetchUserInfo = () => {
   // 假設這是從後端 API 獲取的用戶信息
   const userInfo = {
     avatar: 'url_to_user_avatar',
-    name: 'LiBob' // 假設使用者名稱從後端 API 獲取為 "Amy"
+    name: 'test' // 假設使用者名稱從後端 API 獲取為 "Amy"
   };
-  
+
 
   // 更新用戶頭像和名稱
   userAvatar.value = userInfo.avatar;

@@ -7,11 +7,9 @@
         placeholder="請輸入信箱" />
       <input type="password" v-model="userForm.password" 
         placeholder="請輸入密碼" /-->
-      <v-text-field type="email" v-model="userForm.email"
-        label="請輸入信箱" placeholder="johndoe@gmail.com" 
+      <v-text-field type="email" v-model="userForm.email" label="請輸入信箱" placeholder="johndoe@gmail.com" 
         variant="outlined" density="compact"/>
-      <v-text-field type="password" v-model="userForm.password" 
-        label="請輸入密碼" placeholder="********"
+      <v-text-field type="password" v-model="userForm.password" label="請輸入密碼" placeholder="********"
         variant="outlined" density="compact"/>
 
       <button type="submit">登入</button>
