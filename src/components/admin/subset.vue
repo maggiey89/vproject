@@ -38,6 +38,10 @@
           <label for="credits" class="custom-label">最低學分:</label>
           <input type="number" id="credits" v-model="minimumCredits" class="custom-input" placeholder="輸入數字">
         </div>
+        <div v-if="selectionType === 'compulsory'" class="form-group">
+          <label for="credits" class="custom-label">最低學分:</label>
+          <input type="number" id="credits" v-model="minimumCredits" class="custom-input" placeholder="輸入數字">
+        </div>
   
         <button type="submit" class="submit-button">確定</button>
       </form>
