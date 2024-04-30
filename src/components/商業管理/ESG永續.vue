@@ -30,7 +30,7 @@
         </thead>
         <tbody>
         <tr v-for="item in compulsary" :key="item.name">
-          <td width="300px">{{ item.id }}</td>
+          <td width="300px">{{ item.code }}</td>
           <td width="300px">{{ item.name }}</td>
           <td>{{ item.credit }}</td>
         </tr>
@@ -53,7 +53,7 @@
         </thead>
         <tbody>
         <tr v-for="item in electives" :key="item.name">
-          <td width="300px">{{ item.id }}</td>
+          <td width="300px">{{ item.code }}</td>
             <td width="300px">{{ item.name }}</td>
             <td>{{ item.credit }}</td>
         </tr>
@@ -62,45 +62,65 @@
 </template>
 
 <script>
+import { getCurrentInstance } from 'vue';
+import axios from 'axios';
+
   export default {
     data() {
       return {
-        compulsary: [
-          {
-            id: 'EEC8021',
-            name: '企業管理與永續發展',
-            credit: '3',
-          },
-          {
-            id: 'O5C9007',
-            name: '企業永續揭露與溝通議合',
-            credit: '3',
-          },
-        ],
-        electives: [
-          {
-            id: 'EEC8062',
-            name: '永續金融',
-            credit: '3',
-          },
-          {
-            id: 'O5C9006',
-            name: '企業ESG策略發展與治理',
-            credit: '3',
-          },
-          {
-            id: 'EEC8057',
-            name: '碳管理',
-            credit: '3',
-          },
-          {
-            id: 'O5C9008',
-            name: '永續應用專題',
-            credit: '3',
-          },
-        ],
+        compulsary: [],
+        electives: [],
+        usercourses:[],
+        courses: [],
       }
     },
+
+    methods: {
+      getcourses(){
+        const path = 'http://127.0.0.1:5000/getcourse';
+        axios.post(path, {program: 'ESG永續管理學分學程'})
+        .then((res) => {
+          this.courses = res.data;
+          this.compulsary = this.courses.filter(course => course.type === 1)
+          this.electives = this.courses.filter(course => course.type === 0)
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      },
+
+      header() {
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (user && user["access_token"]) {
+          return { Authorization: `Bearer ${user["access_token"]}` };
+        }
+        else {
+          return {};
+        }
+      },
+
+      getusercourses(){
+        const path = 'http://127.0.0.1:5000/usercourses';
+        axios.get(path, { headers: this.header() })
+        .then((res) => {
+          this.usercourses = res.data;
+          
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      }
+    },
+    created(){
+      this.getcourses();
+      this.getusercourses();
+    }
 }
 
-    </script>
+</script>
+
+<style>
+.textcolor {
+  color: green;
+}
+</style>

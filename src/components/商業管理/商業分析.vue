@@ -31,7 +31,7 @@
         </thead>
         <tbody>
         <tr v-for="item in compulsary" :key="item.name">
-          <td width="300px">{{ item.id }}</td>
+          <td width="300px">{{ item.code }}</td>
             <td width="300px">{{ item.name }}</td>
             <td>{{ item.credit }}</td>
         </tr>
@@ -54,7 +54,7 @@
         </thead>
         <tbody>
         <tr v-for="item in electives" :key="item.name">
-          <td width="300px">{{ item.id }}</td>
+          <td width="300px">{{ item.code }}</td>
           <td width="300px">{{ item.name }}</td>
           <td>{{ item.credit }}</td>
         </tr>
@@ -63,65 +63,65 @@
 </template>
 
 <script>
+import { getCurrentInstance } from 'vue';
+import axios from 'axios';
+
   export default {
     data() {
       return {
-        compulsary: [
-          {
-            id: 'BAU0066',
-            name: '資料科學與管理決策',
-            credit: '3',
-          },
-        ],
-        electives: [
-          {
-            id: 'ITM0006',
-            name: '高等統計學(一)',
-            credit: '3',
-          },
-          {
-            id: 'ISM0429',
-            name: '資料庫管理研究',
-            credit: '3',
-          },
-          {
-            id: 'IAM0094',
-            name: '資料探勘',
-            credit: '3',
-          },
-          {
-            id: 'IAM0101',
-            name: '文字探勘',
-            credit: '3',
-          },
-          {
-            id: 'BAU0068',
-            name: '商業分析程式語言',
-            credit: '3',
-          },
-          {
-            id: 'MBM0044',
-            name: '資料庫行銷',
-            credit: '3',
-          },
-          {
-            id: 'MBM0094',
-            name: '網路流量分析與行銷實務應用',
-            credit: '3',
-          },
-          {
-            id: 'MBM0092',
-            name: '金融科技與應用',
-            credit: '3',
-          },
-          {
-            id: 'MBM0096',
-            name: '商業資料視覺化設計與實務',
-            credit: '3',
-          },
-        ],
+        compulsary: [],
+        electives: [],
+        usercourses:[],
+        courses: [],
       }
     },
+
+    methods: {
+      getcourses(){
+        const path = 'http://127.0.0.1:5000/getcourse';
+        axios.post(path, {program: '商業分析學分學程'})
+        .then((res) => {
+          this.courses = res.data;
+          this.compulsary = this.courses.filter(course => course.type === 1)
+          this.electives = this.courses.filter(course => course.type === 0)
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      },
+
+      header() {
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (user && user["access_token"]) {
+          return { Authorization: `Bearer ${user["access_token"]}` };
+        }
+        else {
+          return {};
+        }
+      },
+
+      getusercourses(){
+        const path = 'http://127.0.0.1:5000/usercourses';
+        axios.get(path, { headers: this.header() })
+        .then((res) => {
+          this.usercourses = res.data;
+          
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      }
+    },
+    created(){
+      this.getcourses();
+      this.getusercourses();
+    }
 }
 
 </script>
+
+<style>
+.textcolor {
+  color: green;
+}
+</style>

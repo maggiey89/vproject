@@ -28,7 +28,7 @@
         </thead>
         <tbody>
         <tr v-for="item in compulsary" :key="item.name">
-            <td width="300px">{{ item.id }}</td>
+            <td width="300px">{{ item.code }}</td>
             <td width="300px">{{ item.name }}</td>
             <td>{{ item.credit }}</td>
         </tr>
@@ -51,7 +51,7 @@
         </thead>
         <tbody>
         <tr v-for="item in electives" :key="item.name">
-          <td width="300px">{{ item.id }}</td>
+          <td width="300px">{{ item.code }}</td>
             <td width="300px">{{ item.name }}</td>
             <td>{{ item.credit }}</td>
         </tr>
@@ -60,85 +60,65 @@
 </template>
 
 <script>
+import { getCurrentInstance } from 'vue';
+import axios from 'axios';
+
   export default {
     data() {
       return {
-        compulsary: [
-          {
-            id: 'CEU0439',
-            name: '會計學',
-            credit: '3',
-          },
-          {
-            id: 'CEU0512',
-            name: '統計學概論',
-            credit: '3',
-          },
-          {
-            id: 'CEU0011',
-            name: '經濟學',
-            credit: '2',
-          },
-          {
-            id: 'CEU0076',
-            name: '貨幣銀行學',
-            credit: '3',
-          },
-          {
-            id: 'CEU0313',
-            name: '國際金融',
-            credit: '3',
-          },
-        ],
-        electives: [
-          {
-            id: 'PGUB005',
-            name: '管理學',
-            credit: '3',
-          },
-          {
-            id: 'CEU0493',
-            name: '財務報表分析',
-            credit: '3',
-          },
-          {
-            id: 'CEU0317',
-            name: '投資學',
-            credit: '3',
-          },
-          {
-            id: 'CEU0399',
-            name: '財務管理',
-            credit: '3',
-          },
-          {
-            id: 'CEU0494',
-            name: '金融市場',
-            credit: '3',
-          },
-          {
-            id: 'CEU0496',
-            name: '產業分析',
-            credit: '3',
-          },
-          {
-            id: 'PGUB013',
-            name: '財務數學',
-            credit: '3',
-          },
-          {
-            id: 'PGUB014',
-            name: '期貨與選擇權',
-            credit: '3',
-          },
-          {
-            id: 'PGUB015',
-            name: '計量財務分析',
-            credit: '3',
-          },
-        ],
+        compulsary: [],
+        electives: [],
+        usercourses:[],
+        courses: [],
       }
     },
+
+    methods: {
+      getcourses(){
+        const path = 'http://127.0.0.1:5000/getcourse';
+        axios.post(path, {program: '財務金融學分學程'})
+        .then((res) => {
+          this.courses = res.data;
+          this.compulsary = this.courses.filter(course => course.type === 1)
+          this.electives = this.courses.filter(course => course.type === 0)
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      },
+
+      header() {
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (user && user["access_token"]) {
+          return { Authorization: `Bearer ${user["access_token"]}` };
+        }
+        else {
+          return {};
+        }
+      },
+
+      getusercourses(){
+        const path = 'http://127.0.0.1:5000/usercourses';
+        axios.get(path, { headers: this.header() })
+        .then((res) => {
+          this.usercourses = res.data;
+          
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      }
+    },
+    created(){
+      this.getcourses();
+      this.getusercourses();
+    }
 }
 
-    </script>
+</script>
+
+<style>
+.textcolor {
+  color: green;
+}
+</style>

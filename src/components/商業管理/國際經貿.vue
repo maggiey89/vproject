@@ -28,7 +28,7 @@
         </thead>
         <tbody>
         <tr v-for="item in compulsary" :key="item.name">
-          <td width="300px">{{ item.id }}</td>
+          <td width="300px">{{ item.code }}</td>
             <td width="300px">{{ item.name }}</td>
             <td>{{ item.credit }}</td>
         </tr>
@@ -51,7 +51,7 @@
         </thead>
         <tbody>
         <tr v-for="item in electives" :key="item.name">
-          <td width="300px">{{ item.id }}</td>
+          <td width="300px">{{ item.code }}</td>
             <td width="300px">{{ item.name }}</td>
             <td>{{ item.credit }}</td>
         </tr>
@@ -60,45 +60,65 @@
 </template>
 
 <script>
+import { getCurrentInstance } from 'vue';
+import axios from 'axios';
+
   export default {
     data() {
       return {
-        compulsary: [
-          {
-            id: 'O5C9005',
-            name: '全球經濟與機遇',
-            credit: '3',
-          },
-          {
-            id: 'EAU0139',
-            name: '跨國企業經營策略',
-            credit: '3',
-          },
-          {
-            id: 'E0C9009',
-            name: '智慧財產權法專題研究',
-            credit: '3',
-          },
-        ],
-        electives: [
-          {
-            id: 'O5C9004',
-            name: '跨國企業併購談判',
-            credit: '3',
-          },
-          {
-            id: 'EAU0204',
-            name: '韓半島政治與經濟',
-            credit: '3',
-          },
-          {
-            id: 'E0C9010',
-            name: '國際金融專題研究',
-            credit: '3',
-          },
-        ],
+        compulsary: [],
+        electives: [],
+        usercourses:[],
+        courses: [],
       }
     },
+
+    methods: {
+      getcourses(){
+        const path = 'http://127.0.0.1:5000/getcourse';
+        axios.post(path, {program: '國際經貿與涉外事務全英語學分學程'})
+        .then((res) => {
+          this.courses = res.data;
+          this.compulsary = this.courses.filter(course => course.type === 1)
+          this.electives = this.courses.filter(course => course.type === 0)
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      },
+
+      header() {
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (user && user["access_token"]) {
+          return { Authorization: `Bearer ${user["access_token"]}` };
+        }
+        else {
+          return {};
+        }
+      },
+
+      getusercourses(){
+        const path = 'http://127.0.0.1:5000/usercourses';
+        axios.get(path, { headers: this.header() })
+        .then((res) => {
+          this.usercourses = res.data;
+          
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      }
+    },
+    created(){
+      this.getcourses();
+      this.getusercourses();
+    }
 }
 
 </script>
+
+<style>
+.textcolor {
+  color: green;
+}
+</style>
