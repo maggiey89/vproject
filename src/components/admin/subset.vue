@@ -5,7 +5,7 @@
         <div class="form-group">
           <label for="field" class="custom-label">領域:</label>
           <select v-model="selectedField" id="field" class="custom-select">
-            <option v-for="field in fields" :value="field.id">{{ field.name }}</option>
+            <option  v-for="(f, index) in fields" :key="index">{{ f }}</option>
           </select>
         </div>
   
@@ -45,6 +45,7 @@
   </template>
   
   <script>
+  import axios from 'axios';
   export default {
     data() {
       return {
@@ -59,6 +60,18 @@
       };
     },
     methods: {
+
+      getFields(){
+        const path = 'http://127.0.0.1:5000/getfield';
+        axios.get(path)
+        .then((res) => {
+          this.fields = res.data;
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      },
+
       submitForm() {
         console.log({
           selectedField: this.selectedField,
@@ -69,6 +82,11 @@
         });
       }
     },
+
+    created(){
+    this.getFields();
+    },
+
     computed: {
       filteredPrograms() {
         return this.programs.filter(program => program.fieldId === this.selectedField);
@@ -80,11 +98,6 @@
       }
     },
     mounted() {
-      this.fields = [
-        { id: 1, name: '商業領域' },
-        { id: 2, name: '國際交流領域' },
-        // 其他領域...
-      ];
       this.programs = [
         { id: 1, name: '基礎管理學分學程', fieldId: 1 },
         { id: 2, name: '財務金融學分學程', fieldId: 1 },

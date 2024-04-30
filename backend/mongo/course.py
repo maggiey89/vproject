@@ -25,6 +25,7 @@ def get_user_courses():
     collection = db['user']
     user = collection.find_one({"email": email})
     if user:
+        print(user['courses'])
         return jsonify({'courses': user['courses']})
 
 @course.route('/getfield', methods = ['GET'])
