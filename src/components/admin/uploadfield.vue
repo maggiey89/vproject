@@ -1,6 +1,12 @@
 <template>
     <div>
       <h1>新增領域</h1>
+      <!--v-form @submit="confirmAdd" >
+        <label for="domainName" class="custom-label">請使用者輸入領域名稱：</label>
+        <v-text-field type="text" id="domainName" v-model="domainName" label="ex: 商業管理" placeholder=" "
+        variant="solo" density="compact"/>
+      </v-form-->
+
       <form @submit="confirmAdd">
         <div class="form-group">
           <label for="domainName" class="custom-label">請使用者輸入領域名稱：</label>

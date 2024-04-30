@@ -27,8 +27,8 @@
             </tr>
         </thead>
         <tbody>
-        <tr v-for="item in compulsary" :key="item.name">
-            <td width="300px">{{ item.id }}</td>
+        <tr v-for="item in compulsary" :key="item.name" :class="{ 'textcolor': item.code == 'PGUA006' }">
+            <td width="300px">{{ item.code }}</td>
             <td width="300px">{{ item.name }}</td>
             <td>{{ item.credit }}</td>
         </tr>
@@ -51,7 +51,7 @@
         </thead>
         <tbody>
         <tr v-for="item in electives" :key="item.name">
-            <td width="300px">{{ item.id }}</td>
+            <td width="300px">{{ item.code }}</td>
             <td width="300px">{{ item.name }}</td>
             <td>{{ item.credit }}</td>
         </tr>
@@ -60,100 +60,65 @@
 </template>
 
 <script>
+import { getCurrentInstance } from 'vue';
+import axios from 'axios';
+
   export default {
     data() {
       return {
-        compulsary: [
-          {
-            id: 'PGUA006',
-            name: '經濟學',
-            credit: '3',
-          },
-          {
-            id: 'PGUA007',
-            name: '統計學',
-            credit: '3',
-          },
-          {
-            id: 'PGUA005',
-            name: '	會計學',
-            credit: '3',
-          },
-          {
-            id: 'PGUA001',
-            name: '企業概論',
-            credit: '3',
-          },
-        ],
-        electives: [
-          {
-            id: 'PGUA002',
-            name: '管理學',
-            credit: '3',
-          },
-          {
-            id: 'PGUA004',
-            name: '行銷管理',
-            credit: '3',
-          },
-          {
-            id: 'PGUA003',
-            name: '財務管理',
-            credit: '3',
-          },
-          {
-            id: 'PGUA008',
-            name: '資訊管理',
-            credit: '3',
-          },
-          {
-            id: 'PGUA009',
-            name: '人力資源管理',
-            credit: '3',
-          },
-          {
-            id: 'PGUA011',
-            name: '投資組合與個人財務分析',
-            credit: '3',
-          },
-          {
-            id: 'PGUA020',
-            name: '餐旅產業管理',
-            credit: '3',
-          },
-          {
-            id: 'PGUA021',
-            name: '產業分析',
-            credit: '3',
-          },
-          {
-            id: 'PGUA022',
-            name: '策略管理',
-            credit: '3',
-          },
-          {
-            id: 'PGUA023',
-            name: '投資學',
-            credit: '3',
-          },
-          {
-            id: 'PGUA024',
-            name: '港台經商政治與社會文化',
-            credit: '3',
-          },
-          {
-            id: 'PGUA025',
-            name: '基礎商業資料視覺化與溝通',
-            credit: '3',
-          },
-          {
-            id: '	BAU0006',
-            name: '管理科學模式',
-            credit: '3',
-          },
-        ],
+        compulsary: [],
+        electives: [],
+        usercourses:[],
+        courses: [],
       }
     },
+
+    methods: {
+      getcourses(){
+        const path = 'http://127.0.0.1:5000/getcourse';
+        axios.post(path, {program: '基礎管理學分學程'})
+        .then((res) => {
+          this.courses = res.data;
+          this.compulsary = this.courses.filter(course => course.type === 1)
+          this.electives = this.courses.filter(course => course.type === 0)
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      },
+
+      header() {
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (user && user["access_token"]) {
+          return { Authorization: `Bearer ${user["access_token"]}` };
+        }
+        else {
+          return {};
+        }
+      },
+
+      getusercourses(){
+        const path = 'http://127.0.0.1:5000/usercourses';
+        axios.get(path, { headers: this.header() })
+        .then((res) => {
+          this.usercourses = res.data;
+          
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      }
+    },
+    created(){
+      this.getcourses();
+      this.getusercourses();
+    }
 }
 
 </script>
+
+<style>
+.textcolor {
+  color: green;
+}
+</style>

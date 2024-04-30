@@ -10,15 +10,23 @@ def user_add_course():
     if request.method == "POST":
         course = request.get_json()
         code = course.get('course')
-        print(code)
         #collection = db['course']
         #c = collection.find_one({'code': code})
         #if c:
         email = get_jwt_identity()
         collection = db['user']
-        user = collection.find_one({"email": email})
-        user['courses'].append(code)
+        collection.update_one({"email": email}, {"$push": {"courses": code}})
         return jsonify({'success': 'success'})
+    
+@course.route('/usercourses', methods = ['GET'])
+@jwt_required()
+def get_user_courses():
+    email = get_jwt_identity()
+    collection = db['user']
+    user = collection.find_one({"email": email})
+    if user:
+        print(user['courses'])
+        return jsonify({'courses': user['courses']})
 
 @course.route('/getfield', methods = ['GET'])
 def all_field():
@@ -40,4 +48,15 @@ def getProgram():
             program = p['name']
             programs.append(program)
         return jsonify(programs)
-
+    
+@course.route('/getcourse', methods = ['POST'])
+def get_course():
+    if request.method == 'POST':
+        p = request.get_json()
+        program = p['program']
+        courses = []
+        collection = db['course']
+        for c in collection.find({'program': program}):
+            c['_id'] = ''
+            courses.append(c)
+        return jsonify(courses)
