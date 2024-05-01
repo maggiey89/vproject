@@ -15,7 +15,13 @@
             <option v-for="program in filteredPrograms" :value="program.id">{{ program.name }}</option>
           </select>
         </div>
-  
+
+        <div class="form-group">
+          <label for="subfield" class="custom-label">小領域課程名稱:</label>
+          <input type="text" id="subfield" v-model="subfield" class="custom-input" placeholder="ex:資訊工程基礎領域">
+        </div>
+
+
         <h2>課程列表:</h2>
         <ul class="custom-ul">
           <li v-for="course in courses" :key="course.id">
@@ -60,7 +66,8 @@
         selectedProgram: null,
         selectedCourses: [],
         selectionType: 'compulsory',
-        minimumCredits: null
+        minimumCredits: null,
+        subfield: '' // 新增的小領域課程欄位
       };
     },
     methods: {
@@ -117,6 +124,7 @@
       ];
   }
 };
+
 </script>
 
 <style scoped>
