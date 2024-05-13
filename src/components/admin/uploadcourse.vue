@@ -2,7 +2,7 @@
   <div>
     <h1>新增課程</h1>
 
-    <div class="form-group">
+    <!-- <div class="form-group">
       <label for="program" class="custom-label">請選擇課程所屬學程領域：</label>
       <div>
         <select id="program" v-model="newcourseForm.field" class="custom-select" required>
@@ -26,7 +26,7 @@
           <option value="選修">選修</option>
         </select>
       </div>
-    </div>
+    </div> -->
 
     <div class="form-group">
       <label for="courseName" class="custom-label">請輸入課程名稱：</label>
