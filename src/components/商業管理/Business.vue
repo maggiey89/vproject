@@ -1,12 +1,17 @@
 <template>
   <v-expansion-panel v-for="data in courses" :key="data.title" :title="data.title">
-          <!--v-expansion-panel-title expand-icon="mdi-menu-down">
-            {{ data.title }}
-          </v-expansion-panel-title-->
+
+    <v-progress-linear :model-value="data.complete"
+      :class="{ 'redtext': data.complete < 30, 'yellowtext': data.complete >= 30 && data.complete < 70, 'greentext': data.complete >= 70 }"
+
+    >
+    </v-progress-linear>
     <v-expansion-panel-text>
       <component :is="data.content"/>
     </v-expansion-panel-text>
+    
   </v-expansion-panel>
+  
 </template>
 
 <script>
@@ -27,26 +32,32 @@ export default {
       {
         title: '基礎管理學分學程',
         content: '基礎管理',
+        complete: '20',
       },
       {
         title: '財務金融學分學程',
         content: '財務金融',
+        complete: '90',
       },
       {
         title: '大師創業學分學程',
         content: '大師創業',
+        complete: '0',
       },
       {
         title: '國際經貿與涉外事務全英語學分學程',
         content: '國際經貿',
+        complete: '50',
       },
       {
         title: '商業分析學分學程',
         content: '商業分析',
+        complete: '70',
       },
       {
         title: 'ESG永續管理學分學程',
         content: 'ESG永續',
+        complete: '40',
       },
       ],
     }
@@ -54,3 +65,14 @@ export default {
 }
 
 </script>
+<style>
+.greentext {
+  color: green;
+}
+.yellowtext {
+  color: rgb(236, 236, 140);
+}
+.redtext{
+  color: red
+}
+</style>
