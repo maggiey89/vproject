@@ -141,8 +141,4 @@ h1 {
   margin-top: 5px;
   text-align: left;
 }
-
-
-
-
 </style>
