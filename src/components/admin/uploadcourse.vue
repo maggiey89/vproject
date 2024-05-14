@@ -53,46 +53,16 @@ export default {
   data() {
     return {
       newcourseForm:{
-        field: '',
-        program: '',
-        type: '',
         name: '',
         code: '',
         credit: '',
         
-      },
-      fields: [],
-      programs: [],          
+      },         
     };
   },
   methods: {
-    getFields(){
-      const path = 'http://127.0.0.1:5000/getfield';
-      axios.get(path)
-      .then((res) => {
-        this.fields = res.data;
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-    },
-
-    getProgram(f){
-      const path = 'http://127.0.0.1:5000/getprogram';
-      axios.post(path, f)
-      .then((res) => {
-        this.programs = res.data;
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-    },
-
     submitForm() {
       const payload = {
-        field: this.newcourseForm.field,
-        program: this.newcourseForm.program,
-        type: this.newcourseForm.type,
         name: this.newcourseForm.name,
         code: this.newcourseForm.code,
         credit: this.newcourseForm.credit,
@@ -109,15 +79,6 @@ export default {
       
     }
   },
-  watch: {
-    "newcourseForm.field": function(){
-      this.getProgram(this.newcourseForm.field);
-    }
-  },
-
-  created(){
-    this.getFields();
-  }
 };
 </script>
 

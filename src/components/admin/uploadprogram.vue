@@ -6,7 +6,7 @@
         <label class="custom-label">請選擇要加入的課程：</label>
         <div class="course-grid">
           <label v-for="(course, index) in courses" :key="index" class="course-checkbox">
-            <input type="checkbox" v-model="selectedCourses" :value="course.id"> {{ course.name }}
+            <input type="checkbox" v-model="selectedCourses" > {{ course.code }} {{ course.name }}
           </label>
         </div>
       </div>
@@ -27,11 +27,7 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      courses: [{"id": 1, "name": "程式設計入門"},
-    {"id": 2, "name": "網頁開發基礎"},
-    {"id": 3, "name": "資料結構與演算法"},
-    {"id": 4, "name": "人工智慧導論"},
-    {"id": 5, "name": "數據分析實戰"},], // 存放從後端取得的課程列表
+      courses: [], // 存放從後端取得的課程列表
       selectedCourses: [], // 存放使用者選擇的課程
       newProgramName: '', // 新增學程的名稱
     };
@@ -39,7 +35,7 @@ export default {
   methods: {
     // 從後端取得課程列表
     getCourses() {
-      const path = 'http://127.0.0.1:5000/getcourses';
+      const path = 'http://127.0.0.1:5000/getcourse';
       axios.get(path)
         .then((res) => {
           this.courses = res.data;
@@ -54,7 +50,7 @@ export default {
       const path = 'http://127.0.0.1:5000/addprogram';
       axios.post(path, payload)
         .then(() => {
-          alert('已新增完成，請到"新增課程"處新增學程內課程。');
+          alert('已新增完成');
         })
         .catch((error) => {
           console.log(error);
