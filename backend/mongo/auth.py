@@ -4,7 +4,6 @@ from flask_jwt_extended import (create_access_token, create_refresh_token,
                                 jwt_required, get_jwt_identity, unset_jwt_cookies)
 from mongo import db
 from datetime import datetime
-from .engine import User
 auth = Blueprint('auth', __name__)
 
 @auth.route('/login', methods = ['POST', 'GET'])
@@ -42,13 +41,6 @@ def sign_up():
         dt = datetime.now()
         role = 1
         collection = db["user"]
-        '''
-        user = User(
-            name = name,
-            email = mail,
-
-        )
-        '''
         collection.insert_one({
             "email" : mail,
             "user_name" : name,
@@ -73,11 +65,5 @@ def userinfo():
     university = u['school']
     major = u['department']
     role = u['role']
-    '''
-    if(u['role'] == 1):
-        role = '學生'
-    else:
-        role = '管理者'
-    '''
     user_data = {'name': name, 'email': email, 'university': university, 'major': major, 'iden': role}
     return jsonify(user_data)

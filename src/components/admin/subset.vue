@@ -4,15 +4,15 @@
       <form @submit.prevent="submitForm">
         <div class="form-group">
           <label for="field" class="custom-label">領域:</label>
-          <select v-model="selectedField" id="field" class="custom-select">
+          <select v-model="newsubsetForm.field" id="field" class="custom-select" required>
             <option  v-for="(f, index) in fields" :key="index">{{ f }}</option>
           </select>
         </div>
   
         <div class="form-group">
           <label for="program" class="custom-label">學程:</label>
-          <select v-model="selectedProgram" id="program" class="custom-select">
-            <option v-for="program in filteredPrograms" :value="program.id">{{ program.name }}</option>
+          <select v-model="newsubsetForm.program" id="program" class="custom-select" required>
+            <option  v-for="(p, index) in programs" :key="index">{{ p }}</option>
           </select>
         </div>
 
@@ -24,37 +24,37 @@
 
         <h2>課程列表:</h2>
         <ul class="custom-ul">
-          <li v-for="course in courses" :key="course.id">
+          <li v-for="c in courses" :key="c.id">
             <label class="custom-label">
-              <input type="checkbox" v-model="selectedCourses" :value="course.id">
-              {{ course.name }}
+              <input type="checkbox" v-model="newsubsetForm.course" >
+              {{ `${c.code} ${c.name}` }}
             </label>
           </li>
         </ul>
   
         <div class="form-group">
           <label class="custom-label">必選或選修:</label>
-          <input type="radio" id="compulsory" value="compulsory" v-model="selectionType">
+          <input type="radio" id="compulsory" value="compulsory" v-model="newsubsetForm.type">
           <label for="compulsory">必修</label>
-          <input type="radio" id="elective" value="elective" v-model="selectionType">
+          <input type="radio" id="elective" value="elective" v-model="newsubsetForm.type">
           <label for="elective">選修</label>
         </div>
   
         <div v-if="selectionType === 'elective'" class="form-group">
           <label for="credits" class="custom-label">最低學分:</label>
-          <input type="number" id="credits" v-model="minimumCredits" class="custom-input" placeholder="輸入數字">
+          <input type="number" id="credits" v-model="newsubsetForm.credit" class="custom-input" placeholder="輸入數字">
         </div>
         <div v-if="selectionType === 'compulsory'" class="form-group">
           <label for="credits" class="custom-label">最低學分:</label>
-          <input type="number" id="credits" v-model="minimumCredits" class="custom-input" placeholder="輸入數字">
+          <input type="number" id="credits" v-model="newsubsetForm.credit" class="custom-input" placeholder="輸入數字">
         </div>
   
         <button type="submit" class="submit-button">確定</button>
       </form>
     </div>
-  </template>
+</template>
   
-  <script>
+<script>
   import axios from 'axios';
   export default {
     data() {
@@ -62,16 +62,17 @@
         fields: [],
         programs: [],
         courses: [],
-        selectedField: null,
-        selectedProgram: null,
-        selectedCourses: [],
-        selectionType: 'compulsory',
-        minimumCredits: null,
-        subfield: '' // 新增的小領域課程欄位
+        newsubsetForm:{
+          field: '',
+          program: '',
+          name: '',
+          course: [],
+          type: '',
+          credit: 0,
+        },
       };
     },
     methods: {
-
       getFields(){
         const path = 'http://127.0.0.1:5000/getfield';
         axios.get(path)
@@ -83,13 +84,45 @@
         });
       },
 
+      getProgram(f){
+        const path = 'http://127.0.0.1:5000/getprogram';
+        axios.post(path, f)
+        .then((res) => {
+          this.programs = res.data;
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      },
+
+      getcourses(p){
+        const path = 'http://127.0.0.1:5000/getcourse';
+        axios.post(path, {program: p})
+        .then((res) => {
+          this.courses = res.data;
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      },
+
       submitForm() {
-        console.log({
-          selectedField: this.selectedField,
-          selectedProgram: this.selectedProgram,
-          selectedCourses: this.selectedCourses,
-          selectionType: this.selectionType,
-          minimumCredits: this.minimumCredits
+        const payload = {
+          field: this.newsubsetForm.field,
+          program: this.newsubsetForm.program,
+          type: this.newsubsetForm.type,
+          name: this.newsubsetForm.name,
+          course: this.newsubsetForm.course,
+          credit: this.newsubsetForm.credit,
+        }
+        const path = 'http://127.0.0.1:5000/addsubset';
+        axios.post(path, payload)
+        .then(() => {
+          console.log('表單已提交');
+          alert('新增成功。');
+        })
+        .catch((error) => {
+          console.error(error);
         });
       }
     },
@@ -98,33 +131,15 @@
     this.getFields();
     },
 
-    computed: {
-      filteredPrograms() {
-        return this.programs.filter(program => program.fieldId === this.selectedField);
-      }
-    },
     watch: {
-      selectedField() {
-        this.selectedProgram = null; // Reset selected program when changing field
-      }
+      "newsubsetForm.field": function(){
+        this.getProgram(this.newsubsetForm.field);
+      },
+      "newsubsetForm.program": function(){
+        this.getcourses(this.newsubsetForm.program);
+      },
     },
-    mounted() {
-      this.programs = [
-        { id: 1, name: '基礎管理學分學程', fieldId: 1 },
-        { id: 2, name: '財務金融學分學程', fieldId: 1 },
-        { id: 3, name: '國際關係與外交學程', fieldId: 2 },
-        { id: 4, name: '全英語學分學程', fieldId: 2 },
-        // 其他學程...
-      ];
-      this.courses = [
-        { id: 1, name: '課程A' },
-        { id: 2, name: '課程B' },
-        //
-      // 其他課程...
-      ];
-  }
 };
-
 </script>
 
 <style scoped>
