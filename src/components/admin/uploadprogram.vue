@@ -1,22 +1,47 @@
 <template>
   <div>
     <h1>新增學程</h1>
+    <div class="form-group">
+      <label for="programName" class="custom-label">學程名稱：</label>
+      <input type="text" id="programName" v-model="newProgramName" class="custom-input" placeholder="請輸入學程名稱">
+    </div>
+
     <form @submit.prevent="confirmAdd">
       <div class="form-group">
-        <label class="custom-label">請選擇要加入的課程：</label>
-        <div class="course-grid">
-          <label v-for="(course, index) in courses" :key="index" class="course-checkbox">
-            <input type="checkbox" v-model="selectedCourses" > {{ course.code }} {{ course.name }}
-          </label>
+        <label for="searchCourse" class="custom-label">請輸入要加入的課程代碼：</label>
+        <input type="text" id="searchCourse" v-model="searchQuery" class="custom-input" placeholder="請輸入課程代碼">
+        <button type="button" class="toggle-button" @click="toggleCourseList">
+          {{ showCourseList ? '隱藏清單' : '顯示清單' }}
+        </button>
+      </div>
+
+      <v-list v-show="showCourseList">
+        <v-list-item v-for="course in filteredCourses" :key="course.id">
+          <template v-slot:default="{ active }">
+            <v-list-item-action>
+              <v-checkbox-btn :model-value="active" color="primary" @click="toggleCourse(course.id)"></v-checkbox-btn>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>{{ course.code }}</v-list-item-title>
+              <v-list-item-subtitle>{{ course.name }}</v-list-item-subtitle>
+            </v-list-item-content>
+          </template>
+        </v-list-item>
+      </v-list>
+
+      <div class="form-group">
+        <label for="programName" class="custom-label">已選課程：</label>
+        <div class="selected-courses">
+          <v-chip v-for="courseId in selectedCourses" :key="courseId" @click="removeCourse(courseId)">
+            {{ getCourseName(courseId) }}
+            <v-icon small>mdi-close</v-icon>
+          </v-chip>
         </div>
       </div>
 
       <div class="form-group">
-        <label for="programName" class="custom-label">請輸入新增學程名稱：</label>
-        <input type="text" id="programName" v-model="newProgramName" class="custom-input" placeholder="ex: 全英語學分學程" required>
+        <button type="submit" class="submit-button">確認新增</button>
       </div>
-
-      <button type="submit" class="submit-button">確認新增</button>
     </form>
   </div>
 </template>
@@ -27,25 +52,34 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      courses: [], // 存放從後端取得的課程列表
-      selectedCourses: [], // 存放使用者選擇的課程
-      newProgramName: '', // 新增學程的名稱
+      courses: [ 
+        { id: 1, code: 'PGUA005', name: '會計學' },
+        { id: 2, code: 'PGUA006', name: '經濟學' },
+        { id: 3, code: 'PGUA004', name: '行銷管理' },
+        // 這邊是測試用 寫死的
+      ],
+      selectedCourses: [], 
+      newProgramName: '', 
+      searchQuery: '', 
+      showCourseList: false, 
     };
   },
+  computed: {
+    filteredCourses() {
+      return this.courses.filter(course => {
+        return course.code.toLowerCase().includes(this.searchQuery.toLowerCase());
+      });
+    }
+  },
   methods: {
-    // 從後端取得課程列表
-    getCourses() {
-      const path = 'http://127.0.0.1:5000/getcourse';
-      axios.get(path)
-        .then((res) => {
-          this.courses = res.data;
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+    toggleCourse(courseId) {
+      if (this.selectedCourses.includes(courseId)) {
+        this.selectedCourses = this.selectedCourses.filter(id => id !== courseId);
+      } else {
+        this.selectedCourses.push(courseId);
+      }
     },
 
-    // 新增學程
     addProgram(payload) {
       const path = 'http://127.0.0.1:5000/addprogram';
       axios.post(path, payload)
@@ -57,94 +91,132 @@ export default {
         });
     },
 
-    // 確認新增
     confirmAdd() {
-      const payload = {
-        name: this.newProgramName,
-        courses: this.selectedCourses, // 將使用者選擇的課程一併傳送到後端
-      };
-      this.addProgram(payload);
+    const payload = {
+      name: this.newProgramName,
+      courses: this.selectedCourses, 
+    };
+    
+  },
+
+
+
+    toggleCourseList() {
+      this.showCourseList = !this.showCourseList;
+    },
+
+    getCourseName(courseId) {
+      const course = this.courses.find(course => course.id === courseId);
+      return course ? course.name : '';
+    },
+
+    removeCourse(courseId) {
+      this.selectedCourses = this.selectedCourses.filter(id => id !== courseId);
     }
   },
   created() {
-    this.getCourses();
   }
 };
 </script>
-  
-  <style scoped>
-  h1 {
-    margin-bottom: 20px;
-    font-family: 'Arial', sans-serif;
-    color: #333;
-  }
-  
-  .form-group {
-    margin-bottom: 20px; 
-  }
-  
-  .custom-label {
-    display: block;
-    margin-bottom: 15px; 
-    font-weight: bold;
-  }
-  
-  .custom-select {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
-    background-color: #fff;
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-  }
-  
-  .custom-input {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
-    background-color: #fff;
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-    margin-top: 5px; 
-  }
-  
-  .submit-button {
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #b8bfc6;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .submit-button:hover {
-    background-color: #727a83;
-  }
-  
-  .custom-select:hover,
-  .custom-input:hover {
-    border-color: #aaa;
-  }
-  
-  .custom-select:focus,
-  .custom-input:focus {
-    border-color: #4d90fe;
-    outline: 0;
-    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-  }
-  .course-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 10px;
+
+<!-- //----------------------------------------- -->
+<style scoped>
+h1 {
+  margin-bottom: 20px;
+  font-family: 'Arial', sans-serif;
+  color: #333;
+}
+
+.form-group {
+  margin-bottom: 20px; 
+}
+
+.custom-label {
+  display: block;
+  margin-bottom: 15px; 
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.custom-select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  background-color: #fff;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.custom-input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  background-color: #fff;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  margin-top: 5px; 
+}
+
+.submit-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #b8bfc6;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+  background-color: #727a83;
+}
+
+.custom-select:hover,
+.custom-input:hover {
+  border-color: #aaa;
+}
+
+.custom-select:focus,
+.custom-input:focus {
+  border-color: #4d90fe;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+.course-grid {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+grid-gap: 10px;
 }
 
 .course-checkbox {
-  display: block;
+display: block;
+}
+.toggle-button {
+  margin-top: 10px;
+  background-color: #b8bfc6;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 8px 16px;
+  margin-left: 10px; 
 }
 
-  </style>
+.toggle-button:hover {
+  background-color: #727a83;
+}
+
+.selected-courses {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.selected-courses v-chip {
+  margin-right: 5px;
+  margin-bottom: 5px;
+}
+</style>
   

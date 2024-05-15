@@ -7,14 +7,14 @@
         <input type="text" id="domainName" v-model="domainName" class="custom-input" placeholder="ex:商業管理">
       </div>
 
-      <div class="form-group">
+      <!-- <div class="form-group">
         <label class="custom-label">請選擇要加入的學程：</label>
         <div class="course-grid">
           <label v-for="(program, index) in programs" :key="index" class="program-checkbox">
             <input type="checkbox" v-model="selectedPrograms" :value="program.id"> {{ program.name }}
           </label>
         </div>
-      </div>
+      </div> -->
 
       <button type="submit" class="submit-button">確認新增</button>
     </form>

@@ -32,13 +32,13 @@
           </li>
         </ul>
   
-        <div class="form-group">
+        <!-- <div class="form-group">
           <label class="custom-label">必選或選修:</label>
           <input type="radio" id="compulsory" value="compulsory" v-model="newsubsetForm.type">
           <label for="compulsory">必修</label>
           <input type="radio" id="elective" value="elective" v-model="newsubsetForm.type">
           <label for="elective">選修</label>
-        </div>
+        </div> -->
   
         <div v-if="selectionType === 'elective'" class="form-group">
           <label for="credits" class="custom-label">最低學分:</label>
