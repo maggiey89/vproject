@@ -69,9 +69,14 @@ export default {
       }
       const path = 'http://127.0.0.1:5000/addcourse';
       axios.post(path, payload)
-      .then(() => {
-        console.log('表單已提交');
-        alert('已新增課程。');
+      .then((res) => {
+        const data = res.data;
+        if (data.error) {
+          alert(data.error);
+        } else {
+          alert('已新增課程。');
+          console.log('表單已提交');
+        }
       })
       .catch((error) => {
         console.error(error);

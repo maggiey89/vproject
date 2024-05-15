@@ -10,13 +10,15 @@ def user_add_course():
     if request.method == "POST":
         course = request.get_json()
         code = course.get('course')
-        #collection = db['course']
-        #c = collection.find_one({'code': code})
-        #if c:
-        email = get_jwt_identity()
-        collection = db['user']
-        collection.update_one({"email": email}, {"$push": {"courses": code}})
-        return jsonify({'success': 'success'})
+        collection = db['course']
+        c = collection.find_one({'code': code})
+        if c:
+            email = get_jwt_identity()
+            collection = db['user']
+            collection.update_one({"email": email}, {"$push": {"courses": code}})
+            return jsonify({'success': 'success'})
+        else:
+            return jsonify(error = '學分學程中無此課程。')
     
 @course.route('/usercourses', methods = ['GET'])
 @jwt_required()

@@ -12,6 +12,12 @@ def add_course():
         code = course.get('code')
         credit = course.get('credit')
         colletion = db['course']
+        c = colletion.find_one({"code" : code})
+        if c:
+            return jsonify(error = '課程已存在。')
+        c = colletion.find_one({'name' : name})
+        if c:
+            return jsonify(error = '課程已存在。')
         colletion.insert_one({
             "code": code,
             "name": name,
