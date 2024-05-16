@@ -19,7 +19,7 @@
         <v-list-item v-for="course in filteredCourses" :key="course.id">
           <template v-slot:default="{ active }">
             <v-list-item-action>
-              <v-checkbox-btn :model-value="active" color="primary" @click="toggleCourse(course)"></v-checkbox-btn>
+              <v-checkbox-btn :model-value="active" color="primary" @click="toggleCourse(course.code)"></v-checkbox-btn>
             </v-list-item-action>
             <v-list-item-content>
               <v-list-item-title>{{ course.code }}</v-list-item-title>
@@ -33,7 +33,7 @@
         <label for="programName" class="custom-label">已選課程：</label>
         <div class="selected-courses">
           <v-chip v-for="courseId in selectedCourses" :key="courseId" @click="removeCourse(courseId)">
-            {{ courseId.name }}
+            {{ getCourseName(courseId) }}
             <v-icon small>mdi-close</v-icon>
           </v-chip>
         </div>
@@ -111,7 +111,7 @@ export default {
     },
 
     getCourseName(courseId) {
-      const course = this.courses.find(course => course.id === courseId);
+      const course = this.courses.find(course => course.code === courseId);
       return course ? course.name : '';
     },
 
