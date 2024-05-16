@@ -49,6 +49,6 @@
 }
 .redtext {
   color: red;
-  opacity: 50%;
+  opacity: 60%;
 }
 </style>
