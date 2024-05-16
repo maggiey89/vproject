@@ -72,7 +72,19 @@ export default {
     }
   },
   methods: {
+    getcourses(){
+      const path = 'http://127.0.0.1:5000/getcourses';
+      axios.get(path)
+        .then((res) => {
+          this.courses = res.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
     toggleCourse(courseId) {
+      
       if (this.selectedCourses.includes(courseId)) {
         this.selectedCourses = this.selectedCourses.filter(id => id !== courseId);
       } else {
@@ -115,6 +127,7 @@ export default {
     }
   },
   created() {
+    this.getcourses();
   }
 };
 </script>

@@ -77,7 +77,7 @@ import axios from 'axios';
 
     methods: {
       getcourses(){
-        const path = 'http://127.0.0.1:5000/getcourse';
+        const path = 'http://127.0.0.1:5000/getcourses';
         axios.post(path, {program: 'ESG永續管理學分學程'})
         .then((res) => {
           this.courses = res.data;

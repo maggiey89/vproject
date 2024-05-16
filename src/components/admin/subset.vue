@@ -96,7 +96,7 @@
       },
 
       getcourses(p){
-        const path = 'http://127.0.0.1:5000/getcourse';
+        const path = 'http://127.0.0.1:5000/getcourses';
         axios.post(path, {program: p})
         .then((res) => {
           this.courses = res.data;
