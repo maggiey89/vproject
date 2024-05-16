@@ -2,10 +2,12 @@
   <v-expansion-panel v-for="data in courses" :key="data.title" :title="data.title">
 
     <v-progress-linear :model-value="data.complete"
-      :class="{ 'redtext': data.complete < 30, 'yellowtext': data.complete >= 30 && data.complete < 70, 'greentext': data.complete >= 70 }"
-
+      :class="{ 'redtext': data.complete < 30, 
+                'yellowtext': data.complete >= 30 && data.complete < 70, 
+                'greentext': data.complete >= 70 }"
     >
     </v-progress-linear>
+
     <v-expansion-panel-text>
       <component :is="data.content"/>
     </v-expansion-panel-text>
@@ -65,14 +67,3 @@ export default {
 }
 
 </script>
-<style>
-.greentext {
-  color: green;
-}
-.yellowtext {
-  color: rgb(236, 236, 140);
-}
-.redtext{
-  color: red
-}
-</style>

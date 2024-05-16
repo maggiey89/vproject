@@ -1,12 +1,17 @@
 <template>
-      <v-expansion-panel v-for="data in courses" :key="data.title" :title="data.title">
-        <!--v-expansion-panel-title expand-icon="mdi-menu-down">
-          {{ data.title }}
-        </v-expansion-panel-title-->
-        <v-expansion-panel-text>
-          <component :is="data.content"/>
-        </v-expansion-panel-text>
-      </v-expansion-panel>
+  <v-expansion-panel v-for="data in courses" :key="data.title" :title="data.title">
+
+    <v-progress-linear :model-value="data.complete"
+      :class="{ 'redtext': data.complete < 30, 
+                'yellowtext': data.complete >= 30 && data.complete < 70, 
+                'greentext': data.complete >= 70 }"
+    >
+    </v-progress-linear>
+
+    <v-expansion-panel-text>
+      <component :is="data.content"/>
+    </v-expansion-panel-text>
+  </v-expansion-panel>
   </template>
   
 <script>
@@ -25,14 +30,17 @@
       {
         title: '國際關係與外交學分學程',
         content: '國際關係',
+        complete: 0,
       },
       {
         title: '全英語學分學程',
         content: '全英語',
+        complete: 0,
       },
       {
         title: '國際足跡學分學程',
         content: '國際足跡',
+        complete: 0,
       },
       ],
     }
