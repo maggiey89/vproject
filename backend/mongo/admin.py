@@ -31,15 +31,15 @@ def add_program():
         program = request.get_json()
         courses = program.get('courses')
         name = program.get('name')
-        print(courses)
-        '''
+        codes = []
+        for c in courses:
+            codes.append(c['code'])
         collection = db["program"]
         collection.insert_one({
-            "field": field,
-            "name": name
+            "name": name,
+            "courses": codes
         })
-        '''
-    return jsonify({'success': 'success'})
+    return jsonify(success = 'success')
 
 @admin.route('/addfield', methods = ['POST'])
 def add_field():

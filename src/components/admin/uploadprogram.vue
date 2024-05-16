@@ -19,7 +19,7 @@
         <v-list-item v-for="course in filteredCourses" :key="course.id">
           <template v-slot:default="{ active }">
             <v-list-item-action>
-              <v-checkbox-btn :model-value="active" color="primary" @click="toggleCourse(course.id)"></v-checkbox-btn>
+              <v-checkbox-btn :model-value="active" color="primary" @click="toggleCourse(course)"></v-checkbox-btn>
             </v-list-item-action>
             <v-list-item-content>
               <v-list-item-title>{{ course.code }}</v-list-item-title>
@@ -33,7 +33,7 @@
         <label for="programName" class="custom-label">已選課程：</label>
         <div class="selected-courses">
           <v-chip v-for="courseId in selectedCourses" :key="courseId" @click="removeCourse(courseId)">
-            {{ getCourseName(courseId) }}
+            {{ courseId.name }}
             <v-icon small>mdi-close</v-icon>
           </v-chip>
         </div>
@@ -52,12 +52,7 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      courses: [ 
-        { id: 1, code: 'PGUA005', name: '會計學' },
-        { id: 2, code: 'PGUA006', name: '經濟學' },
-        { id: 3, code: 'PGUA004', name: '行銷管理' },
-        // 這邊是測試用 寫死的
-      ],
+      courses: [],
       selectedCourses: [], 
       newProgramName: '', 
       searchQuery: '', 
@@ -92,23 +87,21 @@ export default {
       }
     },
 
-    addProgram(payload) {
+    confirmAdd() {
+      const payload = {
+        name: this.newProgramName,
+        courses: this.selectedCourses, 
+      };
       const path = 'http://127.0.0.1:5000/addprogram';
       axios.post(path, payload)
-        .then(() => {
-          alert('已新增完成');
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-
-    confirmAdd() {
-    const payload = {
-      name: this.newProgramName,
-      courses: this.selectedCourses, 
-    };
-    
+      .then((res) => {
+        if(res.data.success){
+          alert("學分學程新增成功。");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   },
 
 
