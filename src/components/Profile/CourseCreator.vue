@@ -78,7 +78,7 @@ export default {
         this.selectedItems = [];
     },
     emitCourse(word) {
-        if (!this.courseList.has(word)) {
+        if (!this.emittedWords.has(word)) {
             this.$emit('create-course', word);
             this.emittedWords.add(word);
         }
