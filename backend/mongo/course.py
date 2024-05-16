@@ -27,7 +27,7 @@ def get_user_courses():
     collection = db['user']
     user = collection.find_one({"email": email})
     if user:
-        return jsonify({'courses': user['courses']})
+        return jsonify(user['courses'])
 
 @course.route('/getfield', methods = ['GET'])
 def all_field():
@@ -50,8 +50,8 @@ def getProgram():
             programs.append(program)
         return jsonify(programs)
     
-@course.route('/getcourse', methods = ['POST', 'GET'])
-def get_course():
+@course.route('/getcourses', methods = ['POST', 'GET'])
+def get_courses():
     if request.method == 'POST':
         p = request.get_json()
         program = p['program']
@@ -68,3 +68,11 @@ def get_course():
             c['_id'] = ''
             courses.append(c)
         return jsonify(courses)
+
+@course.route('/getonecourse', methods = ['POST', 'GET'])
+def get_one_course():
+    if request.method == 'POST':
+        code = request.get_data(as_text=True)
+        collection = db['course']
+        course = collection.find_one({'code': code})
+        return jsonify(course)
