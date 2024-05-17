@@ -16,7 +16,7 @@
       </div>
 
       <v-list v-show="showCourseList">
-        <v-list-item v-for="course in filteredCourses" :key="course.id">
+        <v-list-item v-for="course in filteredCourses" :key="course.code">
           <template v-slot:default="{ active }">
             <v-list-item-action>
               <v-checkbox-btn :model-value="active" color="primary" @click="toggleCourse(course.code)"></v-checkbox-btn>
