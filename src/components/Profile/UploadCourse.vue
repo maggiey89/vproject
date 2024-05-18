@@ -1,5 +1,7 @@
 <template>
   
+    
+
     <CourseCreator @create-course="createCourse"/>
     
     <CourseItems v-for="(course, index) in courseList" 
@@ -66,3 +68,11 @@ const deleteCourse = (courseId) => {
 };
 
 </script>
+
+<style>
+.v-select{
+    width: 200px; 
+    height: 50px; 
+    margin-bottom: 20px;
+}
+</style>

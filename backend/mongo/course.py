@@ -69,10 +69,15 @@ def get_courses():
             courses.append(c)
         return jsonify(courses)
 
-@course.route('/getonecourse', methods = ['POST', 'GET'])
-def get_one_course():
+@course.route('/getcoursesbycode', methods = ['POST', 'GET'])
+def getcourses_by_code():
     if request.method == 'POST':
-        code = request.get_data(as_text=True)
+        code = request.get_json()
+        codes = code['code']
+        courses = []
         collection = db['course']
-        course = collection.find_one({'code': code})
-        return jsonify(course)
+        for c in codes:
+            course = collection.find_one({"code": c})
+            course['_id'] = ''
+            courses.append(course)
+        return jsonify(courses)

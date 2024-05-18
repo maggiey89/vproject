@@ -17,11 +17,19 @@
         <input type="text" id="searchCourse" v-model="searchQuery" class="custom-input" placeholder="ex:PGUA005">
       </div>
 
+<<<<<<< HEAD
       <v-list class="course-list">
         <v-list-item v-for="course in filteredCourses" :key="course.id" :value="course.id" @click="toggleCourse(course)">
           <template v-slot:prepend="{ isActive }">
             <v-list-item-action start>
               <v-checkbox-btn :model-value="isActive" color="primary"></v-checkbox-btn>
+=======
+      <v-list v-show="showCourseList">
+        <v-list-item v-for="course in filteredCourses" :key="course.code">
+          <template v-slot:default="{ active }">
+            <v-list-item-action>
+              <v-checkbox-btn :model-value="active" color="primary" @click="toggleCourse(course.code)"></v-checkbox-btn>
+>>>>>>> b5ea844c8a48124fdf12f8b32dfd37bce54422c1
             </v-list-item-action>
           </template>
           <v-list-item-content>
@@ -36,7 +44,7 @@
         <label for="programName" class="custom-label">已選課程：</label>
         <div class="selected-courses">
           <v-chip v-for="courseId in selectedCourses" :key="courseId" @click="removeCourse(courseId)">
-            {{ courseId.name }}
+            {{ getCourseName(courseId) }}
             <v-icon small>mdi-close</v-icon>
           </v-chip>
         </div>
@@ -116,7 +124,7 @@ export default {
     },
 
     getCourseName(courseId) {
-      const course = this.courses.find(course => course.id === courseId);
+      const course = this.courses.find(course => course.code === courseId);
       return course ? course.name : '';
     },
 

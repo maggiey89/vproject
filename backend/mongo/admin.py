@@ -29,16 +29,14 @@ def add_course():
 def add_program():
     if request.method == "POST":
         program = request.get_json()
-        courses = program.get('courses')
+        codes = program.get('courses')
         name = program.get('name')
-        codes = []
-        for c in courses:
-            codes.append(c['code'])
         collection = db["program"]
         collection.insert_one({
             "name": name,
-            "courses": codes
+            "courses": codes,
         })
+
     return jsonify(success = 'success')
 
 @admin.route('/addfield', methods = ['POST'])
