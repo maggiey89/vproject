@@ -47,3 +47,9 @@
   },
 }
   </script>
+
+<style>
+.v-data-table {
+  width: 100%;
+}
+</style>
