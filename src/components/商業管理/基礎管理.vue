@@ -27,7 +27,7 @@
             </tr>
         </thead>
         <tbody>
-        <tr v-for="item in compulsary" :key="item.name" :class="{ 'textcolor': item.code == 'PGUA006' }">
+        <tr v-for="item in courses" :key="item.name" :class="{ 'textcolor': item.code == 'PGUA006' }">
             <td width="300px">{{ item.code }}</td>
             <td width="300px">{{ item.name }}</td>
             <td>{{ item.credit }}</td>
@@ -49,13 +49,13 @@
                 </th>
             </tr>
         </thead>
-        <tbody>
+        <!--tbody>
         <tr v-for="item in electives" :key="item.name">
             <td width="300px">{{ item.code }}</td>
             <td width="300px">{{ item.name }}</td>
             <td>{{ item.credit }}</td>
         </tr>
-        </tbody>
+        </tbody-->
     </v-table>
 </template>
 
@@ -76,11 +76,12 @@ import axios from 'axios';
     methods: {
       getcourses(){
         const path = 'http://127.0.0.1:5000/getcourses';
-        axios.post(path, {program: '基礎管理學分學程'})
+        const program = '基礎管理學分學程'
+        axios.post(path, program)
         .then((res) => {
           this.courses = res.data;
-          this.compulsary = this.courses.filter(course => course.type === 1)
-          this.electives = this.courses.filter(course => course.type === 0)
+          //this.compulsary = this.courses.filter(course => course.type === 1)
+          //this.electives = this.courses.filter(course => course.type === 0)
         })
         .catch((error) => {
           console.error(error);
@@ -111,7 +112,9 @@ import axios from 'axios';
     },
     created(){
       this.getcourses();
-      this.getusercourses();
+      if(localStorage.getItem('user')){
+        this.getusercourses();
+      }
     }
 }
 

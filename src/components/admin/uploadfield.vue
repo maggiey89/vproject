@@ -3,7 +3,7 @@
     <h1>新增領域</h1>
     <form @submit.prevent="confirmAdd">
       <div class="form-group">
-        <label for="domainName" class="custom-label">請使用者輸入領域名稱：</label>
+        <label for="domainName" class="custom-label">請輸入領域名稱：</label>
         <input type="text" id="domainName" v-model="domainName" class="custom-input" placeholder="ex:商業管理">
       </div>
 

@@ -18,13 +18,13 @@
 
         <div class="form-group">
           <label for="subfield" class="custom-label">小領域課程名稱:</label>
-          <input type="text" id="subfield" v-model="subfield" class="custom-input" placeholder="ex:資訊工程基礎領域">
+          <input type="text" id="subfield" v-model="subfield" class="custom-input" placeholder="ex:資訊工程基礎領域" required>
         </div>
 
 
         <h2>課程列表:</h2>
         <ul class="custom-ul">
-          <li v-for="c in courses" :key="c.id">
+          <li v-for="c in courses" :key="c.code">
             <label class="custom-label">
               <input type="checkbox" v-model="newsubsetForm.course" >
               {{ `${c.code} ${c.name}` }}
@@ -97,7 +97,8 @@
 
       getcourses(p){
         const path = 'http://127.0.0.1:5000/getcourses';
-        axios.post(path, {program: p})
+        const program = p;
+        axios.post(path, program)
         .then((res) => {
           this.courses = res.data;
         })
