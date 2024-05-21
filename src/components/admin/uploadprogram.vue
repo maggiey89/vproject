@@ -3,12 +3,14 @@
     <h1>新增學程</h1>
     <div class="form-group">
       <label for="programName" class="custom-label">學程名稱：</label>
-      <input type="text" id="programName" v-model="newProgramName" class="custom-input" placeholder="ex:基礎管理學分學程">
+      <input type="text" id="programName" v-model="newProgramName" class="custom-input" placeholder="ex:基礎管理學分學程" required>
     </div>
 
     <div class="form-group">
       <label for="programCategory" class="custom-label">所屬類別：</label>
-      <input type="text" id="programCategory" v-model="newProgramCategory" class="custom-input" placeholder="ex:商業管理">
+      <select v-model="newProgramCategory" id="program" class="custom-select" required>
+            <option  v-for="(f, index) in fields" :key="index">{{ f }}</option>
+      </select>
     </div>
 
     <form @submit.prevent="confirmAdd">
@@ -56,7 +58,8 @@ export default {
   data() {
     return {
       courses: [],
-      selectedCourses: [], 
+      selectedCourses: [],
+      fields: [], 
       newProgramName: '', 
       searchQuery: '', 
       showCourseList: false, 
@@ -71,6 +74,16 @@ export default {
     }
   },
   methods: {
+    getFields(){
+      const path = 'http://127.0.0.1:5000/getfield';
+      axios.get(path)
+      .then((res) => {
+        this.fields = res.data;
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+    },
     getcourses(){
       const path = 'http://127.0.0.1:5000/getcourses';
       axios.get(path)
@@ -93,6 +106,7 @@ export default {
 
     confirmAdd() {
       const payload = {
+        field: this.newProgramCategory,
         name: this.newProgramName,
         category: this.newProgramCategory,
         courses: this.selectedCourses, 
@@ -116,7 +130,7 @@ export default {
     },
 
     getCourseName(courseId) {
-      const course = this.courses.find(course => course.id === courseId);
+      const course = this.courses.find(course => course.code === courseId);
       return course ? course.name : '';
     },
 
@@ -126,6 +140,7 @@ export default {
   },
   created() {
     this.getcourses();
+    this.getFields();
   }
 };
 </script>

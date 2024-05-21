@@ -50,16 +50,23 @@ def getProgram():
             programs.append(program)
         return jsonify(programs)
     
+def get_course_info(code):
+    collection = db['course']
+    c = collection.find_one({'code': code})
+    course = {'name': c['name'], 'code': c['code'], 'credit': c['credit']}
+    return course
+    
 @course.route('/getcourses', methods = ['POST', 'GET'])
 def get_courses():
     if request.method == 'POST':
-        p = request.get_json()
-        program = p['program']
+        program = request.get_data(as_text=True)
         courses = []
-        collection = db['course']
-        for c in collection.find({'program': program}):
-            c['_id'] = ''
-            courses.append(c)
+        collection = db['program']
+        p = collection.find_one({'name': program})
+        codes = p['courses']
+        for c in codes:
+            course = get_course_info(c)
+            courses.append(course)
         return jsonify(courses)
     else:
         courses = []
@@ -75,9 +82,7 @@ def getcourses_by_code():
         code = request.get_json()
         codes = code['code']
         courses = []
-        collection = db['course']
         for c in codes:
-            course = collection.find_one({"code": c})
-            course['_id'] = ''
+            course = get_course_info(c)
             courses.append(course)
         return jsonify(courses)
