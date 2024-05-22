@@ -23,7 +23,7 @@ def add_course():
             "name": name,
             "credit": credit,
         })
-        return jsonify({'success': 'success'})
+        return jsonify(success = 'success')
 
 @admin.route('/addprogram', methods = ['POST'])
 def add_program():
@@ -52,7 +52,7 @@ def add_field():
         collection.insert_one({
             "name": name
         })
-    return jsonify({'success': 'success'})
+    return jsonify(success = 'success')
 
 @admin.route('/addsubset', methods = ['POST'])
 def add_subset():
@@ -62,19 +62,13 @@ def add_subset():
         program = subset.get('program')
         name = subset.get('name')
         courses = subset.get('course')
-        required = subset.get('type')
         credit = subset.get('credit')
-        if required == 'compulsory':
-            required = 1
-        else:
-            required = 0
         collection = db["subset"]
         collection.insert_one({
             "field": field,
             "program": program,
             "name": name,
             "courses": courses,
-            "type": required,
             "credit": credit,
         })
-        return jsonify({'success': 'success'})
+        return jsonify(success = 'success')

@@ -27,7 +27,7 @@
             </tr>
         </thead>
         <tbody>
-        <tr v-for="item in courses" :key="item.name" :class="{ 'textcolor': item.code == 'PGUA006' }">
+        <tr v-for="item in courses" :key="item.name" :class="{ 'textcolor': usercourses.includes(item.code) }">
             <td width="300px">{{ item.code }}</td>
             <td width="300px">{{ item.name }}</td>
             <td>{{ item.credit }}</td>
@@ -66,15 +66,14 @@ import axios from 'axios';
   export default {
     data() {
       return {
-        compulsary: [],
-        electives: [],
         usercourses:[],
         courses: [],
       }
     },
 
     methods: {
-      getcourses(){
+      async getcourses(){
+        await this.getusercourses();
         const path = 'http://127.0.0.1:5000/getcourses';
         const program = '基礎管理學分學程'
         axios.post(path, program)
@@ -98,12 +97,11 @@ import axios from 'axios';
         }
       },
 
-      getusercourses(){
+      async getusercourses(){
         const path = 'http://127.0.0.1:5000/usercourses';
         axios.get(path, { headers: this.header() })
         .then((res) => {
           this.usercourses = res.data;
-          
         })
         .catch((error) => {
           console.error(error);
@@ -112,9 +110,9 @@ import axios from 'axios';
     },
     created(){
       this.getcourses();
-      if(localStorage.getItem('user')){
+      /*if(localStorage.getItem('user')){
         this.getusercourses();
-      }
+      }*/
     }
 }
 
