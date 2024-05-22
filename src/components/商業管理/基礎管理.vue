@@ -73,8 +73,10 @@ import axios from 'axios';
 
     methods: {
       async getcourses(){
-        await this.getusercourses();
-        const path = 'http://127.0.0.1:5000/getcourses';
+        if(localStorage.getItem('user')){
+          await this.getusercourses();
+        }
+        const path = 'http://127.0.0.1:5000/getsubset';
         const program = '基礎管理學分學程'
         axios.post(path, program)
         .then((res) => {

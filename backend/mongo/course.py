@@ -86,3 +86,15 @@ def getcourses_by_code():
             course = get_course_info(c)
             courses.append(course)
         return jsonify(courses)
+    
+@course.route('/getsubset', methods = ['POST'])
+def get_subset():
+    if request.method == 'POST':
+        program = request.get_data(as_text=True)
+        subsets = []
+        collection = db['subset']
+        for s in collection.find({'program': program}):
+            subset = {'name': s['name'], 'courses': s['courses'], 'credit': s['credit']}
+            subsets.append(subset)
+        print(subsets)
+        return jsonify(success = 'success')
