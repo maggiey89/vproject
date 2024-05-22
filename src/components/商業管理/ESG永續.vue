@@ -29,7 +29,7 @@
             </tr>
         </thead>
         <tbody>
-        <tr v-for="item in compulsary" :key="item.name">
+        <tr v-for="item in courses" :key="item.name">
           <td width="300px">{{ item.code }}</td>
           <td width="300px">{{ item.name }}</td>
           <td>{{ item.credit }}</td>
@@ -51,13 +51,13 @@
                 </th>
             </tr>
         </thead>
-        <tbody>
+        <!--tbody>
         <tr v-for="item in electives" :key="item.name">
           <td width="300px">{{ item.code }}</td>
             <td width="300px">{{ item.name }}</td>
             <td>{{ item.credit }}</td>
         </tr>
-        </tbody>
+        </tbody-->
     </v-table>
 </template>
 
@@ -68,21 +68,21 @@ import axios from 'axios';
   export default {
     data() {
       return {
-        compulsary: [],
-        electives: [],
         usercourses:[],
         courses: [],
       }
     },
 
     methods: {
-      getcourses(){
+      async getcourses(){
+        if(localStorage.getItem('user')){
+          await this.getusercourses();
+        }
         const path = 'http://127.0.0.1:5000/getcourses';
-        axios.post(path, {program: 'ESG永續管理學分學程'})
+        const program = 'ESG永續管理學分學程';
+        axios.post(path, program)
         .then((res) => {
           this.courses = res.data;
-          this.compulsary = this.courses.filter(course => course.type === 1)
-          this.electives = this.courses.filter(course => course.type === 0)
         })
         .catch((error) => {
           console.error(error);
@@ -99,12 +99,11 @@ import axios from 'axios';
         }
       },
 
-      getusercourses(){
+      async getusercourses(){
         const path = 'http://127.0.0.1:5000/usercourses';
         axios.get(path, { headers: this.header() })
         .then((res) => {
           this.usercourses = res.data;
-          
         })
         .catch((error) => {
           console.error(error);
@@ -113,7 +112,6 @@ import axios from 'axios';
     },
     created(){
       this.getcourses();
-      this.getusercourses();
     }
 }
 

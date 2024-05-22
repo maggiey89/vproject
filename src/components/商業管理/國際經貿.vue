@@ -27,14 +27,14 @@
             </tr>
         </thead>
         <tbody>
-        <tr v-for="item in compulsary" :key="item.name">
+        <tr v-for="item in courses" :key="item.name" :class="{ 'textcolor': usercourses.includes(item.code) }">
           <td width="300px">{{ item.code }}</td>
             <td width="300px">{{ item.name }}</td>
             <td>{{ item.credit }}</td>
         </tr>
         </tbody>
     </v-table>
-    <text>選修：1科 3學分</text>
+    <!--text>選修：1科 3學分</text>
     <v-table density="compact" fixed-header>
         <thead>
             <tr>
@@ -56,7 +56,7 @@
             <td>{{ item.credit }}</td>
         </tr>
         </tbody>
-    </v-table>
+    </v-table-->
 </template>
 
 <script>
@@ -66,21 +66,21 @@ import axios from 'axios';
   export default {
     data() {
       return {
-        compulsary: [],
-        electives: [],
         usercourses:[],
         courses: [],
       }
     },
 
     methods: {
-      getcourses(){
+      async getcourses(){
+        if(localStorage.getItem('user')){
+          await this.getusercourses();
+        }
         const path = 'http://127.0.0.1:5000/getcourses';
-        axios.post(path, {program: '國際經貿與涉外事務全英語學分學程'})
+        const program = '國際經貿與涉外事務全英語學分學程'
+        axios.post(path, program)
         .then((res) => {
           this.courses = res.data;
-          this.compulsary = this.courses.filter(course => course.type === 1)
-          this.electives = this.courses.filter(course => course.type === 0)
         })
         .catch((error) => {
           console.error(error);
@@ -97,12 +97,11 @@ import axios from 'axios';
         }
       },
 
-      getusercourses(){
+      async getusercourses(){
         const path = 'http://127.0.0.1:5000/usercourses';
         axios.get(path, { headers: this.header() })
         .then((res) => {
           this.usercourses = res.data;
-          
         })
         .catch((error) => {
           console.error(error);
@@ -111,7 +110,6 @@ import axios from 'axios';
     },
     created(){
       this.getcourses();
-      this.getusercourses();
     }
 }
 
