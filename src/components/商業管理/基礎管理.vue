@@ -27,7 +27,7 @@
             </tr>
         </thead>
         <tbody>
-        <tr v-for="item in courses" :key="item.name" :class="{ 'textcolor': usercourses.includes(item.code) }">
+        <tr v-for="item in course" :key="item.name" :class="{ 'textcolor': usercourses.includes(item.code) }">
             <td width="300px">{{ item.code }}</td>
             <td width="300px">{{ item.name }}</td>
             <td>{{ item.credit }}</td>
@@ -67,7 +67,9 @@ import axios from 'axios';
     data() {
       return {
         usercourses:[],
-        courses: [],
+        course: [],
+        subset: [],
+        subsetcourse: [],
       }
     },
 
@@ -80,13 +82,26 @@ import axios from 'axios';
         const program = '基礎管理學分學程'
         axios.post(path, program)
         .then((res) => {
-          this.courses = res.data;
+          this.course = res.data;
+          for(var i = 0;i < this.course.length;i++){
+            this.subset = this.course[i].courses;
+            this.getcourseinfo(this.subset);
+          }
+          console.log(this.subsetcourse);
           //this.compulsary = this.courses.filter(course => course.type === 1)
           //this.electives = this.courses.filter(course => course.type === 0)
         })
         .catch((error) => {
           console.error(error);
         });
+      },
+
+      getcourseinfo(c){
+        const path = 'http://127.0.0.1:5000/getcoursesbycode';
+        axios.post(path, {code: c})
+        .then((res) => {
+          this.subsetcourse.push(res.data);
+        })
       },
 
       header() {
