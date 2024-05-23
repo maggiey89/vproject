@@ -30,7 +30,7 @@
           </thead>
           <tbody>
           <tr v-for="item in courses" :key="item.name">
-            <td width="300px">{{ item.id }}</td>
+            <td width="300px">{{ item.code }}</td>
             <td width="300px">{{ item.name }}</td>
             <td>{{ item.credit }}</td>
           </tr>
@@ -51,116 +51,65 @@
                   </th>
               </tr>
           </thead>
-          <tbody>
+          <!--tbody>
           <tr v-for="item in electives" :key="item.name">
             <td width="300px">{{ item.id }}</td>
             <td width="300px">{{ item.name }}</td>
             <td>{{ item.credit }}</td>
           </tr>
-          </tbody>
+          </tbody-->
       </v-table>
   </template>
   
   <script>
+import axios from 'axios';
     export default {
       data() {
-        return {
-          courses: [
-            {
-              id: 'ENU5010',
-              name: '主題式中級英語聽講',
-              credit: '2',
-            },
-            {
-              id: 'PGUK003',
-              name: '英語口語溝通技巧',
-              credit: '2',
-            },
-            {
-              id: 'ENU5011',
-              name: '英語溝通討論與思辯知能',
-              credit: '2',
-            },
-            {
-              id: 'ENU5012',
-              name: '英語發表技巧',
-              credit: '2',
-            },
-            {
-              id: 'PGUK008',
-              name: '英文專題報導',
-              credit: '2',
-            },
-            {
-              id: 'ENU5002',
-              name: '情境式英語聽力練習',
-              credit: '2',
-            },
-            {
-              id: 'ENU5006',
-              name: '進階英語聽講練習',
-              credit: '2',
-            },
-            {
-              id: 'ENU5008',
-              name: '英語口語表達',
-              credit: '2',
-            },
-          ],
-          electives: [
-            {
-              id: 'ENU5013',
-              name: '國際時事議題英文',
-              credit: '2',
-            },
-            {
-              id: 'PGUK004',
-              name: '英文散文選讀',
-              credit: '2',
-            },
-            {
-              id: 'ENU5014',
-              name: '英文寫作技巧：連貫性與銜接性',
-              credit: '2',
-            },
-            {
-              id: 'PGUK009',
-              name: '中外文化議題探討',
-              credit: '2',
-            },
-            {
-              id: 'PGUK010',
-              name: '翻譯入門',
-              credit: '2',
-            },
-            {
-              id: 'ENU0277',
-              name: '中英翻譯（一）',
-              credit: '2',
-            },
-            {
-              id: 'ENU0278',
-              name: '中英翻譯（二）',
-              credit: '2',
-            },
-            {
-              id: 'ENU5003',
-              name: '互動式英語閱讀',
-              credit: '2',
-            },
-            {
-              id: 'ENU5007',
-              name: '英美文學作品閱讀',
-              credit: '2',
-            },
-            {
-              id: 'ENU5009',
-              name: '英語閱讀與寫作',
-              credit: '2',
-            },
-          ],
+      return {
+        usercourses:[],
+        courses: [],
+      }
+    },
+
+    methods: {
+      async getcourses(){
+        if(localStorage.getItem('user')){
+          await this.getusercourses();
+        }
+        const path = 'http://127.0.0.1:5000/getcourses';
+        const program = '榮譽英語學分學程'
+        axios.post(path, program)
+        .then((res) => {
+          this.courses = res.data;
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      },
+
+      header() {
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (user && user["access_token"]) {
+          return { Authorization: `Bearer ${user["access_token"]}` };
+        }
+        else {
+          return {};
         }
       },
+
+      async getusercourses(){
+        const path = 'http://127.0.0.1:5000/usercourses';
+        axios.get(path, { headers: this.header() })
+        .then((res) => {
+          this.usercourses = res.data;
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      }
+    },
+    created(){
+      this.getcourses();
+    }
   }
-  
       </script>

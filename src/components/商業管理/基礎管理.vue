@@ -27,7 +27,7 @@
             </tr>
         </thead>
         <tbody>
-        <tr v-for="item in courses" :key="item.name" :class="{ 'textcolor': item.code.includes('06') }">
+        <tr v-for="item in course" :key="item.name" :class="{ 'textcolor': usercourses.includes(item.code) }">
             <td width="300px">{{ item.code }}</td>
             <td width="300px">{{ item.name }}</td>
             <td>{{ item.credit }}</td>
@@ -66,26 +66,42 @@ import axios from 'axios';
   export default {
     data() {
       return {
-        compulsary: [],
-        electives: [],
         usercourses:[],
-        courses: [],
+        course: [],
+        subset: [],
+        subsetcourse: [],
       }
     },
 
     methods: {
-      getcourses(){
-        const path = 'http://127.0.0.1:5000/getcourses';
+      async getcourses(){
+        if(localStorage.getItem('user')){
+          await this.getusercourses();
+        }
+        const path = 'http://127.0.0.1:5000/getsubset';
         const program = '基礎管理學分學程'
         axios.post(path, program)
         .then((res) => {
-          this.courses = res.data;
+          this.subset = res.data;
+          for(var i = 0;i < this.subset.length;i++){
+            this.course = this.subset[i].courses;
+            this.getcourseinfo(this.course);
+          }
+          console.log(this.subsetcourse);
           //this.compulsary = this.courses.filter(course => course.type === 1)
           //this.electives = this.courses.filter(course => course.type === 0)
         })
         .catch((error) => {
           console.error(error);
         });
+      },
+
+      getcourseinfo(c){
+        const path = 'http://127.0.0.1:5000/getcoursesbycode';
+        axios.post(path, {code: c})
+        .then((res) => {
+          this.subsetcourse.push(res.data);
+        })
       },
 
       header() {
@@ -98,12 +114,11 @@ import axios from 'axios';
         }
       },
 
-      getusercourses(){
+      async getusercourses(){
         const path = 'http://127.0.0.1:5000/usercourses';
         axios.get(path, { headers: this.header() })
         .then((res) => {
           this.usercourses = res.data;
-          
         })
         .catch((error) => {
           console.error(error);
@@ -112,9 +127,6 @@ import axios from 'axios';
     },
     created(){
       this.getcourses();
-      if(localStorage.getItem('user')){
-        this.getusercourses();
-      }
     }
 }
 

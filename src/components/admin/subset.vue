@@ -1,7 +1,7 @@
 <template>
     <div>
       <h1>新增小領域</h1>
-      <form @submit.prevent="submitForm">
+      <form @submit="submitForm">
         <div class="form-group">
           <label for="field" class="custom-label">領域:</label>
           <select v-model="newsubsetForm.field" id="field" class="custom-select" required>
@@ -18,19 +18,24 @@
 
         <div class="form-group">
           <label for="subfield" class="custom-label">小領域課程名稱:</label>
-          <input type="text" id="subfield" v-model="subfield" class="custom-input" placeholder="ex:資訊工程基礎領域" required>
+          <input type="text" id="subfield" v-model="newsubsetForm.name" class="custom-input" placeholder="ex:資訊工程基礎領域" required>
         </div>
 
 
         <h2>課程列表:</h2>
-        <ul class="custom-ul">
-          <li v-for="c in courses" :key="c.code">
-            <label class="custom-label">
-              <input type="checkbox" v-model="newsubsetForm.course" >
-              {{ `${c.code} ${c.name}` }}
-            </label>
-          </li>
-        </ul>
+        <v-list class="course-list">
+          <v-list-item v-for="course in courses" :key="course.id" :value="course.id" @click="toggleCourse(course.code)">
+            <template v-slot:prepend="{ isActive }">
+              <v-list-item-action start>
+                <v-checkbox-btn :model-value="isActive" color="primary"></v-checkbox-btn>
+              </v-list-item-action>
+            </template>
+            <v-list-item-content>
+              <v-list-item-title class="course-code">{{ course.code }}</v-list-item-title>
+              <v-list-item-subtitle class="course-name">{{ course.name }}</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
   
         <!-- <div class="form-group">
           <label class="custom-label">必選或選修:</label>
@@ -40,14 +45,14 @@
           <label for="elective">選修</label>
         </div> -->
   
-        <div v-if="selectionType === 'elective'" class="form-group">
+        <div class="form-group">
           <label for="credits" class="custom-label">最低學分:</label>
           <input type="number" id="credits" v-model="newsubsetForm.credit" class="custom-input" placeholder="輸入數字">
         </div>
-        <div v-if="selectionType === 'compulsory'" class="form-group">
+        <!--div v-if="selectionType === 'compulsory'" class="form-group">
           <label for="credits" class="custom-label">最低學分:</label>
           <input type="number" id="credits" v-model="newsubsetForm.credit" class="custom-input" placeholder="輸入數字">
-        </div>
+        </div-->
   
         <button type="submit" class="submit-button">確定</button>
       </form>
@@ -67,7 +72,6 @@
           program: '',
           name: '',
           course: [],
-          type: '',
           credit: 0,
         },
       };
@@ -107,20 +111,29 @@
         });
       },
 
+      toggleCourse(courseId) {
+        if (this.newsubsetForm.course.includes(courseId)) {
+          this.newsubsetForm.course = this.newsubsetForm.course.filter(id => id !== courseId);
+        } else {
+          this.newsubsetForm.course.push(courseId);
+        }
+      },
+
       submitForm() {
         const payload = {
           field: this.newsubsetForm.field,
           program: this.newsubsetForm.program,
-          type: this.newsubsetForm.type,
           name: this.newsubsetForm.name,
           course: this.newsubsetForm.course,
           credit: this.newsubsetForm.credit,
         }
         const path = 'http://127.0.0.1:5000/addsubset';
         axios.post(path, payload)
-        .then(() => {
-          console.log('表單已提交');
-          alert('新增成功。');
+        .then((res) => {
+          if(res.data.success){
+            console.log('表單已提交');
+          alert('領域新增成功。');
+          }
         })
         .catch((error) => {
           console.error(error);

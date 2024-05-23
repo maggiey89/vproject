@@ -30,7 +30,7 @@
         </thead>
         <tbody>
         <tr v-for="item in courses" :key="item.name">
-          <td width="300px">{{ item.id }}</td>
+          <td width="300px">{{ item.code }}</td>
           <td width="300px">{{ item.name }}</td>
           <td>{{ item.credit }}</td>
         </tr>
@@ -51,96 +51,65 @@
                 </th>
             </tr>
         </thead>
-        <tbody>
+        <!--tbody>
         <tr v-for="item in electives" :key="item.name">
           <td width="300px">{{ item.id }}</td>
           <td width="300px">{{ item.name }}</td>
           <td>{{ item.credit }}</td>
         </tr>
-        </tbody>
+        </tbody-->
     </v-table>
 </template>
 
 <script>
-  export default {
-    data() {
+import axios from 'axios';
+    export default {
+      data() {
       return {
-        courses: [
-          {
-            id: 'L0U2001',
-            name: '初級韓文(一)',
-            credit: '2',
-          },
-          {
-            id: 'L0U2002',
-            name: '初級韓文(二)',
-            credit: '2',
-          },
-          {
-            id: 'L0U2003',
-            name: '中級韓文(一)',
-            credit: '2',
-          },
-          {
-            id: 'L0U2004',
-            name: '中級韓文(二)',
-            credit: '2',
-          },
-          {
-            id: 'L0U2005',
-            name: '韓語會話與聽力練習（一）',
-            credit: '2',
-          },
-          {
-            id: 'L0U2006',
-            name: '韓語會話與聽力練習（二）',
-            credit: '2',
-          },
-          {
-            id: 'L0U2022',
-            name: '韓文閱讀與寫作',
-            credit: '2',
-          },
-        ],
-        electives: [
-          {
-            id: 'L0U2011',
-            name: '韓語語法',
-            credit: '2',
-          },
-          {
-            id: 'L0U2012',
-            name: '商用韓語',
-            credit: '2',
-          },
-          {
-            id: 'L0U2013',
-            name: '韓國名著選讀',
-            credit: '2',
-          },
-          {
-            id: 'L0U2014',
-            name: '韓國文化與現代生活',
-            credit: '2',
-          },
-          {
-            id: 'L0U2015',
-            name: '現代韓國政治與經濟',
-            credit: '2',
-          },
-          {
-            id: 'L0U2016',
-            name: '韓國學概論',
-            credit: '2',
-          },
-          {
-            id: 'L0U2017',
-            name: '探索北韓',
-            credit: '2',
-          },
-        ],
+        usercourses:[],
+        courses: [],
       }
     },
-}
 
+    methods: {
+      async getcourses(){
+        if(localStorage.getItem('user')){
+          await this.getusercourses();
+        }
+        const path = 'http://127.0.0.1:5000/getcourses';
+        const program = '韓國學與語文學分學程'
+        axios.post(path, program)
+        .then((res) => {
+          this.courses = res.data;
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      },
+
+      header() {
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (user && user["access_token"]) {
+          return { Authorization: `Bearer ${user["access_token"]}` };
+        }
+        else {
+          return {};
+        }
+      },
+
+      async getusercourses(){
+        const path = 'http://127.0.0.1:5000/usercourses';
+        axios.get(path, { headers: this.header() })
+        .then((res) => {
+          this.usercourses = res.data;
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      }
+    },
+    created(){
+      this.getcourses();
+    }
+  }
     </script>

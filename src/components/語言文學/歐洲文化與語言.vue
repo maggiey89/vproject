@@ -29,7 +29,7 @@
           </thead>
           <tbody>
           <tr v-for="item in courses" :key="item.name">
-            <td width="300px">{{ item.id }}</td>
+            <td width="300px">{{ item.code }}</td>
             <td width="300px">{{ item.name }}</td>
             <td>{{ item.credit }}</td>
           </tr>
@@ -50,156 +50,65 @@
                   </th>
               </tr>
           </thead>
-          <tbody>
+          <!--tbody>
           <tr v-for="item in electives" :key="item.name">
             <td width="300px">{{ item.id }}</td>
             <td width="300px">{{ item.name }}</td>
             <td>{{ item.credit }}</td>
           </tr>
-          </tbody>
+          </tbody-->
       </v-table>
   </template>
   
   <script>
+import axios from 'axios';
     export default {
       data() {
-        return {
-          courses: [
-            {
-              id: '',
-              name: '歐洲文化史',
-              credit: '3',
-            },
-            {
-              id: '',
-              name: '歐洲文學概論',
-              credit: '3',
-            },
-            {
-              id: '',
-              name: '語言與文化',
-              credit: '3',
-            },
-            {
-              id: '',
-              name: '歐洲文化創意',
-              credit: '3',
-            },
-            {
-              id: '',
-              name: '歐洲電影史',
-              credit: '3',
-            },
-            {
-              id: '',
-              name: '歐洲文化遺產與觀光',
-              credit: '3',
-            },
-            {
-              id: '',
-              name: '20世紀文學、音樂、藝術與電影',
-              credit: '3',
-            },
-            {
-              id: '',
-              name: '歐洲地理文化的幻想與相遇',
-              credit: '3',
-            },
-            {
-              id: '',
-              name: '歐洲藝術名作閱讀',
-              credit: '3',
-            },
-            {
-              id: '',
-              name: '歐洲神話',
-              credit: '3',
-            },
-            {
-              id: '',
-              name: '歐洲奇幻文學',
-              credit: '3',
-            },
-            {
-              id: '',
-              name: '現代歐陸哲學選讀',
-              credit: '3',
-            },
-          ],
-          electives: [
-            {
-              id: '',
-              name: '法文（一）',
-              credit: '3',
-            },
-            {
-              id: '',
-              name: '德文（一）',
-              credit: '3',
-            },
-            {
-              id: '',
-              name: '西班牙文（一）',
-              credit: '3',
-            },
-            {
-              id: '',
-              name: '拉丁文（一）',
-              credit: '3',
-            },
-            {
-              id: '',
-              name: '法文（二）',
-              credit: '3',
-            },
-            {
-              id: '',
-              name: '德文（二）',
-              credit: '3',
-            },
-            {
-              id: '',
-              name: '西班牙文（二）',
-              credit: '3',
-            },
-            {
-              id: '',
-              name: '拉丁文（二）',
-              credit: '3',
-            },
-            {
-              id: '',
-              name: '法文（三）',
-              credit: '3',
-            },
-            {
-              id: '',
-              name: '德文（三）',
-              credit: '3',
-            },
-            {
-              id: '',
-              name: '西班牙文（三）',
-              credit: '3',
-            },
-            {
-              id: '',
-              name: '法文（四）',
-              credit: '3',
-            },
-            {
-              id: '',
-              name: '德文（四）',
-              credit: '3',
-            },
-            {
-              id: '',
-              name: '西班牙文（四）',
-              credit: '3',
-            },
-          ],
+      return {
+        usercourses:[],
+        courses: [],
+      }
+    },
+
+    methods: {
+      async getcourses(){
+        if(localStorage.getItem('user')){
+          await this.getusercourses();
+        }
+        const path = 'http://127.0.0.1:5000/getcourses';
+        const program = '歐洲文化與語言學分學程'
+        axios.post(path, program)
+        .then((res) => {
+          this.courses = res.data;
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      },
+
+      header() {
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (user && user["access_token"]) {
+          return { Authorization: `Bearer ${user["access_token"]}` };
+        }
+        else {
+          return {};
         }
       },
+
+      async getusercourses(){
+        const path = 'http://127.0.0.1:5000/usercourses';
+        axios.get(path, { headers: this.header() })
+        .then((res) => {
+          this.usercourses = res.data;
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      }
+    },
+    created(){
+      this.getcourses();
+    }
   }
-  
       </script>

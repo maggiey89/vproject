@@ -148,11 +148,15 @@ export default {
 <!-- //----------------------------------------- -->
 <style scoped>
 h1 {
-  margin-bottom: 20px;
+  margin-bottom: 2px;
   font-family: 'Arial', sans-serif;
-  color: #333;
+  color: #fff; 
+  background-color: rgb(190, 190, 190); 
+  padding: 5px 10px; 
+  border-radius: 8px; 
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
 }
-
 .form-group {
   margin-bottom: 20px;
 }
