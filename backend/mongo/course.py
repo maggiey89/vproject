@@ -96,5 +96,4 @@ def get_subset():
         for s in collection.find({'program': program}):
             subset = {'name': s['name'], 'courses': s['courses'], 'credit': s['credit']}
             subsets.append(subset)
-        print(subsets)
         return jsonify(success = 'success')

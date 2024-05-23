@@ -29,7 +29,7 @@
         </thead>
         <tbody>
         <tr v-for="item in courses" :key="item.name">
-          <td width="300px">{{ item.id }}</td>
+          <td width="300px">{{ item.code }}</td>
           <td width="300px">{{ item.name }}</td>
           <td>{{ item.credit }}</td>
         </tr>
@@ -61,25 +61,56 @@
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        courses: [
-          {
-            id: '[國外]',
-            name: '赴外交換修習課程',
-            credit: '6',
-          },
-          {
-            id: '[國內]',
-            name: '本校外語授課課程',
-            credit: '10',
-          },
-          
-        ],
-        
+import axios from 'axios';
+
+export default {
+  data() {
+    return {
+      usercourses:[],
+      courses: [],
+    }
+  },
+
+  methods: {
+    async getcourses(){
+      if(localStorage.getItem('user')){
+        await this.getusercourses();
+      }
+      const path = 'http://127.0.0.1:5000/getcourses';
+      const program = '財務金融學分學程'
+      axios.post(path, program)
+      .then((res) => {
+        this.courses = res.data;
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+    },
+
+    header() {
+      const user = JSON.parse(localStorage.getItem('user'));
+      if (user && user["access_token"]) {
+        return { Authorization: `Bearer ${user["access_token"]}` };
+      }
+      else {
+        return {};
       }
     },
+
+    async getusercourses(){
+      const path = 'http://127.0.0.1:5000/usercourses';
+      axios.get(path, { headers: this.header() })
+      .then((res) => {
+        this.usercourses = res.data;
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+    }
+  },
+  created(){
+    this.getcourses();
+  }
 }
 
     </script>

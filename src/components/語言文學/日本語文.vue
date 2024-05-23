@@ -30,7 +30,7 @@
           </thead>
           <tbody>
           <tr v-for="item in courses" :key="item.name">
-            <td width="300px">{{ item.id }}</td>
+            <td width="300px">{{ item.code }}</td>
             <td width="300px">{{ item.name }}</td>
             <td>{{ item.credit }}</td>
           </tr>
@@ -51,111 +51,65 @@
                   </th>
               </tr>
           </thead>
-          <tbody>
+          <!--tbody>
           <tr v-for="item in electives" :key="item.name">
             <td width="300px">{{ item.id }}</td>
             <td width="300px">{{ item.name }}</td>
             <td>{{ item.credit }}</td>
           </tr>
-          </tbody>
+          </tbody-->
       </v-table>
   </template>
   
   <script>
+import axios from 'axios';
     export default {
       data() {
-        return {
-          courses: [
-            {
-              id: 'L0U1001',
-              name: '初級日文(一)',
-              credit: '2',
-            },
-            {
-              id: 'L0U1002',
-              name: '初級日文(二)',
-              credit: '2',
-            },
-            {
-              id: 'L0U1003',
-              name: '中級日文(一)',
-              credit: '2',
-            },
-            {
-              id: 'L0U1004',
-              name: '中級日文(二)',
-              credit: '2',
-            },
-            {
-              id: 'L0U1005',
-              name: '日語會話與聽講（一）',
-              credit: '2',
-            },
-            {
-              id: 'L0U1006',
-              name: '日語會話與聽講（二）',
-              credit: '2',
-            },
-            {
-              id: 'L0U1009',
-              name: '進階日文（一）',
-              credit: '2',
-            },
-            {
-              id: 'L0U1010',
-              name: '進階日文（二）',
-              credit: '2',
-            },
-            {
-              id: 'L0U1019',
-              name: '日文閱讀與寫作',
-              credit: '2',
-            },
-          ],
-          electives: [
-            {
-              id: 'L0U1014',
-              name: '日本歷史',
-              credit: '2',
-            },
-            {
-              id: 'L0U1013',
-              name: '日本文化史',
-              credit: '2',
-            },
-            {
-              id: 'L0U1015',
-              name: '日本文學史',
-              credit: '2',
-            },
-            {
-              id: 'L0U1018',
-              name: '新聞日語',
-              credit: '2',
-            },
-            {
-              id: 'L0U1017',
-              name: '商用日文',
-              credit: '2',
-            },
-            {
-              id: 'L0U1016',
-              name: '日本文學名著選讀',
-              credit: '2',
-            },
-            {
-              id: 'L0U1011',
-              name: '進階日語會話與聽講(一)',
-              credit: '2',
-            },
-            {
-              id: 'L0U1012',
-              name: '進階日語會話與聽講(二)',
-              credit: '2',
-            },
-          ],
+      return {
+        usercourses:[],
+        courses: [],
+      }
+    },
+
+    methods: {
+      async getcourses(){
+        if(localStorage.getItem('user')){
+          await this.getusercourses();
+        }
+        const path = 'http://127.0.0.1:5000/getcourses';
+        const program = '日本語文學分學程'
+        axios.post(path, program)
+        .then((res) => {
+          this.courses = res.data;
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      },
+
+      header() {
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (user && user["access_token"]) {
+          return { Authorization: `Bearer ${user["access_token"]}` };
+        }
+        else {
+          return {};
         }
       },
+
+      async getusercourses(){
+        const path = 'http://127.0.0.1:5000/usercourses';
+        axios.get(path, { headers: this.header() })
+        .then((res) => {
+          this.usercourses = res.data;
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      }
+    },
+    created(){
+      this.getcourses();
+    }
   }
-  
       </script>

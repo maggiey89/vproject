@@ -27,8 +27,8 @@
             </tr>
         </thead>
         <tbody>
-        <tr v-for="item in compulsary" :key="item.name">
-          <td width="300px">{{ item.id }}</td>
+        <tr v-for="item in courses" :key="item.name">
+          <td width="300px">{{ item.code }}</td>
             <td width="300px">{{ item.name }}</td>
             <td>{{ item.credit }}</td>
         </tr>
@@ -49,61 +49,65 @@
                 </th>
             </tr>
         </thead>
-        <tbody>
+        <!--tbody>
         <tr v-for="item in electives" :key="item.name">
           <td width="300px">{{ item.id }}</td>
             <td width="300px">{{ item.name }}</td>
             <td>{{ item.credit }}</td>
         </tr>
-        </tbody>
+        </tbody-->
     </v-table>
 </template>
 
 <script>
-  export default {
-    data() {
+import axios from 'axios';
+    export default {
+      data() {
       return {
-        compulsary: [
-          {
-            id: '',
-            name: '大師創業管理入門',
-            credit: '2',
-          },
-          {
-            id: '',
-            name: '大師創業論壇',
-            credit: '2',
-          },
-          {
-            id: '',
-            name: '創業經營教戰手則',
-            credit: '2',
-          },
-          {
-            id: '',
-            name: '誰是下一個賈伯斯 大師創業發想與實踐一',
-            credit: '2',
-          },
-          {
-            id: '',
-            name: '誰是下一個賈伯斯 大師創業發想與實踐二',
-            credit: '2',
-          },
-        ],
-        electives: [
-          {
-            id: '',
-            name: '',
-            credit: '',
-          },
-          {
-            id: '',
-            name: '',
-            credit: '',
-          },
-        ],
+        usercourses:[],
+        courses: [],
       }
     },
-}
 
+    methods: {
+      async getcourses(){
+        if(localStorage.getItem('user')){
+          await this.getusercourses();
+        }
+        const path = 'http://127.0.0.1:5000/getcourses';
+        const program = '大師創業學分學程'
+        axios.post(path, program)
+        .then((res) => {
+          this.courses = res.data;
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      },
+
+      header() {
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (user && user["access_token"]) {
+          return { Authorization: `Bearer ${user["access_token"]}` };
+        }
+        else {
+          return {};
+        }
+      },
+
+      async getusercourses(){
+        const path = 'http://127.0.0.1:5000/usercourses';
+        axios.get(path, { headers: this.header() })
+        .then((res) => {
+          this.usercourses = res.data;
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      }
+    },
+    created(){
+      this.getcourses();
+    }
+  }
 </script>

@@ -30,7 +30,7 @@
           </thead>
           <tbody>
           <tr v-for="item in courses" :key="item.name">
-            <td width="300px">{{ item.id }}</td>
+            <td width="300px">{{ item.code }}</td>
             <td width="300px">{{ item.name }}</td>
             <td>{{ item.credit }}</td>
           </tr>
@@ -62,123 +62,54 @@
   </template>
   
   <script>
+import axios from 'axios';
     export default {
       data() {
-        return {
-          courses: [
-            {
-              id: 'CHU0015',
-              name: '文學概論',
-              credit: '3',
-            },
-            {
-              id: 'CHU0074',
-              name: '文學批評',
-              credit: '3',
-            },
-            {
-              id: 'CHU0324',
-              name: '現代詩',
-              credit: '2',
-            },
-            {
-              id: 'CHU0325',
-              name: '現代散文',
-              credit: '2',
-            },
-            {
-              id: 'CHU0326',
-              name: '現代小說',
-              credit: '2',
-            },
-            {
-              id: 'CHU0035',
-              name: '現代戲劇',
-              credit: '3',
-            },
-            {
-              id: 'PGUU016',
-              name: '現代詩寫作指導',
-              credit: '2',
-            },
-            {
-              id: 'PGUU017',
-              name: '現代散文寫作指導',
-              credit: '2',
-            },
-            {
-              id: 'PGUU018',
-              name: '現代小說寫作指導',
-              credit: '2',
-            },
-            {
-              id: 'PGUU025',
-              name: '現代劇本寫作指導',
-              credit: '2',
-            },
-            {
-              id: 'CHU0327',
-              name: '成長小說（一）',
-              credit: '2',
-            },
-            {
-              id: 'CHU0328',
-              name: '成長小說（二）',
-              credit: '2',
-            },
-            {
-              id: '',
-              name: '旅行文學',
-              credit: '2',
-            },
-            {
-              id: '04UG021',
-              name: '報導文學與紀錄片',
-              credit: '3',
-            },
-            {
-              id: 'CHU0134',
-              name: '報導文學',
-              credit: '3',
-            },
-            {
-              id: 'CHU0179',
-              name: '極短篇小說',
-              credit: '2',
-            },
-            {
-              id: 'PGUU029',
-              name: '影像文學',
-              credit: '2',
-            },
-            {
-              id: 'PGUU028',
-              name: '大眾小說寫作',
-              credit: '2',
-            },
-            {
-              id: 'CHU0339',
-              name: '書法與身心紓發',
-              credit: '2',
-            },
-            {
-              id: 'CHU0344',
-              name: '劇本寫作',
-              credit: '2',
-            },
-            {
-              id: 'CHU0340',
-              name: '兒童文學',
-              credit: '2',
-            },
-            {
-              id: 'CHU0348',
-              name: '媒體寫作',
-              credit: '2',
-            },
-          ],
+      return {
+        usercourses:[],
+        courses: [],
+      }
+    },
+
+    methods: {
+      async getcourses(){
+        if(localStorage.getItem('user')){
+          await this.getusercourses();
+        }
+        const path = 'http://127.0.0.1:5000/getcourses';
+        const program = '文學創作學分學程'
+        axios.post(path, program)
+        .then((res) => {
+          this.courses = res.data;
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      },
+
+      header() {
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (user && user["access_token"]) {
+          return { Authorization: `Bearer ${user["access_token"]}` };
+        }
+        else {
+          return {};
         }
       },
+
+      async getusercourses(){
+        const path = 'http://127.0.0.1:5000/usercourses';
+        axios.get(path, { headers: this.header() })
+        .then((res) => {
+          this.usercourses = res.data;
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      }
+    },
+    created(){
+      this.getcourses();
+    }
   }
-  
       </script>

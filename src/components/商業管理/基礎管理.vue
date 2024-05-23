@@ -112,9 +112,6 @@ import axios from 'axios';
     },
     created(){
       this.getcourses();
-      /*if(localStorage.getItem('user')){
-        this.getusercourses();
-      }*/
     }
 }
 
