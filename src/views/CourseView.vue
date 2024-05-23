@@ -39,16 +39,4 @@
 .v-table {
     max-height: 300px;
 }
-.greentext {
-  color: green;
-  opacity: 50%;
-}
-.yellowtext {
-  color: rgb(236, 236, 140);
-  opacity: 80%;
-}
-.redtext {
-  color: red;
-  opacity: 60%;
-}
 </style>

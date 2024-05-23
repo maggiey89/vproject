@@ -2,9 +2,9 @@
   <v-expansion-panel v-for="data in courses" :key="data.title" :title="data.title">
 
     <v-progress-linear :model-value="data.complete"
-      :class="{ 'redtext': data.complete < 30, 
-                'yellowtext': data.complete >= 30 && data.complete < 70, 
-                'greentext': data.complete >= 70 }"
+      :class="{ 'redbar': data.complete < 30, 
+                'yellowbar': data.complete >= 30 && data.complete < 70, 
+                'greenbar': data.complete >= 70 }"
     >
     </v-progress-linear>
 

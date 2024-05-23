@@ -1,6 +1,5 @@
 <template>
   <div class="d-flex">
-  <v-text>必修：4科12學分</v-text>
   <v-spacer/>
   <a href="https://www.ba.ntnu.edu.tw/%E6%9C%80%E6%96%B0%E6%B6%88%E6%81%AF-2"
     target="_blank" rel="noopener noreferrer"
@@ -12,7 +11,25 @@
     </v-btn>
   </a>  
   </div>  
-    <v-table density="compact" fixed-header>
+
+  <template v-for="(subs, index) in subset">
+    <v-text style="font-weight:bold">{{subs.name}}：{{subs.credit}}學分</v-text>
+    <template v-for="(each, index2) in subsetcourse">
+    <v-data-table 
+      v-if="index == index2"
+      :headers="headers"
+      fixed-header="true"
+      :header-class="bold-header"
+      :items="each"
+      :items-per-page="-1"
+      density="compact"
+    >
+      <template #bottom></template>
+    </v-data-table>
+    </template>
+  </template>
+  
+    <!--v-table density="compact" fixed-header>
         <thead>
             <tr>
                 <th class="text-left font-weight-bold">
@@ -49,14 +66,14 @@
                 </th>
             </tr>
         </thead>
-        <!--tbody>
+        <tbody>
         <tr v-for="item in electives" :key="item.name">
             <td width="300px">{{ item.code }}</td>
             <td width="300px">{{ item.name }}</td>
             <td>{{ item.credit }}</td>
         </tr>
-        </tbody-->
-    </v-table>
+        </tbody>
+    </v-table-->
 </template>
 
 <script>
@@ -70,6 +87,12 @@ import axios from 'axios';
         course: [],
         subset: [],
         subsetcourse: [],
+        headers: [
+        { title: '科目代碼', key: 'code', align: 'start', width: '300px'},
+        { title: '科目名稱', key: 'name', align: 'start', width: '300px'},
+        { title: '學分', key: 'credit' },
+        { title: '', key: 'actions', sortable: false},
+      ],
       }
     },
 
@@ -135,5 +158,8 @@ import axios from 'axios';
 <style>
 .textcolor {
   color: green;
+}
+.bold-header {
+  font-weight: bold;
 }
 </style>

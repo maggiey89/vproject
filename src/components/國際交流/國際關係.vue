@@ -131,7 +131,7 @@ export default {
       dialog: false,
       dialogDelete: false,
       headers: [
-        { title: '科目代碼', key: 'id', align: 'start', width: '300px'},
+        { title: '科目代碼', key: 'code', align: 'start', width: '300px'},
         { title: '科目名稱', key: 'name', align: 'start', width: '300px'},
         { title: '學分', key: 'credit' },
         { title: '', key: 'actions', sortable: false},
