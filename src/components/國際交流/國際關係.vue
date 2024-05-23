@@ -16,34 +16,18 @@
   <v-data-table
     :headers="headers"
     fixed-header="true"
-    header-class="bold-header"
     :items="courses"
     :items-per-page="-1"
     density="compact"
   >
     <template v-slot:top >
-      
         <v-spacer></v-spacer>
         <v-dialog
           v-model="dialog"
           max-width="500px"
         >
-          <!--template v-slot:activator="{ props }">
-            <v-btn
-              class="mb-2"
-              style="margin-left: 95%;"
-              color="primary"
-              dark
-              v-bind="props"
-            >
-              +
-            </v-btn>
-          </template-->
           <v-card>
-            <v-card-title>
-              <span class="text-h5">{{ formTitle }}</span>
-            </v-card-title>
-
+            <v-card-title class="text-h5">編輯課程</v-card-title>
             <v-card-text>
               <v-container>
                 <v-row>
@@ -102,7 +86,7 @@
         </v-dialog>
         <v-dialog v-model="dialogDelete" max-width="500px">
           <v-card>
-            <v-card-title class="text-h5">Are you sure you want to delete this item?</v-card-title>
+            <v-card-title class="text-h5">確定要刪除此課程嗎？</v-card-title>
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn color="blue-darken-1" variant="text" @click="closeDelete">Cancel</v-btn>
@@ -128,14 +112,6 @@
         mdi-delete
       </v-icon>
     </template>
-    <template v-slot:no-data>
-      <v-btn
-        color="primary"
-        @click="initialize"
-      >
-        Reset
-      </v-btn>
-    </template>
     <template #bottom></template>
   </v-data-table>
 </template>
@@ -160,6 +136,17 @@ export default {
         { title: '', key: 'actions', sortable: false},
       ],
       courses: [
+          {
+            id: 'EAU0221',
+            name: '近代外交史',
+            credit: '3',
+          },
+          {
+            id: 'EAC9003',
+            name: '國際公法',
+            credit: '3',
+          },
+        
         {
             id: 'L0U1001',
             name: '初級日文（一）',

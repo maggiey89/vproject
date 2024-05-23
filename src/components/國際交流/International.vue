@@ -52,4 +52,8 @@
 .v-data-table {
   width: 100%;
 }
+.v-card-title {
+  text-align: center;
+  margin-top: 10px;
+}
 </style>

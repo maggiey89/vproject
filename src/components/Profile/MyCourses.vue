@@ -15,8 +15,8 @@
             </tr>
         </thead>
         <tbody>
-            <tr v-for="item in courses" >
-                <td width="300px">{{ item.code }}</td>
+            <tr v-for="item in course" >
+                <td width="300px">{{ item.id }}</td>
                 <td width="300px">{{ item.name }}</td>
                 <td>{{ item.credit }}</td>
         </tr>
@@ -31,7 +31,13 @@ export default {
     data() {
       return {
         codes: [],
-        courses: [],
+        course: [
+        {
+            id: 'L0U1001',
+            name: '初級日文（一）',
+            credit: '2',
+          },
+        ],
       };
     },
 
@@ -71,7 +77,13 @@ export default {
     },
     created(){
         this.getcourses();
-    }
+    },
 }
 
 </script>
+<style>
+.v-table {
+    text-align: left;
+}
+
+</style>

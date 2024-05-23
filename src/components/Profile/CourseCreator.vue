@@ -35,7 +35,7 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      courses: [],
+      courses: [{id:'', name: ''}],
       selectedItems: [], // Array to hold selected items
       emittedWords: new Set(),
     };

@@ -27,7 +27,7 @@
             </tr>
         </thead>
         <tbody>
-        <tr v-for="item in courses" :key="item.name" :class="{ 'textcolor': item.code == 'PGUA006' }">
+        <tr v-for="item in courses" :key="item.name" :class="{ 'textcolor': item.code.includes('06') }">
             <td width="300px">{{ item.code }}</td>
             <td width="300px">{{ item.name }}</td>
             <td>{{ item.credit }}</td>

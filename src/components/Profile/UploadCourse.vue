@@ -1,6 +1,4 @@
 <template>
-  
-    
 
     <CourseCreator @create-course="createCourse"/>
     
@@ -12,6 +10,45 @@
         @delete-course="deleteCourse"
     />
     
+    <!--v-data-table
+    :headers="headers"
+    fixed-header="true"
+    :items="courseList"
+    :items-per-page="-1"
+    density="compact"
+  >
+    <template v-slot:top >
+        <v-spacer></v-spacer>
+        <v-dialog v-model="dialogDelete" max-width="500px">
+          <v-card>
+            <v-card-title class="text-h5">Are you sure you want to delete this item?</v-card-title>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="blue-darken-1" variant="text" @click="closeDelete">Cancel</v-btn>
+              <v-btn color="blue-darken-1" variant="text" @click="deleteItemConfirm">OK</v-btn>
+              <v-spacer></v-spacer>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+
+    </template>
+    <template v-slot:item.actions="{ item }">
+      <v-icon
+        class="me-2"
+        size="small"
+        @click="editItem(item)"
+      >
+        mdi-pencil
+      </v-icon>
+      <v-icon
+        size="small"
+        @click="deleteItem(item)"
+      >
+        mdi-delete
+      </v-icon>
+    </template>
+    <template #bottom></template>
+  </v-data-table-->
     
 </template>
     
@@ -21,6 +58,12 @@ import CourseItems from './CourseItems.vue'
 import { ref, watch } from 'vue'
 import { v4 as uuidv4 } from "uuid"
 
+const headers = [
+    { title: '科目代碼', key: 'course', align: 'start', width: '300px'},
+    { title: '科目名稱', key: 'name', align: 'start', width: '300px'},
+    { title: '學分', key: 'credit' },
+    { title: '', key: 'actions', sortable: false},
+]
 const courseList = ref([]);
 
 watch(
