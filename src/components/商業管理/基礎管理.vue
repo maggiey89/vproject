@@ -82,10 +82,10 @@ import axios from 'axios';
         const program = '基礎管理學分學程'
         axios.post(path, program)
         .then((res) => {
-          this.course = res.data;
-          for(var i = 0;i < this.course.length;i++){
-            this.subset = this.course[i].courses;
-            this.getcourseinfo(this.subset);
+          this.subset = res.data;
+          for(var i = 0;i < this.subset.length;i++){
+            this.course = this.subset[i].courses;
+            this.getcourseinfo(this.course);
           }
           console.log(this.subsetcourse);
           //this.compulsary = this.courses.filter(course => course.type === 1)
