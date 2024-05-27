@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1>新增學程</h1>
     <div class="form-group">
       <label for="programName" class="custom-label">學程名稱：</label>
       <input type="text" id="programName" v-model="newProgramName" class="custom-input" placeholder="ex:基礎管理學分學程" required>

@@ -2,7 +2,7 @@
     <v-container style="margin-top: 30px; height: 80px;">
       <v-row>
         <v-col/>
-      <v-col style="text-align: center;"><h1>檢視</h1></v-col>
+      <v-col style="text-align: center;"><h1>檢視：{{$route.meta.title}}</h1></v-col>
       <v-col>
         <v-form style="max-width: 200px; margin-left: 150px; ">
         <v-text-field 

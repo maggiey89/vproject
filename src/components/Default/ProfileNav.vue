@@ -15,7 +15,7 @@ import { ref } from 'vue';
 const Categories = [
     {name: '個人資料', route: '/profile'},
     {name: '我的課程', route: '/profile/mycourses'},
-    {name: '新增課程', route: '/profile/uploadcourse'},
+    {name: '上傳課程', route: '/profile/uploadcourse'},
 ]
 /*const userAvatar = ref('url_to_default_avatar'); // 替換為用戶頭像的 URL
 const userName = ref(''); // 初始使用者名稱設為空字串

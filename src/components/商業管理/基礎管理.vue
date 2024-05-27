@@ -21,6 +21,7 @@
       fixed-header="true"
       :header-class="bold-header"
       :items="each"
+      
       :items-per-page="-1"
       density="compact"
     >

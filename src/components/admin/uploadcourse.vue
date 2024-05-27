@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1>新增課程</h1>
 
     <!-- <div class="form-group">
       <label for="program" class="custom-label">請選擇課程所屬學程領域：</label>
