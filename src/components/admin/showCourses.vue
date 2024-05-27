@@ -261,5 +261,6 @@ export default {
     text-align: left;
     padding-left: 20px;
     padding-right: 20px;
+    height: max-content;
 }
 </style>

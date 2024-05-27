@@ -35,8 +35,6 @@
 
     <v-spacer />
 
-    
-
     <v-btn to="" variant="text" height="100%"> 操作手冊 </v-btn>
     <v-btn to="/course-view/business" variant="text" height="100%"> 學分學程 </v-btn>
 
@@ -75,16 +73,6 @@
     <v-btn to="/login" class="mr-5" variant="text" height="100%" v-if="!isloggedin "> 登入 </v-btn>
 
     <v-btn to="/" class="mr-5" variant="text" height="100%" v-if="isloggedin" @click.prevent = "logout"> 登出 </v-btn>
-    <!-- // -->
-
-    <!--v-btn to="/profile" variant="text" height="100%">
-      {{ userName }}
-    </v-btn-->
-
-    <!-- <v-avatar class="mr-3" size="36">
-      <img :src="userAvatar" alt="User Avatar">
-    </v-avatar> -->
-
 
   </v-app-bar>
 </template>
@@ -109,7 +97,7 @@ const admin = [
   { name: '新增課程', route: '/admin/uploadcourse' },
   { name: '新增學程', route: '/admin/uploadprogram' },
   { name: '新增領域', route: '/admin/uploadfield' },
-  { name: '新增小領域', route: '/admin/subset' },
+  { name: '新增學程中分類', route: '/admin/subset' },
 ]
 
 /*const header = () => {

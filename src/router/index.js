@@ -172,7 +172,7 @@ const router = createRouter({
           path: 'subset',
           name: 'subset',
           component: () => import('@/components/admin/subset.vue'),
-          meta: { title: '新增小領域' },
+          meta: { title: '新增學程中分類' },
         },
 
       ],

@@ -47,4 +47,7 @@ body,
   color: red;
   opacity: 60%;
 }
+.bold-header {
+  font-weight: bold;
+}
 </style>
