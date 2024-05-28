@@ -63,7 +63,6 @@ def add_subset():
         name = subset.get('name')
         courses = subset.get('course')
         credit = subset.get('credit')
-        '''
         collection = db["subset"]
         collection.insert_one({
             "field": field,
@@ -72,5 +71,4 @@ def add_subset():
             "courses": courses,
             "credit": credit,
         })
-        '''
         return jsonify(success = 'success')
