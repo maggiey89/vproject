@@ -41,7 +41,7 @@
         <template v-if="headerfile.iden == 0 && isloggedin" v-slot:item.actions="{ item }">
         <v-icon
           size="small"
-          @click="deleteItem(item)"
+          @click="deleteItem(index, item)"
         >
           mdi-delete
         </v-icon>
@@ -78,6 +78,7 @@ import axios from 'axios';
           { title: '', key: 'actions', sortable: false},
         ],
         editedIndex: -1,
+        deleteIndex: -1,
         editedItem: {
           code: '',
           name: '',
@@ -170,14 +171,15 @@ import axios from 'axios';
         })
       },
 
-      deleteItem (item) {
-        this.editedIndex = this.course.indexOf(item)
+      deleteItem (index, item) {
+        this.editedIndex = this.subsetcourse[index].indexOf(item)
+        this.deleteIndex = index
         this.editedItem = Object.assign({}, item)
         this.dialogDelete = true
       },
 
       deleteItemConfirm () {
-        this.course.splice(this.editedIndex, 1)
+        this.subsetcourse[this.deleteIndex].splice(this.editedIndex, 1)
         this.closeDelete()
       },
 
@@ -186,6 +188,7 @@ import axios from 'axios';
         this.$nextTick(() => {
           this.editedItem = Object.assign({}, this.defaultItem)
           this.editedIndex = -1
+          this.deleteIndex = -1
         })
       },
 
