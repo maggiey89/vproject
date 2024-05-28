@@ -25,6 +25,7 @@
           :items-per-page="-1"
           density="compact"
         >
+        
         <template v-slot:top >
             <v-dialog v-model="dialogDelete" max-width="500px">
               <v-card>
@@ -42,11 +43,12 @@
         <template v-if="headerfile.iden == 0 && isloggedin" v-slot:item.actions="{ item }">
         <v-icon
           size="small"
-          @click="deleteItem(item)"
+          @click="deleteItem(index, item)"
         >
           mdi-delete
         </v-icon>
         </template>
+
       <template #bottom></template>
       </v-data-table>
     </template>
@@ -78,6 +80,18 @@ import axios from 'axios';
           { title: '學分', key: 'credit'},
           { title: '', key: 'actions', sortable: false},
         ],
+        editedIndex: -1,
+        deleteIndex: -1,
+        editedItem: {
+          code: '',
+          name: '',
+          credit: '',
+        },
+        defaultItem: {
+          code: '',
+          name: '',
+          credit: '',
+        },
       }
     },
 
@@ -134,7 +148,7 @@ import axios from 'axios';
         axios.post(path, program)
         .then((res) => {
           this.subset = res.data;
-          for(var i = 0;i < this.subset.length;i++){
+          for(var i = 0; i < this.subset.length;i++){
             this.course = this.subset[i].courses;
             this.getcourseinfo(this.course);
           }
@@ -153,14 +167,15 @@ import axios from 'axios';
         })
       },
 
-      deleteItem (item) {
-        this.editedIndex = this.courses.indexOf(item)
+      deleteItem (index, item) {
+        this.editedIndex = this.subsetcourse[index].indexOf(item)
+        this.deleteIndex = index
         this.editedItem = Object.assign({}, item)
         this.dialogDelete = true
       },
 
       deleteItemConfirm () {
-        this.courses.splice(this.editedIndex, 1)
+        this.subsetcourse[this.deleteIndex].splice(this.editedIndex, 1)
         this.closeDelete()
       },
 
@@ -169,6 +184,7 @@ import axios from 'axios';
         this.$nextTick(() => {
           this.editedItem = Object.assign({}, this.defaultItem)
           this.editedIndex = -1
+          this.deleteIndex = -1
         })
       },
     },

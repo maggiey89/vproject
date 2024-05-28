@@ -50,4 +50,7 @@ body,
 .bold-header {
   font-weight: bold;
 }
+.v-card {
+  align-items: center;
+}
 </style>
