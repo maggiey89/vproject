@@ -13,7 +13,7 @@
   </div> 
 
   <template v-for="(subs, index) in subset">
-    <v-text style="font-weight:bold">{{subs.name}}：{{subs.credit}}學分</v-text>
+    <v-text style="font-weight:bold">{{subs.name}}：至少 {{subs.credit}} 學分</v-text>
       <template v-for="(each, index2) in subsetcourse">
         <v-data-table 
           v-if="index == index2"
@@ -146,12 +146,9 @@ import axios from 'axios';
           await this.getusercourses();
         }
         const path = 'http://127.0.0.1:5000/getsubset';
-        //const path = 'http://127.0.0.1:5000/getcourses';
-        const program = '基礎管理學分學程'
-        //const program = '國際關係與外交學分學程'
+        const program = '國際關係與外交學分學程'
         axios.post(path, program)
         .then((res) => {
-          //this.course = res.data;
           this.subset = res.data;
           for(var i = 0;i < this.subset.length;i++){
             this.course = this.subset[i].courses;

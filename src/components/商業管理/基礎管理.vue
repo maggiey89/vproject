@@ -13,7 +13,7 @@
   </div>  
 
   <template v-for="(subs, index) in subset">
-    <v-text style="font-weight:bold">{{subs.name}}：{{subs.credit}}學分</v-text>
+    <v-text style="font-weight:bold">{{subs.name}}：至少 {{subs.credit}} 學分</v-text>
       <template v-for="(each, index2) in subsetcourse">
         
         <v-data-table 
