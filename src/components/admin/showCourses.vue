@@ -227,7 +227,15 @@ export default {
       deleteItemConfirm () {
         const path = 'http://127.0.0.1:5000/deletecourse';
         const code = this.deletecode;
-        
+        axios.post(path, code)
+        .then((res) => {
+          if(res.data.success){
+            alert("已刪除課程。")
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        })
         this.courses.splice(this.editedIndex, 1)
         this.closeDelete()
       },

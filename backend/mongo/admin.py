@@ -74,7 +74,6 @@ def add_subset():
 def delete_course():
     if request.method == 'POST':
         code = request.get_data(as_text=True)
-        print(code)
         collection = db['course']
         collection.delete_one({'code': code})
         return jsonify(success = 'success')
