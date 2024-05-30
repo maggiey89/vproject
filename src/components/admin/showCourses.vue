@@ -176,6 +176,7 @@ export default {
         this.isloggedin = false;
       }
       this.getcourses();
+      this.getinfo();
     },
 
     methods: {

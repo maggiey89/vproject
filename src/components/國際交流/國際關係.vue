@@ -108,6 +108,7 @@ import axios from 'axios';
         this.isloggedin = false;
       }
       this.getcourses();
+      this.getinfo();
     },
 
     methods: {
@@ -121,13 +122,23 @@ import axios from 'axios';
         }
       },
 
+      getinfo() {
+        const path = 'http://127.0.0.1:5000/userinfo';
+        axios.get(path, { headers: this.header() })
+          .then((res) => {
+            this.headerfile.name = res.data.name;
+            this.headerfile.iden = res.data.iden;
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      },
+
       async getusercourses(){
         const path = 'http://127.0.0.1:5000/usercourses';
         axios.get(path, { headers: this.header() })
         .then((res) => {
           this.usercourses = res.data;
-          this.headerfile.name = res.data.name;
-          this.headerfile.iden = res.data.iden;
         })
         .catch((error) => {
           console.error(error);
