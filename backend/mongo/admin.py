@@ -77,5 +77,17 @@ def delete_course():
         collection = db['course']
         collection.delete_one({'code': code})
         collection1 = db['program']
-        
+        for p in collection1.find():
+            courses = p['courses']
+            if code in courses:
+                print(code)
+                courses.remove(code)
+                collection1.update_one({'_id': p['_id']}, {'$set': {'courses': courses}})
+        collection1 = db['subset']
+        for s in collection1.find():
+            courses = s['courses']
+            if code in courses:
+                print(code)
+                courses.remove(code)
+                collection1.update_one({'_id': s['_id']}, {'$set': {'courses': courses}})
         return jsonify(success = 'success')
