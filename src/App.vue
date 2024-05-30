@@ -39,6 +39,7 @@ body,
   color: green;
   opacity: 50%;
 }
+
 .yellowbar {
   color: rgb(236, 236, 140);
   opacity: 80%;

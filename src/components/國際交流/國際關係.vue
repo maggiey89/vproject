@@ -13,42 +13,40 @@
   </div> 
 
   <template v-for="(subs, index) in subset">
-    <v-text style="font-weight:bold">{{subs.name}}：至少 {{subs.credit}} 學分</v-text>
-      <template v-for="(each, index2) in subsetcourse">
-        <v-data-table 
-          v-if="index == index2"
-          :headers="headers"
-          fixed-header="true"
-          :header-class="bold-header"
-          :items="each"
-          :items-per-page="-1"
-          density="compact"
-        >
-        <template v-slot:top >
-            <v-dialog v-model="dialogDelete" max-width="500px">
-              <v-card>
-                <v-card-title class="text-h5">確定要刪除此課程嗎？</v-card-title>
-                <v-card-actions>
-                  <v-spacer></v-spacer>
-                  <v-btn color="blue-darken-1" variant="text" @click="closeDelete">取消</v-btn>
-                  <v-btn color="blue-darken-1" variant="text" @click="deleteItemConfirm">確認</v-btn>
-                  <v-spacer></v-spacer>
-                </v-card-actions>
-              </v-card>
-            </v-dialog>
+    <v-text style="font-weight:bold">{{subs.name}}：{{subs.credit}}學分</v-text>
+      <template v-for="(each, index2) in subsetcourse" >
+        <v-table v-if="index == index2" density="compact" fixed-header>
+        <thead>
+            <tr>
+                <th class="text-left font-weight-bold">
+                科目代碼
+                </th>
+                <th class="text-left font-weight-bold">
+                科目名稱
+                </th>
+                <th class="text-left font-weight-bold">
+                學分
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr v-for="cs in each" :class="{'greentext': usercourses.includes(cs.code)}">
+            <td width="300px">{{ cs.code }}</td>
+            <td width="300px">{{ cs.name }}</td>
+            <td>{{ cs.credit }}</td>
+            <td ><v-icon
+              v-if="headerfile.iden == 0 && isloggedin"
+              size="small"
+              @click="deleteItem(index2, cs)"
+            > mdi-delete </v-icon></td>
 
-        </template>
-        <template v-if="headerfile.iden == 0 && isloggedin" v-slot:item.actions="{ item }">
-        <v-icon
-          size="small"
-          @click="deleteItem(index, item)"
-        >
-          mdi-delete
-        </v-icon>
-        </template>
-      <template #bottom></template>
-      </v-data-table>
-    </template>
+        </tr>
+        </tbody>
+    </v-table>
+
+      </template>
+
   </template>
 
 </template>
@@ -90,12 +88,6 @@ import axios from 'axios';
           credit: '',
         },
       }
-    },
-    
-    computed: {
-      formTitle () {
-        return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
-      },
     },
 
     watch: {
@@ -156,7 +148,6 @@ import axios from 'axios';
             this.getcourseinfo(this.course);
           }
           console.log(this.subsetcourse);
-          
         })
         .catch((error) => {
           console.error(error);
@@ -188,10 +179,8 @@ import axios from 'axios';
         this.$nextTick(() => {
           this.editedItem = Object.assign({}, this.defaultItem)
           this.editedIndex = -1
-          this.deleteIndex = -1
         })
       },
-
     },
 
 }

@@ -59,7 +59,7 @@ import { ref, watch } from 'vue'
 import { v4 as uuidv4 } from "uuid"
 
 const headers = [
-    { title: '科目代碼', key: 'course', align: 'start', width: '300px'},
+    { title: '科目代碼', key: 'code', align: 'start', width: '300px'},
     { title: '科目名稱', key: 'name', align: 'start', width: '300px'},
     { title: '學分', key: 'credit' },
     { title: '', key: 'actions', sortable: false},
@@ -107,7 +107,7 @@ const updateCourse = (courseVal, coursePos) => {
 };
 
 const deleteCourse = (courseId) => {
-    courseList.value = courseList.value.filter((course) => course.id != courseId);
+    courseList.value = courseList.value.filter((course) => course.code != courseId);
 };
 
 </script>

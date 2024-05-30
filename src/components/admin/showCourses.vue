@@ -187,6 +187,19 @@ export default {
           return {};
         }
       },
+      async getusercourses(){
+        const path = 'http://127.0.0.1:5000/usercourses';
+        axios.get(path, { headers: this.header() })
+        .then((res) => {
+          this.usercourses = res.data;
+          this.headerfile.name = res.data.name;
+          this.headerfile.iden = res.data.iden;
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      },
+      
       getinfo() {
         const path = 'http://127.0.0.1:5000/userinfo';
         axios.get(path, { headers: this.header() })
@@ -200,6 +213,9 @@ export default {
       },
 
       async getcourses(){
+        if(localStorage.getItem('user')){
+          await this.getusercourses();
+        }
         const path = 'http://127.0.0.1:5000/getcourses';
         const program = '國際關係與外交學分學程'
         axios.post(path, program)

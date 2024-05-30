@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex">
     <v-spacer/>
-    <a href="https://www.ba.ntnu.edu.tw/%E6%9C%80%E6%96%B0%E6%B6%88%E6%81%AF-2"
+    <a href="https://sites.google.com/view/ntnufin/"
       target="_blank" rel="noopener noreferrer"
     >
       <v-btn density="compact" variant="outlined" 
@@ -30,16 +30,15 @@
             </tr>
         </thead>
         <tbody>
-        <tr v-for="cs in each">
+        <tr v-for="cs in each" :class="{'greentext': usercourses.includes(cs.code)}">
             <td width="300px">{{ cs.code }}</td>
             <td width="300px">{{ cs.name }}</td>
             <td>{{ cs.credit }}</td>
-            <td><v-icon
-            size="small"
-            @click="deleteItem(item)"
-          >
-            mdi-delete
-          </v-icon></td>
+            <td ><v-icon
+              v-if="headerfile.iden == 0 && isloggedin"
+              size="small"
+              @click="deleteItem(index2, cs)"
+            > mdi-delete </v-icon></td>
 
         </tr>
         </tbody>
@@ -49,52 +48,11 @@
 
   </template>
 
-  <template v-for="(subs, index) in subset">
-    <v-text style="font-weight:bold">{{subs.name}}：{{subs.credit}}學分</v-text>
-      <template v-for="(each, index2) in subsetcourse">
-        
-        <v-data-table 
-          v-if="index == index2"
-          :headers="headers"
-          fixed-header="true"
-          :header-class="bold-header"
-          :items="each"
-          :items-per-page="-1"
-          density="compact"
-        >
-        <template v-slot:top >
-            <v-dialog v-model="dialogDelete" max-width="500px">
-              <v-card>
-                <v-card-title class="text-h5">確定要刪除此課程嗎？</v-card-title>
-                <v-card-actions>
-                  <v-spacer></v-spacer>
-                  <v-btn color="blue-darken-1" variant="text" @click="closeDelete">取消</v-btn>
-                  <v-btn color="blue-darken-1" variant="text" @click="deleteItemConfirm">確認</v-btn>
-                  <v-spacer></v-spacer>
-                </v-card-actions>
-              </v-card>
-            </v-dialog>
-
-        </template>
-        <template v-if="headerfile.iden == 0 && isloggedin" v-slot:item.actions="{ item }">
-        <v-icon
-          size="small"
-          @click="deleteItem(item)"
-        >
-          mdi-delete
-        </v-icon>
-        </template>
-      <template #bottom></template>
-      </v-data-table>
-    </template>
-  </template>
-
 </template>
 
 <script>
 import { getCurrentInstance } from 'vue';
 import axios from 'axios';
-import { VAutocomplete } from 'vuetify/lib/components/index.mjs';
 
   export default {
     data() {
@@ -116,6 +74,18 @@ import { VAutocomplete } from 'vuetify/lib/components/index.mjs';
           { title: '學分', key: 'credit'},
           { title: '', key: 'actions', sortable: false},
         ],
+        editedIndex: -1,
+        deleteIndex: -1,
+        editedItem: {
+          code: '',
+          name: '',
+          credit: '',
+        },
+        defaultItem: {
+          code: '',
+          name: '',
+          credit: '',
+        },
       }
     },
 
@@ -191,14 +161,15 @@ import { VAutocomplete } from 'vuetify/lib/components/index.mjs';
         })
       },
 
-      deleteItem (item) {
-        this.editedIndex = this.course.indexOf(item)
+      deleteItem (index, item) {
+        this.editedIndex = this.subsetcourse[index].indexOf(item)
+        this.deleteIndex = index
         this.editedItem = Object.assign({}, item)
         this.dialogDelete = true
       },
 
       deleteItemConfirm () {
-        this.courses.splice(this.editedIndex, 1)
+        this.subsetcourse[this.deleteIndex].splice(this.editedIndex, 1)
         this.closeDelete()
       },
 
@@ -214,6 +185,7 @@ import { VAutocomplete } from 'vuetify/lib/components/index.mjs';
 }
 
 </script>
+
 <!--template>
   <div class="d-flex">
     <text>必修：5科14學分</text>
