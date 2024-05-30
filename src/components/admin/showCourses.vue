@@ -130,6 +130,7 @@ export default {
       isloggedin: false,
       dialog: false,
       dialogDelete: false,
+      deletecode: '',
       headers: [
         { title: '科目代碼', key: 'code', align: 'start', width: '300px'},
         { title: '科目名稱', key: 'name', align: 'start', width: '300px'},
@@ -201,8 +202,7 @@ export default {
 
       async getcourses(){
         const path = 'http://127.0.0.1:5000/getcourses';
-        const program = '國際關係與外交學分學程'
-        axios.post(path, program)
+        axios.get(path)
         .then((res) => {
           this.courses = res.data;
         })
@@ -221,9 +221,13 @@ export default {
         this.editedIndex = this.courses.indexOf(item)
         this.editedItem = Object.assign({}, item)
         this.dialogDelete = true
+        this.deletecode = item.code
       },
 
       deleteItemConfirm () {
+        const path = 'http://127.0.0.1:5000/deletecourse';
+        const code = this.deletecode;
+        
         this.courses.splice(this.editedIndex, 1)
         this.closeDelete()
       },
