@@ -278,6 +278,7 @@ export default {
         } else {
           this.courses.push(this.editedItem)
         }
+        console.log(this.editedItem)
         this.close()
       },
     },

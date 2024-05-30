@@ -76,4 +76,6 @@ def delete_course():
         code = request.get_data(as_text=True)
         collection = db['course']
         collection.delete_one({'code': code})
+        collection1 = db['program']
+        
         return jsonify(success = 'success')
