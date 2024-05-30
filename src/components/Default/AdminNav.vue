@@ -16,6 +16,7 @@
       //{ name: '數據顯示', route: '/admin/' },
       { name: "個人資料", route: "/admin" },
       { name: '所有課程', route: '/admin/showcourses'},
+      { name: '編輯學程', route: '/admin/editprograms'},
       { name: '新增課程', route: '/admin/uploadcourse' },
       { name: '新增學程', route: '/admin/uploadprogram' },
       { name: '新增領域', route: '/admin/uploadfield' },

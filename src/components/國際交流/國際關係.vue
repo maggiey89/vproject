@@ -31,6 +31,19 @@
             </tr>
         </thead>
         <tbody>
+          <template>
+            <v-dialog v-model="dialogDelete" max-width="500px">
+              <v-card>
+                <v-card-title class="text-h5">確定要刪除此課程嗎？</v-card-title>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn color="blue-darken-1" variant="text" @click="closeDelete">取消</v-btn>
+                  <v-btn color="blue-darken-1" variant="text" @click="deleteItemConfirm">確認</v-btn>
+                  <v-spacer></v-spacer>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+        </template>
         <tr v-for="cs in each" :class="{'greentext': usercourses.includes(cs.code)}">
             <td width="300px">{{ cs.code }}</td>
             <td width="300px">{{ cs.name }}</td>
@@ -175,9 +188,10 @@ import axios from 'axios';
 
       deleteItem (index, item) {
         this.editedIndex = this.subsetcourse[index].indexOf(item)
-        this.deleteIndex = index
         this.editedItem = Object.assign({}, item)
         this.dialogDelete = true
+        this.deleteIndex = index
+        console.log(item);
       },
 
       deleteItemConfirm () {

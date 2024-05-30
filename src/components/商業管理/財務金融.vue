@@ -11,6 +11,7 @@
       </v-btn>
     </a>  
   </div>  
+  
   <template v-for="(subs, index) in subset">
     <v-text style="font-weight:bold">{{subs.name}}：{{subs.credit}}學分</v-text>
       <template v-for="(each, index2) in subsetcourse" >
@@ -30,6 +31,19 @@
             </tr>
         </thead>
         <tbody>
+          <template >
+            <v-dialog v-model="dialogDelete" max-width="500px">
+              <v-card>
+                <v-card-title class="text-h5">確定要刪除此課程嗎？</v-card-title>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn color="blue-darken-1" variant="text" @click="closeDelete">取消</v-btn>
+                  <v-btn color="blue-darken-1" variant="text" @click="deleteItemConfirm">確認</v-btn>
+                  <v-spacer></v-spacer>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+        </template>
         <tr v-for="cs in each" :class="{'greentext': usercourses.includes(cs.code)}">
             <td width="300px">{{ cs.code }}</td>
             <td width="300px">{{ cs.name }}</td>
@@ -89,6 +103,8 @@ import axios from 'axios';
       }
     },
 
+    
+
     watch: {
       dialog (val) {
         val || this.close()
@@ -107,6 +123,7 @@ import axios from 'axios';
         this.isloggedin = false;
       }
       this.getcourses();
+      this.getinfo();
     },
 
     methods: {
@@ -118,6 +135,18 @@ import axios from 'axios';
         else {
           return {};
         }
+      },
+      
+      getinfo() {
+        const path = 'http://127.0.0.1:5000/userinfo';
+        axios.get(path, { headers: this.header() })
+          .then((res) => {
+            this.headerfile.name = res.data.name;
+            this.headerfile.iden = res.data.iden;
+          })
+          .catch((error) => {
+            console.error(error);
+          });
       },
 
       async getusercourses(){

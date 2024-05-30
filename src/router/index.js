@@ -142,6 +142,12 @@ const router = createRouter({
           component: () =>import('@/components/admin/showCourses.vue'),
           meta: {title: '所有課程'},
         },
+        {
+          path: 'editprograms',
+          name: 'admineditprograms',
+          component: () =>import('@/components/admin/editPrograms.vue'),
+          meta: {title: '編輯學程'},
+        },
         /*
         {
           path: '',

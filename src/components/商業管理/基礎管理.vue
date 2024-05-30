@@ -81,6 +81,7 @@ import axios from 'axios';
           { title: '', key: 'actions', sortable: false},
         ],
         editedIndex: -1,
+        deleteIndex: -1,
         editedItem: {
           code: '',
           name: '',
@@ -92,6 +93,10 @@ import axios from 'axios';
           credit: '',
         },
       }
+    },
+
+    computed () {
+      return editedIndex.value === -1 ? 'New Item' : 'Edit Item'
     },
 
     watch: {
@@ -177,15 +182,16 @@ import axios from 'axios';
         })
       },
 
-      deleteItem (item) {
-        this.editedIndex = this.courses.indexOf(item)
+      deleteItem (index, item) {
+        this.editedIndex = this.subsetcourse[index].indexOf(item)
         this.editedItem = Object.assign({}, item)
         this.dialogDelete = true
+        this.deleteIndex = index
         console.log(item);
       },
 
       deleteItemConfirm () {
-        this.courses.splice(this.editedIndex, 1)
+        this.subsetcourse[this.deleteIndex].splice(this.editedIndex, 1)
         this.closeDelete()
       },
 

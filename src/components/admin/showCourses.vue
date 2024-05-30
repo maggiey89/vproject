@@ -71,14 +71,14 @@
                     variant="text"
                     @click="close"
                 >
-                    Cancel
+                    取消
                 </v-btn>
                 <v-btn
                     color="blue-darken-1"
                     variant="text"
                     @click="save"
                 >
-                    Save
+                    儲存
                 </v-btn>
                 </v-card-actions>
             </v-card>
@@ -88,8 +88,8 @@
                 <v-card-title class="text-h5">確定要刪除此課程嗎？</v-card-title>
                 <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="blue-darken-1" variant="text" @click="closeDelete">Cancel</v-btn>
-                <v-btn color="blue-darken-1" variant="text" @click="deleteItemConfirm">OK</v-btn>
+                <v-btn color="blue-darken-1" variant="text" @click="closeDelete">取消</v-btn>
+                <v-btn color="blue-darken-1" variant="text" @click="deleteItemConfirm">確定</v-btn>
                 <v-spacer></v-spacer>
                 </v-card-actions>
             </v-card>
@@ -257,13 +257,7 @@ export default {
         this.closeDelete()
       },
 
-      close () {
-        this.dialog = false
-        this.$nextTick(() => {
-          this.editedItem = Object.assign({}, this.defaultItem)
-          this.editedIndex = -1
-        })
-      },
+      
 
       closeDelete () {
         this.dialogDelete = false
@@ -272,7 +266,13 @@ export default {
           this.editedIndex = -1
         })
       },
-
+      close () {
+        this.dialog = false
+        this.$nextTick(() => {
+          this.editedItem = Object.assign({}, this.defaultItem)
+          this.editedIndex = -1
+        })
+      },
       save () {
         if (this.editedIndex > -1) {
           Object.assign(this.courses[this.editedIndex], this.editedItem)
@@ -285,12 +285,3 @@ export default {
     },
   }
 </script>
-
-<style>
-.v-data-table{
-    text-align: left;
-    padding-left: 20px;
-    padding-right: 20px;
-    height: max-content;
-}
-</style>

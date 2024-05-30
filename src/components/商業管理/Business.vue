@@ -39,7 +39,7 @@ export default {
       {
         title: '財務金融學分學程',
         content: '財務金融',
-        complete: '90',
+        complete: '0',
       },
       {
         title: '大師創業學分學程',
@@ -49,17 +49,17 @@ export default {
       {
         title: '國際經貿與涉外事務全英語學分學程',
         content: '國際經貿',
-        complete: '50',
+        complete: '0',
       },
       {
         title: '商業分析學分學程',
         content: '商業分析',
-        complete: '70',
+        complete: '0',
       },
       {
         title: 'ESG永續管理學分學程',
         content: 'ESG永續',
-        complete: '40',
+        complete: '0',
       },
       ],
     }

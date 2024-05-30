@@ -39,7 +39,6 @@ body,
   color: green;
   opacity: 50%;
 }
-
 .yellowbar {
   color: rgb(236, 236, 140);
   opacity: 80%;
@@ -53,5 +52,12 @@ body,
 }
 .v-card {
   align-items: center;
+}
+.v-data-table{
+    text-align: left;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+    height: max-content;
 }
 </style>
