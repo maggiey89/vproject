@@ -15,9 +15,6 @@ def add_course():
         c = colletion.find_one({"code" : code})
         if c:
             return jsonify(error = '課程已存在。')
-        c = colletion.find_one({'name' : name})
-        if c:
-            return jsonify(error = '課程已存在。')
         colletion.insert_one({
             "code": code,
             "name": name,
@@ -71,4 +68,12 @@ def add_subset():
             "courses": courses,
             "credit": credit,
         })
+        return jsonify(success = 'success')
+    
+@admin.route('/deletecourse', methods = ['POST'])
+def delete_course():
+    if request.method == 'POST':
+        code = request.get_data(as_text=True)
+        collection = db['course']
+        collection.delete_one({'code': code})
         return jsonify(success = 'success')

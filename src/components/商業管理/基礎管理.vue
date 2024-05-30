@@ -256,7 +256,7 @@ import axios from 'axios';
         subsetcourse: [],
         headerfile: {
           name: '',
-          iden: '',
+          iden: 1,
         },
         isloggedin: false,
         dialog: false,
@@ -268,7 +268,6 @@ import axios from 'axios';
           { title: '', key: 'actions', sortable: false},
         ],
         editedIndex: -1,
-        deleteIndex: -1,
         editedItem: {
           code: '',
           name: '',
@@ -300,6 +299,7 @@ import axios from 'axios';
         this.isloggedin = false;
       }
       this.getcourses();
+      this.getinfo();
     },
 
     methods: {
@@ -313,13 +313,23 @@ import axios from 'axios';
         }
       },
 
+      getinfo() {
+        const path = 'http://127.0.0.1:5000/userinfo';
+        axios.get(path, { headers: this.header() })
+          .then((res) => {
+            this.headerfile.name = res.data.name;
+            this.headerfile.iden = res.data.iden;
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      },
+
       async getusercourses(){
         const path = 'http://127.0.0.1:5000/usercourses';
         axios.get(path, { headers: this.header() })
         .then((res) => {
           this.usercourses = res.data;
-          this.headerfile.name = res.data.name;
-          this.headerfile.iden = res.data.iden;
         })
         .catch((error) => {
           console.error(error);
@@ -354,15 +364,15 @@ import axios from 'axios';
         })
       },
 
-      deleteItem (index, item) {
-        this.editedIndex = this.subsetcourse[index].indexOf(item)
-        this.deleteIndex = index
+      deleteItem (item) {
+        this.editedIndex = this.courses.indexOf(item)
         this.editedItem = Object.assign({}, item)
         this.dialogDelete = true
+        console.log(item);
       },
 
       deleteItemConfirm () {
-        this.subsetcourse[this.deleteIndex].splice(this.editedIndex, 1)
+        this.courses.splice(this.editedIndex, 1)
         this.closeDelete()
       },
 
