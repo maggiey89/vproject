@@ -31,4 +31,27 @@ body,
   text-align: center;
   /* margin-top: 60px; */
 }
+.greentext {
+  color: green;
+}
+
+.greenbar {
+  color: green;
+  opacity: 50%;
+}
+
+.yellowbar {
+  color: rgb(236, 236, 140);
+  opacity: 80%;
+}
+.redbar {
+  color: red;
+  opacity: 60%;
+}
+.bold-header {
+  font-weight: bold;
+}
+.v-card {
+  align-items: center;
+}
 </style>

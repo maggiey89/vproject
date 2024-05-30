@@ -1,8 +1,7 @@
 <template>
   <div class="d-flex" style="margin-bottom: 10px;">
-    <v-text>必修：至少16學分</v-text>
     <v-spacer/>
-    <a href="https://www.cge.ntnu.edu.tw/article_d.php?lang=tw&tb=5&cid=114&id=1120"
+    <a href="http://www.deas.ntnu.edu.tw/front/Courses/Courses11/pages.php?ID=bnRudV9kZWFzJkNvdXJzZXMxMQ=="
       target="_blank" rel="noopener noreferrer"
     >
       <v-btn density="compact" variant="outlined" 
@@ -13,279 +12,82 @@
     </a>  
   </div> 
 
-  <v-data-table
-    :headers="headers"
-    fixed-header="true"
-    header-class="bold-header"
-    :items="courses"
-    :items-per-page="-1"
-    density="compact"
-  >
-    <template v-slot:top >
-      
-        <v-spacer></v-spacer>
-        <v-dialog
-          v-model="dialog"
-          max-width="500px"
-        >
-          <!--template v-slot:activator="{ props }">
-            <v-btn
-              class="mb-2"
-              style="margin-left: 95%;"
-              color="primary"
-              dark
-              v-bind="props"
-            >
-              +
-            </v-btn>
-          </template-->
-          <v-card>
-            <v-card-title>
-              <span class="text-h5">{{ formTitle }}</span>
-            </v-card-title>
+  <template v-for="(subs, index) in subset">
+    <v-text style="font-weight:bold">{{subs.name}}：{{subs.credit}}學分</v-text>
+      <template v-for="(each, index2) in subsetcourse" >
+        <v-table v-if="index == index2" density="compact" fixed-header>
+        <thead>
+            <tr>
+                <th class="text-left font-weight-bold">
+                科目代碼
+                </th>
+                <th class="text-left font-weight-bold">
+                科目名稱
+                </th>
+                <th class="text-left font-weight-bold">
+                學分
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr v-for="cs in each" :class="{'greentext': usercourses.includes(cs.code)}">
+            <td width="300px">{{ cs.code }}</td>
+            <td width="300px">{{ cs.name }}</td>
+            <td>{{ cs.credit }}</td>
+            <td ><v-icon
+              v-if="headerfile.iden == 0 && isloggedin"
+              size="small"
+              @click="deleteItem(index2, cs)"
+            > mdi-delete </v-icon></td>
 
-            <v-card-text>
-              <v-container>
-                <v-row>
-                  <v-col
-                    cols="12"
-                    md="4"
-                    sm="6"
-                  >
-                    <v-text-field
-                      v-model="editedItem.id"
-                      label="科目代碼"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col
-                    cols="12"
-                    md="4"
-                    sm="6"
-                  >
-                    <v-text-field
-                      v-model="editedItem.name"
-                      label="科目名稱"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col
-                    cols="12"
-                    md="4"
-                    sm="6"
-                  >
-                    <v-text-field
-                      v-model="editedItem.credit"
-                      label="學分"
-                    ></v-text-field>
-                  </v-col>
-                </v-row>
-              </v-container>
-            </v-card-text>
+        </tr>
+        </tbody>
+    </v-table>
 
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn
-                color="blue-darken-1"
-                variant="text"
-                @click="close"
-              >
-                Cancel
-              </v-btn>
-              <v-btn
-                color="blue-darken-1"
-                variant="text"
-                @click="save"
-              >
-                Save
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-        <v-dialog v-model="dialogDelete" max-width="500px">
-          <v-card>
-            <v-card-title class="text-h5">Are you sure you want to delete this item?</v-card-title>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="blue-darken-1" variant="text" @click="closeDelete">Cancel</v-btn>
-              <v-btn color="blue-darken-1" variant="text" @click="deleteItemConfirm">OK</v-btn>
-              <v-spacer></v-spacer>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
+      </template>
 
-    </template>
-    <template v-if="headerfile.iden == 0 && isloggedin" v-slot:item.actions="{ item }">
-      <v-icon
-        class="me-2"
-        size="small"
-        @click="editItem(item)"
-      >
-        mdi-pencil
-      </v-icon>
-      <v-icon
-        size="small"
-        @click="deleteItem(item)"
-      >
-        mdi-delete
-      </v-icon>
-    </template>
-    <template v-slot:no-data>
-      <v-btn
-        color="primary"
-        @click="initialize"
-      >
-        Reset
-      </v-btn>
-    </template>
-    <template #bottom></template>
-  </v-data-table>
+  </template>
+
 </template>
 
-
-
 <script>
-export default {
-  data() {
-    return {
-      headerfile: {
-        name: '',
-        iden: '',
-      },
-      isloggedin: false,
-      dialog: false,
-      dialogDelete: false,
-      headers: [
-        { title: '科目代碼', key: 'id', align: 'start', width: '300px'},
-        { title: '科目名稱', key: 'name', align: 'start', width: '300px'},
-        { title: '學分', key: 'credit' },
-        { title: '', key: 'actions', sortable: false},
-      ],
-      courses: [
-        {
-            id: 'L0U1001',
-            name: '初級日文（一）',
-            credit: '2',
-          },
-          {
-            id: 'L0U2001',
-            name: '初級韓文(一)',
-            credit: '2',
-          },
-          {
-            id: '0HUG502',
-            name: '法語（一）',
-            credit: '2',
-          },
-          {
-            id: '0HUG503',
-            name: '西班牙語（一）',
-            credit: '2',
-          },
-          {
-            id: '0HUG509',
-            name: '泰語（一）',
-            credit: '2',
-          },
-          {
-            id: '0HUG649',
-            name: '越南語（一）',
-            credit: '2',
-          },
-          {
-            id: '0HUG653',
-            name: '印尼語（一）',
-            credit: '2',
-          },
+import { getCurrentInstance } from 'vue';
+import axios from 'axios';
 
-          {
-            id: 'EAU0124',
-            name: '國際政治',
-            credit: '3',
-          },
-          {
-            id: 'EAU0220',
-            name: '國際關係概論',
-            credit: '3',
-          },
-          {
-            id: 'EAU0194',
-            name: '國際組織概論',
-            credit: '3',
-          },
-          {
-            id: 'EAU0113',
-            name: '台灣外交研究',
-            credit: '3',
-          },
-          {
-            id: 'EAU0201',
-            name: '中共對台政策與兩岸關係',
-            credit: '3',
-          },
-          {
-            id: 'EAU0206',
-            name: '美國外交政策',
-            credit: '3',
-          },
-          {
-            id: 'EAU0229',
-            name: '外交決策分析',
-            credit: '3',
-          },
-
-          {
-            id: 'GEU0057',
-            name: '都市地理',
-            credit: '3',
-          },
-          {
-            id: 'GEU0006',
-            name: '經濟地理',
-            credit: '3',
-          },
-          {
-            id: 'GEU0014',
-            name: '世界地理',
-            credit: '3',
-          },
-          {
-            id: 'GEU0067',
-            name: '歐洲地理',
-            credit: '3',
-          },
-          {
-            id: 'GEU0069',
-            name: '亞洲地理',
-            credit: '3',
-          },
-          {
-            id: 'GEU0170',
-            name: '自然資源保育',
-            credit: '3',
-          },
-          {
-            id: 'GEU0226',
-            name: '環境永續',
-            credit: '3',
-          },
+  export default {
+    data() {
+      return {
+        usercourses:[],
+        course: [],
+        subset: [],
+        subsetcourse: [],
+        headerfile: {
+          name: '',
+          iden: '',
+        },
+        isloggedin: false,
+        dialog: false,
+        dialogDelete: false,
+        headers: [
+          { title: '科目代碼', key: 'code', align: 'start', width: '300px'},
+          { title: '科目名稱', key: 'name', align: 'start', width: '300px'},
+          { title: '學分', key: 'credit'},
+          { title: '', key: 'actions', sortable: false},
         ],
-      editedIndex: -1,
-      editedItem: {
-        id: '',
-        name: '',
-        credit: '',
-      },
-      defaultItem: {
-        id: '',
-        name: '',
-        credit: '',
-      },
-    }
-  },
-
-    computed: {
-      formTitle () {
-        return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
-      },
+        editedIndex: -1,
+        deleteIndex: -1,
+        editedItem: {
+          code: '',
+          name: '',
+          credit: '',
+        },
+        defaultItem: {
+          code: '',
+          name: '',
+          credit: '',
+        },
+      }
     },
 
     watch: {
@@ -298,13 +100,15 @@ export default {
     },
 
     created () {
-      //if (localStorage.getItem('user')) {
+      if (localStorage.getItem('user')) {
         this.isloggedin = true;
-        //this.getinfo();
-      //}
-      //else{
-        //this.isloggedin = false;
-      ///}
+        this.getusercourses();
+      }
+      else{
+        this.isloggedin = false;
+      }
+      this.getcourses();
+      this.getinfo();
     },
 
     methods: {
@@ -317,6 +121,7 @@ export default {
           return {};
         }
       },
+
       getinfo() {
         const path = 'http://127.0.0.1:5000/userinfo';
         axios.get(path, { headers: this.header() })
@@ -329,29 +134,55 @@ export default {
           });
       },
 
-      editItem (item) {
-        this.editedIndex = this.courses.indexOf(item)
-        this.editedItem = Object.assign({}, item)
-        this.dialog = true
+      async getusercourses(){
+        const path = 'http://127.0.0.1:5000/usercourses';
+        axios.get(path, { headers: this.header() })
+        .then((res) => {
+          this.usercourses = res.data;
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      },
+      
+      async getcourses(){
+        if(localStorage.getItem('user')){
+          await this.getusercourses();
+        }
+        const path = 'http://127.0.0.1:5000/getsubset';
+        const program = '國際關係與外交學分學程'
+        axios.post(path, program)
+        .then((res) => {
+          this.subset = res.data;
+          for(var i = 0;i < this.subset.length;i++){
+            this.course = this.subset[i].courses;
+            this.getcourseinfo(this.course);
+          }
+          console.log(this.subsetcourse);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
       },
 
-      deleteItem (item) {
-        this.editedIndex = this.courses.indexOf(item)
+      getcourseinfo(c){
+        const path = 'http://127.0.0.1:5000/getcoursesbycode';
+        axios.post(path, {code: c})
+        .then((res) => {
+          this.subsetcourse.push(res.data);
+        })
+      },
+
+      deleteItem (index, item) {
+        this.editedIndex = this.subsetcourse[index].indexOf(item)
+        this.deleteIndex = index
         this.editedItem = Object.assign({}, item)
         this.dialogDelete = true
       },
 
       deleteItemConfirm () {
-        this.courses.splice(this.editedIndex, 1)
+        this.subsetcourse[this.deleteIndex].splice(this.editedIndex, 1)
         this.closeDelete()
-      },
-
-      close () {
-        this.dialog = false
-        this.$nextTick(() => {
-          this.editedItem = Object.assign({}, this.defaultItem)
-          this.editedIndex = -1
-        })
       },
 
       closeDelete () {
@@ -361,18 +192,12 @@ export default {
           this.editedIndex = -1
         })
       },
-
-      save () {
-        if (this.editedIndex > -1) {
-          Object.assign(this.courses[this.editedIndex], this.editedItem)
-        } else {
-          this.courses.push(this.editedItem)
-        }
-        this.close()
-      },
     },
-  }
+
+}
+
 </script>
+
 
 <!--template>
   <div class="d-flex">

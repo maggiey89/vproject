@@ -1,6 +1,5 @@
 <template>
     <div>
-      <h1>新增小領域</h1>
       <form @submit="submitForm">
         <div class="form-group">
           <label for="field" class="custom-label">領域:</label>

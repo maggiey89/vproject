@@ -2,12 +2,6 @@
     <v-container>
       <v-row>
         <v-col cols="12">
-          <h1>近期加入課程人數</h1>
-          <v-divider class="mt-4"></v-divider>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col cols="12">
           <v-card>
             <!-- <v-card-title>近期數據列表</v-card-title> -->
             <v-card-text>

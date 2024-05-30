@@ -16,7 +16,7 @@
             <Icon v-else icon="ph:pencil-fill" 
                 color="#41b080" width="15px" @click="$emit('edit-course', index)"/-->
             <Icon icon="ph:trash" 
-                color="#f95e5e" width="15px" @click="$emit('delete-course', course.id)"/>
+                color="#f95e5e" width="15px" @click="$emit('delete-course', course.code)"/>
         </div>
     </li>
 

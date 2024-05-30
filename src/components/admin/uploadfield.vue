@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1>新增領域</h1>
     <form @submit.prevent="confirmAdd">
       <div class="form-group">
         <label for="domainName" class="custom-label">請輸入領域名稱：</label>

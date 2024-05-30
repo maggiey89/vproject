@@ -35,12 +35,27 @@
 
     <v-spacer />
 
-    <v-btn to="/admin" variant="text" height="100%" v-if="headerfile.iden == 0 && isloggedin"> 管理者介面 </v-btn>
-
     <v-btn to="" variant="text" height="100%"> 操作手冊 </v-btn>
     <v-btn to="/course-view/business" variant="text" height="100%"> 學分學程 </v-btn>
 
-    <v-menu open-on-hover v-if="isloggedin">
+    <!--v-btn to="/admin" variant="text" height="100%" v-if="headerfile.iden == 0 && isloggedin"> 管理者介面 </v-btn-->
+
+    <v-menu open-on-hover v-if="headerfile.iden == 0 && isloggedin">
+      <template v-slot:activator="{ props }">
+        <v-btn to="/admin" v-bind="props" variant="text" height="100%">
+          Admin
+        </v-btn>
+      </template>
+
+      <v-list density="compact">
+        <router-link v-for="{ name, route } in admin" :to="{ path: route }"
+          style="text-decoration: none; color: inherit; text-align: center;">
+          <v-list-item>{{ name }}</v-list-item>
+        </router-link>
+      </v-list>
+    </v-menu>
+
+    <v-menu open-on-hover v-if="headerfile.iden == 1 && isloggedin">
       <template v-slot:activator="{ props }">
         <v-btn to="/profile" v-bind="props" variant="text" height="100%">
           {{ headerfile.name }}
@@ -58,16 +73,6 @@
     <v-btn to="/login" class="mr-5" variant="text" height="100%" v-if="!isloggedin "> 登入 </v-btn>
 
     <v-btn to="/" class="mr-5" variant="text" height="100%" v-if="isloggedin" @click.prevent = "logout"> 登出 </v-btn>
-    <!-- // -->
-
-    <!--v-btn to="/profile" variant="text" height="100%">
-      {{ userName }}
-    </v-btn-->
-
-    <!-- <v-avatar class="mr-3" size="36">
-      <img :src="userAvatar" alt="User Avatar">
-    </v-avatar> -->
-
 
   </v-app-bar>
 </template>
@@ -85,6 +90,15 @@ const profile = [
   { name: "我的課程", route: "/profile/mycourses" },
   { name: "新增課程", route: "/profile/uploadcourse" },
 ];
+
+const admin = [
+  { name: "個人資料", route: "/admin" },
+  { name: '所有課程', route: '/admin/showcourses'},
+  { name: '新增課程', route: '/admin/uploadcourse' },
+  { name: '新增學程', route: '/admin/uploadprogram' },
+  { name: '新增領域', route: '/admin/uploadfield' },
+  { name: '新增學程中分類', route: '/admin/subset' },
+]
 
 /*const header = () => {
   const user = JSON.parse(localStorage.getItem('user'));
