@@ -25,11 +25,11 @@
             v-model="dialog"
             max-width="500px"
             >
-            <v-card>
+            <v-card >
                 <v-card-title class="text-h5">編輯課程</v-card-title>
                 <v-card-text>
-                <v-container>
-                    <v-row>
+                <v-container style="width: 450px;">
+                    <v-row >
                     <v-col
                         cols="12"
                         md="4"
@@ -42,7 +42,7 @@
                     </v-col>
                     <v-col
                         cols="12"
-                        md="4"
+                        md="5"
                         sm="6"
                     >
                         <v-text-field
@@ -52,9 +52,9 @@
                     </v-col>
                     <v-col
                         cols="12"
-                        md="4"
+                        md="3"
                         sm="6"
-                    >
+                    > 
                         <v-text-field
                         v-model="editedItem.credit"
                         label="學分"
@@ -65,7 +65,6 @@
                 </v-card-text>
 
                 <v-card-actions>
-                <v-spacer></v-spacer>
                 <v-btn
                     color="blue-darken-1"
                     variant="text"
