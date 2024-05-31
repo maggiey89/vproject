@@ -139,8 +139,10 @@ export default {
       ],
       courses: [],
       editedIndex: -1,
+      editedCode: '',
       editedItem: {
         id: '',
+        code: '',
         name: '',
         credit: '',
       },
@@ -176,7 +178,6 @@ export default {
         this.isloggedin = false;
       }
       this.getcourses();
-      this.getinfo();
     },
 
     methods: {
@@ -188,18 +189,6 @@ export default {
         else {
           return {};
         }
-      },
-      async getusercourses(){
-        const path = 'http://127.0.0.1:5000/usercourses';
-        axios.get(path, { headers: this.header() })
-        .then((res) => {
-          this.usercourses = res.data;
-          this.headerfile.name = res.data.name;
-          this.headerfile.iden = res.data.iden;
-        })
-        .catch((error) => {
-          console.error(error);
-        });
       },
       
       getinfo() {
@@ -215,9 +204,6 @@ export default {
       },
 
       async getcourses(){
-        if(localStorage.getItem('user')){
-          await this.getusercourses();
-        }
         const path = 'http://127.0.0.1:5000/getcourses';
         axios.get(path)
         .then((res) => {
@@ -232,6 +218,7 @@ export default {
         this.editedIndex = this.courses.indexOf(item)
         this.editedItem = Object.assign({}, item)
         this.dialog = true
+        this.editedCode = item.code
       },
 
       deleteItem (item) {
@@ -279,7 +266,22 @@ export default {
         } else {
           this.courses.push(this.editedItem)
         }
-        console.log(this.editedItem)
+        const path = 'http://127.0.0.1:5000/editcourse';
+        const payload = {
+          ocode: this.editedCode,
+          ncode: this.editedItem.code,
+          nname: this.editedItem.name,
+          credit: this.editedItem.credit
+        }
+        axios.post(path, payload)
+        .then((res) => {
+          if(res.data.success){
+            alert("已編輯課程。")
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        })
         this.close()
       },
     },
