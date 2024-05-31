@@ -167,7 +167,7 @@ import axios from 'axios';
           await this.getusercourses();
         }
         const path = 'http://127.0.0.1:5000/getsubset';
-        const program = '基礎管理學分學程'
+        const program = '財務金融學分學程'
         axios.post(path, program)
         .then((res) => {
           this.subset = res.data;

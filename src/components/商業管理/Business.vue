@@ -1,5 +1,5 @@
 <template>
-  <v-expansion-panel v-for="data in courses" :key="data.title" :title="data.title">
+  <v-expansion-panel v-for="data in courses" :key="data.complete" :title="data.title">
 
     <v-progress-linear :model-value="data.complete"
       :class="{ 'redbar': data.complete < 30, 
