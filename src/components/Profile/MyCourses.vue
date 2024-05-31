@@ -14,7 +14,7 @@
         <v-data-table
         :headers="headers"
         fixed-header="true"
-        :items="course"
+        :items="courses"
         :items-per-page="20"
         :search="search"
         density="compact"
@@ -67,13 +67,7 @@ export default {
             { title: '學分', key: 'credit' },
             { title: '', key: 'actions', sortable: false},
         ],
-        course: [
-        {
-            code: 'L0U1001',
-            name: '初級日文（一）',
-            credit: '2',
-          },
-        ],
+        courses: [],
         editedIndex: -1,
         editedItem: {
           code: '',
@@ -106,11 +100,17 @@ export default {
       if (localStorage.getItem('user')) {
         this.isloggedin = true;
         this.getinfo();
+        this.getusercourses();
       }
       else{
         this.isloggedin = false;
       }
-      this.getcourses();
+    },
+
+    watch: {
+      usercourses: function(){
+        this.getcourses();
+      },
     },
 
     methods: {
@@ -129,8 +129,6 @@ export default {
         axios.get(path, { headers: this.header() })
         .then((res) => {
           this.usercourses = res.data;
-          this.headerfile.name = res.data.name;
-          this.headerfile.iden = res.data.iden;
         })
         .catch((error) => {
           console.error(error);
@@ -150,9 +148,9 @@ export default {
       },
 
       async getcourses(){
-        const path = 'http://127.0.0.1:5000/getcourses';
-        const program = '國際關係與外交學分學程'
-        axios.post(path, program)
+        const path = 'http://127.0.0.1:5000/getcoursesbycode';
+        const ucourse = this.usercourses
+        axios.post(path, {code : ucourse})
         .then((res) => {
           this.courses = res.data;
         })

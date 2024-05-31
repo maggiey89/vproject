@@ -91,3 +91,15 @@ def delete_course():
                 courses.remove(code)
                 collection1.update_one({'_id': s['_id']}, {'$set': {'courses': courses}})
         return jsonify(success = 'success')
+    
+@admin.route('/editcourse', methods = ['POST'])
+def edit_course():
+    if request.method == 'POST':
+        editcourse = request.get_json()
+        ocode = editcourse['ocode']
+        ncode = editcourse['ncode']
+        nname = editcourse['nname']
+        credit = editcourse['credit']
+        collection = db['course']
+        collection.update_one({'code': ocode}, {'$set': {'code': ncode, 'name': nname, 'credit': credit}})
+
