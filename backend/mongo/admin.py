@@ -70,6 +70,24 @@ def add_subset():
         })
         return jsonify(success = 'success')
     
+def update_course_in_programs(ocode, ncode):
+    collection = db['program']
+    for p in collection.find():
+        courses = p['courses']
+        if ocode in courses:
+            index = courses.index(ocode)
+            courses[index] = ncode
+            collection.update_one({'_id': p['_id']}, {'$set': {'courses': courses}})
+
+def update_course_in_subsets(ocode, ncode):
+    collection = db['subset']
+    for s in collection.find():
+        courses = s['courses']
+        if ocode in courses:
+            index = courses.index(ocode)
+            courses[index] = ncode
+            collection.update_one({'_id': s['_id']}, {'$set': {'courses': courses}})
+    
 @admin.route('/deletecourse', methods = ['POST'])
 def delete_course():
     if request.method == 'POST':
@@ -80,14 +98,12 @@ def delete_course():
         for p in collection1.find():
             courses = p['courses']
             if code in courses:
-                print(code)
                 courses.remove(code)
                 collection1.update_one({'_id': p['_id']}, {'$set': {'courses': courses}})
         collection1 = db['subset']
         for s in collection1.find():
             courses = s['courses']
             if code in courses:
-                print(code)
                 courses.remove(code)
                 collection1.update_one({'_id': s['_id']}, {'$set': {'courses': courses}})
         return jsonify(success = 'success')
@@ -102,4 +118,8 @@ def edit_course():
         credit = editcourse['credit']
         collection = db['course']
         collection.update_one({'code': ocode}, {'$set': {'code': ncode, 'name': nname, 'credit': credit}})
+        if ocode != ncode:
+            update_course_in_programs(ocode, ncode)
+            update_course_in_subsets(ocode, ncode)
+        return jsonify(success = 'success')
 
