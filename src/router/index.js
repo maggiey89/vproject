@@ -139,14 +139,14 @@ const router = createRouter({
         {
           path: 'showcourses',
           name: 'adminshowcourses',
-          component: () =>import('@/components/admin/showCourses.vue'),
-          meta: {title: '所有課程'},
+          component: () => import('@/components/admin/showCourses.vue'),
+          meta: { title: '所有課程' },
         },
         {
           path: 'editprograms',
           name: 'admineditprograms',
-          component: () =>import('@/components/admin/editPrograms.vue'),
-          meta: {title: '編輯學程'},
+          component: () => import('@/components/admin/editPrograms.vue'),
+          meta: { title: '編輯學程' },
         },
         /*
         {
@@ -180,6 +180,13 @@ const router = createRouter({
           component: () => import('@/components/admin/subset.vue'),
           meta: { title: '新增學程中分類' },
         },
+        {
+          path: 'uploadfile',
+          name: 'uploadfile',
+          component: () => import('@/components/admin/uploadfile.vue'),
+          meta: { title: '上傳檔案' },
+        },
+
 
       ],
     },

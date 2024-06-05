@@ -21,6 +21,7 @@
       { name: '新增學程', route: '/admin/uploadprogram' },
       { name: '新增學程中分類', route: '/admin/subset' },
       { name: '新增領域', route: '/admin/uploadfield' },
+      { name: '上傳檔案', route: '/admin/uploadfile' },
       
   ];
   const adminAvatar = ref('url_to_default_avatar'); 
