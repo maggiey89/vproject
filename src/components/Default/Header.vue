@@ -72,20 +72,20 @@
 
     <v-btn to="/login" class="mr-5" variant="text" height="100%" v-if="!isloggedin "> 登入 </v-btn>
 
-    <!--template>
+    <template>
       <v-dialog v-model="dialogLogout" max-width="500px">
               <v-card>
                 <v-card-title class="text-h5">確定要登出嗎？</v-card-title>
                 <v-card-actions>
                   <v-spacer></v-spacer>
                   <v-btn color="blue-darken-1" variant="text" @click="closeLogout">取消</v-btn>
-                  <v-btn color="blue-darken-1" variant="text" @click="logoutConfirm">登出</v-btn>
+                  <v-btn to="/" color="blue-darken-1" variant="text" @click="logoutConfirm">登出</v-btn>
                   <v-spacer></v-spacer>
                 </v-card-actions>
               </v-card>
             </v-dialog>
-    </template-->
-      <v-btn to="/" class="mr-5" variant="text" height="100%" v-if="isloggedin" @click.prevent = "logout"> 登出 </v-btn>
+    </template>
+      <v-btn class="mr-5" variant="text" height="100%" v-if="isloggedin" @click.prevent = "logout"> 登出 </v-btn>
     
   </v-app-bar>
 </template>
@@ -191,17 +191,18 @@ export default {
       this.dialogLogout = true;
     },
     logoutConfirm () {
-        //this.subsetcourse[this.deleteIndex].splice(this.editedIndex, 1)
-        localStorage.removeItem('user');
+      localStorage.removeItem('user');
       if (localStorage.getItem('courseList')) {
         localStorage.removeItem('courseList')
       }
-      router.push('/');//不知為何不會換頁面
-      this.closeLogout()
-      },
+      this.closeLogout();
+      //location.reload();
+      router.push({name: 'home'});//不知為何不會換頁面
+    },
 
       closeLogout () {
-        this.dialogDelete = false
+        this.dialogLogout = false
+        
         /*this.$nextTick(() => {
           this.editedItem = Object.assign({}, this.defaultItem)
           this.editedIndex = -1
