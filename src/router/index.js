@@ -112,12 +112,6 @@ const router = createRouter({
           component: () => import('@/components/Profile/UploadCourse.vue'),
           meta: { title: '上傳課程' },
         },
-        {
-          path: 'uploadDocument',
-          name: 'uploadDocumentUser',
-          component: () => import('@/components/Profile/uploadDocument.vue'),
-          meta: { title: '上傳檔案' },
-        },
       ],
 
     },
