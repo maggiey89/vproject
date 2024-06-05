@@ -1,7 +1,7 @@
 <template>
   <v-expansion-panel v-for="data in courses" :key="data.title" :title="data.title">
 
-    <v-progress-linear :model-value="data.complete"
+    <v-progress-linear v-if="isloggedin" :model-value="data.complete"
       :class="{ 'redbar': data.complete < 30, 
                 'yellowbar': data.complete >= 30 && data.complete < 70, 
                 'greenbar': data.complete >= 70 }"
@@ -43,7 +43,43 @@
         complete: 0,
       },
       ],
+      isloggedin: false,
     }
+  },
+
+  created() {
+    if (localStorage.getItem('user')) {
+      this.isloggedin = true;
+      //this.getinfo();
+    }
+    else{
+      this.isloggedin = false;
+    }
+  },
+
+  methods: {
+    header() {
+      const user = JSON.parse(localStorage.getItem('user'));
+      if (user && user["access_token"]) {
+        return { Authorization: `Bearer ${user["access_token"]}` };
+      }
+      else {
+        return {};
+      }
+    },
+    /*
+    getinfo() {
+      const path = 'http://127.0.0.1:5000/userinfo';
+      axios.get(path, { headers: this.header() })
+        .then((res) => {
+          this.headerfile.name = res.data.name;
+          this.headerfile.iden = res.data.iden;
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
+    */
   },
 }
   </script>

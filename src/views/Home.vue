@@ -51,7 +51,7 @@ import HelloWorld from "@/components/HelloWorld.vue";
 }
 
 .v-container {
-  background-color: rgba(248, 248, 247, 0.6); 
+  background-color: rgba(248, 248, 247, 0.8); 
   width: 50%;
   padding-top: 10px;
   padding-bottom: 20px;
