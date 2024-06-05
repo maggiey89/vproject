@@ -12,12 +12,26 @@
             :items="subsettitle" density="comfortable" variant="solo">
         </v-autocomplete>
 
+        
     </div>
     <v-card>
-
         <template v-slot:text v-model="editProgram.name">
-            <v-row>
-                <v-text-field
+          <v-dialog v-model="dialogAdd" max-width="600px">
+            <v-card>
+              <v-card-title class="text-h5">新增課程</v-card-title>
+              <v-autocomplete style="width: 500px" label="選擇課程" v-model="addedCourse.add" id="add"
+                  :items="courseAdd" density="comfortable" variant="solo">
+              </v-autocomplete>
+                <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="blue-darken-1" variant="text" @click="close">取消</v-btn>
+                <v-btn color="blue-darken-1" variant="text" @click="save">儲存</v-btn>
+                <v-spacer></v-spacer>
+                </v-card-actions>
+              </v-card>
+          </v-dialog>
+          <v-row>
+            <v-text-field
             v-model="search"
             label="搜尋"
             append-inner-icon="mdi-magnify"
@@ -25,83 +39,24 @@
             hide-details
             single-line
             density="compact"
-        ></v-text-field>
+            ></v-text-field>
 
-        <v-btn @click="editItem()">新增課程</v-btn>
-            </v-row>
-        
+            <v-btn @click="addItem(add)">新增課程</v-btn>
+          </v-row>
         </template>
+        
             <v-spacer></v-spacer>
-            <!--v-dialog v-model="dialog" max-width="500px">
-                <v-card>
-                    <v-card-title class="text-h5">編輯課程</v-card-title>
-                    <v-card-text>
-                    <v-container>
-                        <v-row>
-                        <v-col
-                            cols="12"
-                            md="4"
-                            sm="6"
-                        >
-                            <v-text-field
-                            v-model="editedItem.code"
-                            label="科目代碼"
-                            ></v-text-field>
-                        </v-col>
-                        <v-col
-                            cols="12"
-                            md="4"
-                            sm="6"
-                        >
-                            <v-text-field
-                            v-model="editedItem.name"
-                            label="科目名稱"
-                            ></v-text-field>
-                        </v-col>
-                        <v-col
-                            cols="12"
-                            md="4"
-                            sm="6"
-                        >
-                            <v-text-field
-                            v-model="editedItem.credit"
-                            label="學分"
-                            ></v-text-field>
-                        </v-col>
-                        </v-row>
-                    </v-container>
-                    </v-card-text>
-
-                    <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn
-                        color="blue-darken-1"
-                        variant="text"
-                        @click="close"
-                    >
-                        取消
-                    </v-btn>
-                    <v-btn
-                        color="blue-darken-1"
-                        variant="text"
-                        @click="save"
-                    >
-                        儲存
-                    </v-btn>
-                    </v-card-actions>
-                </v-card>
-            </v-dialog-->
                 
                 <v-dialog v-model="dialogDelete" max-width="500px">
-                <v-card>
-                    <v-card-title class="text-h5">確定要刪除此課程嗎？</v-card-title>
-                    <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn color="blue-darken-1" variant="text" @click="closeDelete">取消</v-btn>
-                    <v-btn color="blue-darken-1" variant="text" @click="deleteItemConfirm">確定</v-btn>
-                    <v-spacer></v-spacer>
-                    </v-card-actions>
-                </v-card>
+                  <v-card>
+                      <v-card-title class="text-h5">確定要刪除此課程嗎？</v-card-title>
+                      <v-card-actions>
+                      <v-spacer></v-spacer>
+                      <v-btn color="blue-darken-1" variant="text" @click="closeDelete">取消</v-btn>
+                      <v-btn color="blue-darken-1" variant="text" @click="deleteItemConfirm">確定</v-btn>
+                      <v-spacer></v-spacer>
+                      </v-card-actions>
+                  </v-card>
                 </v-dialog>
 
             <v-data-table
@@ -113,7 +68,6 @@
                 density="compact"
             >
             
-            
             <template v-if="headerfile.iden == 0 && isloggedin" v-slot:item.actions="{ item }">
             <v-icon
                 size="small"
@@ -124,7 +78,23 @@
             </template>
             <template #bottom></template>
             </v-data-table>
+
     </v-card>
+
+    <v-dialog v-model="dialogDeleteProgram" max-width="500px">
+      <v-card>
+        <v-card-title class="text-h5">確定要刪除此學分學程嗎？</v-card-title>
+        <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn color="blue-darken-1" variant="text" @click="closeDelete">取消</v-btn>
+        <v-btn color="blue-darken-1" variant="text" @click="deleteItemConfirm">確定</v-btn>
+        <v-spacer></v-spacer>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
+    <v-btn style="margin-top: 20px; color: red" @click="deleteProgram(program)">刪除此學分學程</v-btn>
+    
 </template>
   
 <script>
@@ -138,6 +108,7 @@
         subsettitle: [],
         subsetcourse: [],
         courses: [],
+        allCourses: [{code:'', name: '', credit: ''}],
         chosesubset: false,
         editProgram:{
           field: '',
@@ -153,8 +124,9 @@
         iden: '',
       },
       isloggedin: false,
-      dialog: false,
+      dialogAdd: false,
       dialogDelete: false,
+      dialogDeleteProgram: false,
       deletecode: '',
       headers: [
         { title: '科目代碼', key: 'code', align: 'start', width: '300px'},
@@ -164,13 +136,18 @@
       ],
       subIndex: -1,
       editedIndex: -1,
+      addedCourse: {
+        code: '',
+        name: '',
+        credit: '',
+      },
       editedItem: {
-        id: '',
+        code: '',
         name: '',
         credit: '',
       },
       defaultItem: {
-        id: '',
+        code: '',
         name: '',
         credit: '',
       },
@@ -180,7 +157,10 @@
     computed: {
       computedCourses() {
         return this.editProgram.subset ? this.subsetcourse[this.subIndex] : this.courses;
-    }
+      },
+      courseAdd() {
+        return this.allCourses.map(course => course.code + " " + course.name + " " + course.credit);
+      },
     },
 
     created(){
@@ -194,6 +174,7 @@
       this.getcourses();
       this.getinfo();
       this.getFields();
+      this.getAllCourses();
     },
 
     watch: {
@@ -208,7 +189,7 @@
         this.getsubsetcourses(this.editProgram.program, this.editProgram.subset);
         this.chosesubset = true;
       },
-      dialog (val) {
+      dialogAdd (val) {
         val || this.close()
       },
       dialogDelete (val) {
@@ -217,6 +198,16 @@
     },
 
     methods: {
+      header() {
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (user && user["access_token"]) {
+          return { Authorization: `Bearer ${user["access_token"]}` };
+        }
+        else {
+          return {};
+        }
+      },
+      
       getFields(){
         const path = 'http://127.0.0.1:5000/getfield';
         axios.get(path)
@@ -267,8 +258,6 @@
             if (this.subset[i].name.includes(s))
                 this.subIndex = i;
           }
-
-          
           console.log(this.subsetcourse);
         })
         .catch((error) => {
@@ -295,16 +284,16 @@
           console.error(error);
         });
       },
-    
 
-    header() {
-        const user = JSON.parse(localStorage.getItem('user'));
-        if (user && user["access_token"]) {
-          return { Authorization: `Bearer ${user["access_token"]}` };
-        }
-        else {
-          return {};
-        }
+      getAllCourses(){
+        const path = 'http://127.0.0.1:5000/getcourses';
+        axios.get(path)
+        .then((res) => {
+          this.allCourses = res.data;
+        })
+        .catch((error) => {
+          console.error(error);
+        });
       },
 
       getinfo() {
@@ -320,26 +309,24 @@
       },
 
       close () {
-        this.dialog = false
+        this.dialogAdd = false
         this.$nextTick(() => {
-          this.editedItem = Object.assign({}, this.defaultItem)
+          this.addCourse = Object.assign({}, this.defaultItem)
           this.editedIndex = -1
         })
       },
+
       save () {
-        if (this.editedIndex > -1) {
-          Object.assign(this.courses[this.editedIndex], this.editedItem)
-        } else {
-          this.courses.push(this.editedItem)
-        }
-        console.log(this.editedItem)
+        this.courses.push(this.addedCourse)
+        console.log(this.addedCourse)
         this.close()
       },
 
-      editItem (item) {
-        this.editedIndex = this.courses.indexOf(item)
-        this.editedItem = Object.assign({}, item)
-        this.dialog = true
+      addItem (item) {
+        //this.editedIndex = this.courses.indexOf(item)
+        //this.editedItem = Object.assign({}, item)
+        this.addedCourse = Object.assign({},this.addedCourse.add)
+        this.dialogAdd = true
       },
 /*
       deleteItem (item) {
@@ -379,11 +366,16 @@
 
       closeDelete () {
         this.dialogDelete = false
+        this.dialogDeleteProgram = false
         this.$nextTick(() => {
           this.editedItem = Object.assign({}, this.defaultItem)
           this.editedIndex = -1
         })
       },
+
+      deleteProgram(program) {
+        this.dialogDeleteProgram = true
+      }
     },
 };
 </script>

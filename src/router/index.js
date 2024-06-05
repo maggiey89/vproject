@@ -112,6 +112,12 @@ const router = createRouter({
           component: () => import('@/components/Profile/UploadCourse.vue'),
           meta: { title: '上傳課程' },
         },
+        {
+          path: 'uploadDocument',
+          name: 'uploadDocumentUser',
+          component: () => import('@/components/Profile/uploadDocument.vue'),
+          meta: { title: '上傳檔案' },
+        },
       ],
 
     },
@@ -179,6 +185,12 @@ const router = createRouter({
           name: 'subset',
           component: () => import('@/components/admin/subset.vue'),
           meta: { title: '新增學程中分類' },
+        },
+        {
+          path: 'uploadDocument',
+          name: 'uploadDocumentAdmin',
+          component: () => import('@/components/admin/uploadDocument.vue'),
+          meta: { title: '上傳檔案' },
         },
 
       ],

@@ -56,10 +56,8 @@
 
         </tr>
         </tbody>
-    </v-table>
-
-      </template>
-
+      </v-table>
+    </template>
   </template>
 
 </template>
@@ -104,7 +102,6 @@ import axios from 'axios';
     },
 
     
-
     watch: {
       dialog (val) {
         val || this.close()
