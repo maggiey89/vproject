@@ -19,8 +19,11 @@
           <v-dialog v-model="dialogAdd" max-width="600px">
             <v-card>
               <v-card-title class="text-h5">新增課程</v-card-title>
-              <v-autocomplete style="width: 500px" label="選擇課程" v-model="addedCourse.add" id="add"
-                  :items="courseAdd" density="comfortable" variant="solo">
+              <v-autocomplete style="width: 500px" label="選擇課程" v-model="addCourse.name"
+                  :items="courseAdd" density="comfortable" variant="solo" aria-required="true">
+              </v-autocomplete>
+              <v-autocomplete style="width: 500px" label="課程分類" v-model="addCourse.subset" id="subset" 
+                  :items="subsettitle" density="comfortable" variant="solo" aria-required="true">
               </v-autocomplete>
                 <v-card-actions>
                 <v-spacer></v-spacer>
@@ -41,7 +44,7 @@
             density="compact"
             ></v-text-field>
 
-            <v-btn @click="addItem(add)">新增課程</v-btn>
+            <v-btn style="color: blue;" @click="addItem()">新增課程</v-btn>
           </v-row>
         </template>
         
@@ -76,6 +79,7 @@
                 mdi-delete
             </v-icon>
             </template>
+            <template #no-data></template>
             <template #bottom></template>
             </v-data-table>
 
@@ -136,7 +140,11 @@
       ],
       subIndex: -1,
       editedIndex: -1,
-      addedCourse: {
+      addCourse: {
+        name: '',
+        subset: '',
+      },
+      newCourse: {
         code: '',
         name: '',
         credit: '',
@@ -311,47 +319,34 @@
       close () {
         this.dialogAdd = false
         this.$nextTick(() => {
-          this.addCourse = Object.assign({}, this.defaultItem)
+          this.newCourse = Object.assign({}, this.defaultItem)
+          this.addCourse.name = ''
+          this.addCourse.subset = ''
           this.editedIndex = -1
         })
       },
 
       save () {
-        this.courses.push(this.addedCourse)
-        console.log(this.addedCourse)
+        this.newCourse.code = this.addCourse.name.split(" ")[0]
+        this.newCourse.name = this.addCourse.name.split(" ")[1]
+        this.newCourse.credit = this.addCourse.name.split(" ")[2]
+        
+        for(var i = 0; i < this.subset.length;i++){
+            if(this.subset[i].name == this.addCourse.subset) {
+              this.subset[i].courses.push(this.newCourse.code)
+              this.subsetcourse[i].push(this.newCourse)
+
+            }
+          }
+        this.courses.push(this.newCourse)  
+        console.log(this.newCourse)
         this.close()
       },
 
-      addItem (item) {
-        //this.editedIndex = this.courses.indexOf(item)
-        //this.editedItem = Object.assign({}, item)
-        this.addedCourse = Object.assign({},this.addedCourse.add)
+      addItem () {
         this.dialogAdd = true
       },
-/*
-      deleteItem (item) {
-        this.editedIndex = this.courses.indexOf(item)
-        this.editedItem = Object.assign({}, item)
-        this.dialogDelete = true
-        this.deletecode = item.code
-      },
 
-      deleteItemConfirm () {
-        const path = 'http://127.0.0.1:5000/deletecourse';
-        const code = this.deletecode;
-        axios.post(path, code)
-        .then((res) => {
-          if(res.data.success){
-            alert("已刪除課程。")
-          }
-        })
-        .catch((error) => {
-          console.error(error);
-        })
-        this.courses.splice(this.editedIndex, 1)
-        this.closeDelete()
-      },
-*/
     deleteItem (item) {
         this.editedIndex = this.computedCourses.indexOf(item)
         this.editedItem = Object.assign({}, item)
@@ -382,8 +377,8 @@
 
 <style scoped>
 .v-card {
-    margin-left: 10px;
-    margin-right: 10px;
+    margin-left: 6px;
+    margin-right: 6px;
 }
 .v-text-field {
     margin-left: 10px;

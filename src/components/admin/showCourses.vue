@@ -1,6 +1,7 @@
 <template>
     <v-card>
         <template v-slot:text>
+          
         <v-text-field
             v-model="search"
             label="搜尋"
@@ -11,6 +12,7 @@
             density="compact"
         ></v-text-field>
         </template>
+
         <v-data-table
         :headers="headers"
         fixed-header="true"
