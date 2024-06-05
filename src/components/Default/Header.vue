@@ -70,7 +70,7 @@
       </v-list>
     </v-menu>
 
-    <v-btn to="/login" class="mr-5" variant="text" height="100%" v-if="!isloggedin "> 登入 </v-btn>
+    <v-btn to="/login" class="mr-5" variant="text" height="100%" v-if="!isloggedin"> 登入 </v-btn>
 
     <template>
       <v-dialog v-model="dialogLogout" max-width="500px">
@@ -79,7 +79,7 @@
                 <v-card-actions>
                   <v-spacer></v-spacer>
                   <v-btn color="blue-darken-1" variant="text" @click="closeLogout">取消</v-btn>
-                  <v-btn to="/" color="blue-darken-1" variant="text" @click="logoutConfirm">登出</v-btn>
+                  <v-btn color="blue-darken-1" variant="text" @click="logoutConfirm">登出</v-btn>
                   <v-spacer></v-spacer>
                 </v-card-actions>
               </v-card>
@@ -154,6 +154,7 @@ fetchUserInfo();*/
 
 <script>
 import axios from 'axios';
+import router from '@/router';
 export default {
   data() {
     return {
@@ -165,6 +166,7 @@ export default {
       dialogLogout: false,
     }
   },
+
 
   methods: {
     header() {
@@ -195,14 +197,18 @@ export default {
       if (localStorage.getItem('courseList')) {
         localStorage.removeItem('courseList')
       }
+      
       this.closeLogout();
-      //location.reload();
-      router.push({name: 'home'});//不知為何不會換頁面
+      //this.$router.go()
+      this.$router.push({ path: '/' })
+      //this.router.push({name: 'home'});//不知為何不會換頁面
+      
+      
     },
 
       closeLogout () {
         this.dialogLogout = false
-        
+        //location.reload();
         /*this.$nextTick(() => {
           this.editedItem = Object.assign({}, this.defaultItem)
           this.editedIndex = -1

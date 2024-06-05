@@ -45,7 +45,7 @@ export default {
         .then((res) => {
           if (res.data.access_token) {
             localStorage.setItem('user', JSON.stringify(res.data));//登出按鈕
-            router.push('/');
+            this.$router.push({ path: '/' })
           }
         })
         .catch((error) => {
@@ -61,6 +61,8 @@ export default {
         password: this.userForm.password,
       }
       this.login(payload);
+      this.$router.push({ path: '/' })
+      //this.$router.go()
     }
   }
 };
