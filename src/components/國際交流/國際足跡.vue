@@ -1,7 +1,7 @@
-<template>
+<!--template>
   <div class="d-flex">
   <v-spacer/>
-  <a href="https://www.cge.ntnu.edu.tw/article_d.php?lang=tw&tb=5&cid=114&id=1120"
+  <a href="https://www.cge.ntnu.edu.tw/article_d.php?lang=tw&tb=5&cid=114&id=1126"
     target="_blank" rel="noopener noreferrer"
   >
     <v-btn density="compact" variant="outlined" 
@@ -207,6 +207,70 @@ import axios from 'axios';
       },
     },
 
+}
+
+</script-->
+
+<template>
+  <div class="d-flex">
+  <v-spacer/>
+  <a href="https://www.cge.ntnu.edu.tw/article_d.php?lang=tw&tb=5&cid=114&id=1126"
+    target="_blank" rel="noopener noreferrer"
+  >
+    <v-btn density="compact" variant="outlined" 
+        style="color: black"
+    >
+    點我了解更多
+    </v-btn>
+  </a>  
+  </div> 
+  <v-text style="font-weight:bold">必修： 16學分</v-text>
+    <v-table density="compact" fixed-header>
+        
+        <thead>
+            <tr>
+                <th class="text-left font-weight-bold">
+                科目代碼
+                </th>
+                <th class="text-left font-weight-bold">
+                科目名稱
+                </th>
+                <th class="text-left font-weight-bold">
+                學分
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr v-for="item in courses" :key="item.name">
+          <td width="300px">{{ item.id }}</td>
+          <td width="300px">{{ item.name }}</td>
+          <td>{{ item.credit }}</td>
+        </tr>
+        </tbody>
+    </v-table>
+    
+</template>
+
+<script>
+  export default {
+    data() {
+      return {
+        courses: [
+          {
+            id: '',
+            name: '［國外］赴外交換修習課程',
+            credit: '6',
+          },
+          {
+            id: '',
+            name: '［國內］本校外語授課課程',
+            credit: '10',
+          },
+          
+        ],
+        
+      }
+    },
 }
 
 </script>

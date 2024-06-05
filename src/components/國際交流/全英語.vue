@@ -1,4 +1,4 @@
-<template>
+<!--template>
   <div class="d-flex" style="margin-bottom: 10px;">
     <v-spacer/>
     <a href="https://www.cge.ntnu.edu.tw/article_d.php?lang=tw&tb=5&cid=114&id=1120"
@@ -210,13 +210,12 @@ import axios from 'axios';
 
 }
 
-</script>
+</script-->
 
 
 
-<!--template>
+<template>
   <div class="d-flex">
-  <v-text>必修：至少20學分</v-text>
   <v-spacer/>
   <a href="https://www.cge.ntnu.edu.tw/article_d.php?lang=tw&tb=5&cid=114&id=1120"
     target="_blank" rel="noopener noreferrer"
@@ -228,6 +227,7 @@ import axios from 'axios';
     </v-btn>
   </a>  
   </div> 
+  <v-text style="font-weight:bold">必修： 20學分</v-text>
     <v-table density="compact" fixed-header>
         
         <thead>
@@ -276,4 +276,4 @@ import axios from 'axios';
     },
 }
 
-</script-->
+</script>

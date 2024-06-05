@@ -1,8 +1,8 @@
 <template>
     <v-card>
         <template v-slot:text>
-          
-        <v-text-field
+          <v-row>
+            <v-text-field
             v-model="search"
             label="搜尋"
             append-inner-icon="mdi-magnify"
@@ -10,7 +10,10 @@
             hide-details
             single-line
             density="compact"
-        ></v-text-field>
+            ></v-text-field>
+
+            <v-btn style="color: blue;" @click="addItem()">新增課程</v-btn>
+          </v-row>
         </template>
 
         <v-data-table
@@ -23,12 +26,9 @@
     >
         <template v-slot:top >
             <v-spacer></v-spacer>
-            <v-dialog
-            v-model="dialog"
-            max-width="500px"
-            >
+            <v-dialog v-model="dialog"max-width="500px">
             <v-card >
-                <v-card-title class="text-h5">編輯課程</v-card-title>
+                <v-card-title class="text-h5">{{ formTitle }}</v-card-title>
                 <v-card-text>
                 <v-container style="width: 450px;">
                     <v-row >
@@ -157,7 +157,7 @@ export default {
 
     computed: {
       formTitle () {
-        return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
+        return this.editedIndex === -1 ? '新增課程' : '編輯課程'
       },
     },
 
@@ -215,6 +215,10 @@ export default {
         });
       },
 
+      addItem () {
+        this.dialog = true
+      },
+
       editItem (item) {
         this.editedIndex = this.courses.indexOf(item)
         this.editedItem = Object.assign({}, item)
@@ -245,8 +249,7 @@ export default {
         this.closeDelete()
       },
 
-      
-
+    
       closeDelete () {
         this.dialogDelete = false
         this.$nextTick(() => {
@@ -264,27 +267,44 @@ export default {
       save () {
         if (this.editedIndex > -1) {
           Object.assign(this.courses[this.editedIndex], this.editedItem)
+          const path = 'http://127.0.0.1:5000/editcourse';
+          const payload = {
+            ocode: this.editedCode,
+            ncode: this.editedItem.code,
+            nname: this.editedItem.name,
+            credit: this.editedItem.credit
+          }
+          axios.post(path, payload)
+          .then((res) => {
+            if(res.data.success){
+              alert("已編輯課程。")
+            }
+          })
+          .catch((error) => {
+            console.error(error);
+          })
         } else {
           this.courses.push(this.editedItem)
         }
-        const path = 'http://127.0.0.1:5000/editcourse';
-        const payload = {
-          ocode: this.editedCode,
-          ncode: this.editedItem.code,
-          nname: this.editedItem.name,
-          credit: this.editedItem.credit
-        }
-        axios.post(path, payload)
-        .then((res) => {
-          if(res.data.success){
-            alert("已編輯課程。")
-          }
-        })
-        .catch((error) => {
-          console.error(error);
-        })
+        
         this.close()
       },
     },
   }
 </script>
+
+<style scoped>
+.v-card {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.v-text-field {
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 5px;
+}
+.v-btn {
+    margin-top: 5px;
+    margin-right: 10px;
+}
+</style>
