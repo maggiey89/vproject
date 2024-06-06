@@ -15,6 +15,7 @@ import { ref } from 'vue';
 const Categories = [
     {name: '個人資料', route: '/profile'},
     {name: '我的課程', route: '/profile/mycourses'},
+    {name: '上傳課程檔案', route: '/profile/fileupload'},
     //{name: '上傳課程', route: '/profile/uploadcourse'},
 
 ]
