@@ -4,31 +4,6 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 
 course = Blueprint('course', __name__)
 
-@course.route('/useraddcourse', methods = ['POST'])
-@jwt_required()
-def user_add_course():
-    if request.method == "POST":
-        course = request.get_json()
-        code = course.get('course')
-        collection = db['course']
-        c = collection.find_one({'code': code})
-        if c:
-            email = get_jwt_identity()
-            collection = db['user']
-            collection.update_one({"email": email}, {"$push": {"courses": code}})
-            return jsonify({'success': 'success'})
-        else:
-            return jsonify(error = '學分學程中無此課程。')
-    
-@course.route('/usercourses', methods = ['GET'])
-@jwt_required()
-def get_user_courses():
-    email = get_jwt_identity()
-    collection = db['user']
-    user = collection.find_one({"email": email})
-    if user:
-        return jsonify(user['courses'])
-
 @course.route('/getfield', methods = ['GET'])
 def all_field():
     if request.method == 'GET':
@@ -72,8 +47,11 @@ def get_courses():
         courses = []
         collection = db['course']
         for c in collection.find():
-            c['_id'] = ''
-            courses.append(c)
+            code = c['code']
+            name = c['name']
+            credit = c['credit']
+            course = {'code': code, 'name': name, 'credit': credit}
+            courses.append(course)
         return jsonify(courses)
 
 @course.route('/getcoursesbycode', methods = ['POST', 'GET'])

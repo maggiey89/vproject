@@ -93,6 +93,7 @@ export default {
         dialogAdd: false,
         dialogDelete: false,
         editedIndex: -1,
+        deletecode:'',
         addedCourse: {
           code: '',
           name: '',
@@ -192,6 +193,32 @@ export default {
         });
       },
 
+      addcourse(codes){
+        const path = 'http://127.0.0.1:5000/useraddcourse';
+        axios.post(path, {course: codes}, {headers: this.header()})
+        .then((res) => {
+          if(res.data.success){
+            console.log(res.data.success)
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      },
+
+      deletecourse(code){
+        const path = 'http://127.0.0.1:5000/userdeletecourse';
+        axios.post(path, {course: code}, {headers: this.header()})
+        .then((res) => {
+          if(res.data.success){
+            console.log(code)
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      },
+
       close () {
         this.dialogAdd = false
         this.$nextTick(() => {
@@ -210,6 +237,7 @@ export default {
             //this.usercourses.push(codeOnly[i])
           
         //}
+        this.addcourse(this.codeOnly);
         this.codeOnly.forEach(item => this.usercourses.push(item))
         //console.log(this.codeOnly)
         this.close();
@@ -223,11 +251,13 @@ export default {
       deleteItem (item) {
         this.editedIndex = this.usercourses.indexOf(item.code)
         this.dialogDelete = true
-        console.log(item.code);
+        this.deletecode = item.code
       },
 
       deleteItemConfirm () {
         this.usercourses.splice(this.editedIndex, 1)
+        this.deletecourse(this.deletecode)
+        this.deletecode = ''
         this.closeDelete()
         this.getcourses()
       },
