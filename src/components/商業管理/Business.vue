@@ -1,7 +1,7 @@
 <template>
   <v-expansion-panel v-for="data in courses" :key="data.complete" :title="data.title">
 
-    <v-progress-linear v-if="isloggedin" :model-value="data.complete"
+    <v-progress-linear v-if="headerfile.iden == 1 && isloggedin" :model-value="data.complete"
       :class="{ 'redbar': data.complete < 30, 
                 'yellowbar': data.complete >= 30 && data.complete < 70, 
                 'greenbar': data.complete >= 70 }"
@@ -18,6 +18,7 @@
 
 <script>
 import SideNav from '@/components/Default/SideNav.vue'
+import axios from 'axios';
 import 基礎管理 from './基礎管理.vue'
 import 財務金融 from './財務金融.vue'
 import 大師創業 from './大師創業.vue'
@@ -62,6 +63,10 @@ export default {
         complete: '0',
       },
       ],
+      headerfile: {
+        name: '',
+        iden: '',
+      },
       isloggedin: false,
     }
   },
@@ -69,7 +74,7 @@ export default {
   created() {
     if (localStorage.getItem('user')) {
       this.isloggedin = true;
-      //this.getinfo();
+      this.getinfo();
     }
     else{
       this.isloggedin = false;
@@ -85,6 +90,17 @@ export default {
       else {
         return {};
       }
+    },
+    getinfo() {
+      const path = 'http://127.0.0.1:5000/userinfo';
+      axios.get(path, { headers: this.header() })
+        .then((res) => {
+          this.headerfile.name = res.data.name;
+          this.headerfile.iden = res.data.iden;
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     },
     /*
     getinfo() {
