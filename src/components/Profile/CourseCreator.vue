@@ -75,6 +75,7 @@ export default {
     },
     emitAll(){
         this.selectedItems.forEach(item => this.emitCourse(item));
+        console.log(this.courses);
         this.selectedItems = [];
     },
     emitCourse(word) {

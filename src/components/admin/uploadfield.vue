@@ -27,14 +27,6 @@ export default {
   data() {
     return {
       domainName: '',
-      programs: [{"id": 1, "name": "全英語學分學程"},
-      {"id": 2, "name": "程式設計學分學程"},
-      {"id": 3, "name": "商業管理學分學程"},
-      {"id": 4, "name": "數據分析學分學程"},
-      {"id": 5, "name": "創意寫作學分學程"},
-      {"id": 6, "name": "人工智慧應用學分學程"},
-      {"id": 7, "name": "全球化研究學分學程"},], // 從後端取得的學程列表
-      selectedPrograms: [] // 存放使用者選擇的學程
     };
   },
   methods: {
@@ -52,26 +44,11 @@ export default {
     confirmAdd() {
       const payload = {
         name: this.domainName,
-        programs: this.selectedPrograms // 將使用者選擇的學程一併傳送到後端
       };
       this.addField(payload);
     },
 
-    // 從後端取得學程列表
-    getPrograms() {
-      const path = 'http://127.0.0.1:5000/getprograms';
-      axios.get(path)
-        .then((res) => {
-          this.programs = res.data;
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    }
   },
-  created() {
-    this.getPrograms();
-  }
 };
 </script>
 
