@@ -32,7 +32,7 @@ body,
   /* margin-top: 60px; */
 }
 .greentext {
-  color: green;
+  color: rgb(58, 199, 58);
 }
 
 .greenbar {
